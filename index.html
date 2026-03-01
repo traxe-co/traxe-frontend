@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TRAXE — Verification Layer for Digital Media</title>
-  <meta name="description" content="TRAXE provides cryptographic verification and structured disclosure for AI-generated content. EU AI Act 2026 aligned."/>
+  <meta name="description" content="TRAXE provides structured disclosure and tamper-proof verification for AI-generated content. EU AI Act 2026 aligned."/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -83,7 +83,7 @@
     .stat-divider { width: 1px; height: 40px; background: var(--border2); }
 
     /* TRUST */
-    .trust-bar { padding: 32px 56px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg2); display: flex; align-items: center; justify-content: center; gap: 0; }
+    .trust-bar { padding: 32px 56px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg2); display: flex; align-items: center; justify-content: center; }
     .trust-label { font-family: var(--mono); font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); white-space: nowrap; margin-right: 40px; }
     .trust-items { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; justify-content: center; }
     .trust-item { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); opacity: 0.6; }
@@ -114,7 +114,7 @@
     .badge-embed-icon { width: 48px; height: 48px; background: rgba(43,91,224,0.1); border: 1px solid rgba(43,91,224,0.2); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
     .badge-embed-info { font-family: var(--mono); }
     .badge-embed-title { font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--blue-bright); display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-    .badge-embed-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--success); box-shadow: 0 0 5px var(--success); }
+    .badge-embed-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--success); box-shadow: 0 0 5px var(--success); display: inline-block; }
     .badge-embed-meta { font-size: 11px; color: var(--muted3); }
     .badge-embed-id { font-size: 10px; color: var(--muted); margin-top: 3px; }
     .badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
@@ -163,8 +163,7 @@
     .faq-inner { max-width: 780px; margin: 0 auto; }
     .faq-item { background: var(--surface); border: 1px solid var(--border); border-top: none; padding: 28px 32px; }
     .faq-item:first-child { border-top: 1px solid var(--border); }
-    .faq-item h3 { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-    .faq-item h3::after { content: '+'; color: var(--blue-bright); font-size: 18px; font-weight: 300; }
+    .faq-item h3 { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 10px; }
     .faq-item p { font-family: var(--mono); font-size: 12px; color: var(--muted3); line-height: 1.8; }
 
     /* COMPLIANCE */
@@ -208,9 +207,8 @@
     @media (max-width: 1024px) {
       nav { padding: 0 24px; }
       .nav-links { display: none; }
-      .how, .pricing, .cta-section { padding-left: 24px; padding-right: 24px; }
-      .badges, .faq, .compliance { padding-left: 24px; padding-right: 24px; }
-      .steps { grid-template-columns: 1fr; gap: 2px; }
+      .how, .pricing, .cta-section, .badges, .faq, .compliance { padding-left: 24px; padding-right: 24px; }
+      .steps { grid-template-columns: 1fr; }
       .badge-grid { grid-template-columns: 1fr 1fr; }
       .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
       .compliance-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -220,11 +218,10 @@
       .hero h1 { font-size: 44px; letter-spacing: -2px; }
       .hero-stats { gap: 20px; }
       .badge-grid { grid-template-columns: 1fr; }
-      .hero-actions { flex-direction: column; width: 100%; }
+      .hero-actions, .cta-actions { flex-direction: column; width: 100%; }
       .btn-primary, .btn-ghost { width: 100%; justify-content: center; text-align: center; }
       .trust-bar { padding: 24px; flex-direction: column; gap: 16px; }
       .trust-label { margin-right: 0; }
-      .badge-embed-demo { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -255,7 +252,7 @@
     <span class="accent">is real. Or isn't.</span>
   </h1>
   <p class="hero-sub">
-    TRAXE gives AI-generated and hybrid content a cryptographic identity. Declare origin, sign your work, and share a permanent verification record — before regulators ask.
+    TRAXE gives AI-generated and hybrid content a tamper-proof identity. Declare origin, certify your work, and share a permanent verification record — before regulators ask.
   </p>
   <div class="hero-actions">
     <a class="btn-primary" href="register.html">Register Content →</a>
@@ -268,13 +265,13 @@
     </div>
     <div class="stat-divider"></div>
     <div class="stat">
-      <div class="stat-num">Ed<span>25519</span></div>
-      <div class="stat-label">Cryptographic Signing</div>
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-label">Tamper-Proof</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat">
-      <div class="stat-num">100<span>%</span></div>
-      <div class="stat-label">EU AI Act Aligned</div>
+      <div class="stat-num">EU<span> ✓</span></div>
+      <div class="stat-label">AI Act Aligned</div>
     </div>
   </div>
 </section>
@@ -291,7 +288,7 @@
     <span class="trust-item">·</span>
     <span class="trust-item">GDPR Compliant</span>
     <span class="trust-item">·</span>
-    <span class="trust-item">SHA-256 Verified</span>
+    <span class="trust-item">Independently Verifiable</span>
   </div>
 </div>
 
@@ -299,25 +296,25 @@
 <section class="how" id="how">
   <div class="section-tag">How It Works</div>
   <h2 class="section-title reveal">Three steps to<br/>verified content.</h2>
-  <p class="section-sub reveal reveal-delay-1">Upload your asset, declare its origin and tools, and receive a cryptographically signed verification record — permanently.</p>
+  <p class="section-sub reveal reveal-delay-1">Upload your asset, declare its origin and tools, and receive a certified verification record that lives permanently on the web.</p>
   <div class="steps">
     <div class="step reveal">
       <div class="step-num">01</div>
       <span class="step-icon">⬆</span>
       <h3>Upload Your Asset</h3>
-      <p>Upload any image or video file. TRAXE generates a SHA-256 fingerprint — a unique digital identity for your content that cannot be altered.</p>
+      <p>Upload any image or video file. TRAXE creates a permanent digital fingerprint — a unique identity for your content that cannot be altered or forged after the fact.</p>
     </div>
     <div class="step reveal reveal-delay-1">
       <div class="step-num">02</div>
       <span class="step-icon">◎</span>
       <h3>Declare Origin & Tools</h3>
-      <p>Select your badge category, declare whether content is AI-generated, real, or hybrid, and specify the tools used — MidJourney, Runway, Firefly, or any other.</p>
+      <p>Select your badge category and declare whether your content is AI-generated, real, or hybrid. Specify the tools used — MidJourney, Runway, Firefly, or any other.</p>
     </div>
     <div class="step reveal reveal-delay-2">
       <div class="step-num">03</div>
       <span class="step-icon">✓</span>
-      <h3>Receive Verification</h3>
-      <p>Get a unique TRAXE ID, a cryptographically signed certificate, and a permanent public verification page — shareable with clients, platforms, and regulators.</p>
+      <h3>Receive Your Certificate</h3>
+      <p>Get a unique TRAXE ID and a permanent public verification page. Share it with clients, platforms, and regulators as proof of transparent, compliant content production.</p>
     </div>
   </div>
 </section>
@@ -329,13 +326,12 @@
     <h2 class="section-title reveal">Four categories.<br/>One standard.</h2>
     <p class="section-sub reveal reveal-delay-1">Every piece of content is different. TRAXE's badge system covers the full spectrum of modern digital media production.</p>
 
-    <!-- Live badge example -->
     <div class="badge-embed-demo reveal">
       <div class="badge-embed-icon">◈</div>
       <div class="badge-embed-info">
         <div class="badge-embed-title"><span class="badge-embed-dot"></span>TRAXE VERIFIED — Visualization</div>
-        <div class="badge-embed-meta">Vizionaire Campaign · AI Generated · MidJourney</div>
-        <div class="badge-embed-id">TRX-B21D6918 · traxe-backend.onrender.com/verify/TRX-B21D6918</div>
+        <div class="badge-embed-meta">Campaign Asset · AI Generated · MidJourney</div>
+        <div class="badge-embed-id">TRX-B21D6918 · Verified & Certified</div>
       </div>
     </div>
 
@@ -389,13 +385,13 @@
       </div>
       <ul class="plan-features">
         <li>1 content registration</li>
-        <li>SHA-256 fingerprinting</li>
-        <li>Ed25519 cryptographic signing</li>
+        <li>Permanent digital fingerprint</li>
+        <li>Tamper-proof certification</li>
         <li>Public verification page</li>
-        <li>TRAXE ID + verify URL</li>
+        <li>TRAXE ID + verify link</li>
         <li class="muted">Badge download</li>
-        <li class="muted">API access</li>
-        <li class="muted">Dashboard & history</li>
+        <li class="muted">Submission history</li>
+        <li class="muted">Priority support</li>
       </ul>
       <a href="register.html" class="plan-btn outline">Start Free</a>
     </div>
@@ -410,13 +406,13 @@
       </div>
       <ul class="plan-features">
         <li>25 verifications / month</li>
-        <li>SHA-256 fingerprinting</li>
-        <li>Ed25519 cryptographic signing</li>
+        <li>Permanent digital fingerprint</li>
+        <li>Tamper-proof certification</li>
         <li>Public verification pages</li>
         <li>TRAXE ID + QR code</li>
         <li>Downloadable badge assets</li>
         <li>Full submission history</li>
-        <li class="muted">API access</li>
+        <li class="muted">Priority support</li>
       </ul>
       <a href="register.html" class="plan-btn primary">Get Started</a>
     </div>
@@ -427,23 +423,22 @@
       <div class="plan-desc">For agencies and infrastructure clients requiring compliance at scale.</div>
       <div class="plan-price">
         <div class="amount">€149<span>/mo</span></div>
-        <div class="period">Billed monthly · includes API</div>
+        <div class="period">Billed monthly · includes full access</div>
       </div>
       <ul class="plan-features">
         <li>Unlimited verifications</li>
-        <li>SHA-256 fingerprinting</li>
-        <li>Ed25519 cryptographic signing</li>
+        <li>Permanent digital fingerprint</li>
+        <li>Tamper-proof certification</li>
         <li>White-label verification pages</li>
         <li>TRAXE ID + QR code + badge</li>
         <li>Downloadable badge assets</li>
-        <li>Full dashboard & history</li>
-        <li>REST API access</li>
+        <li>Full submission history</li>
+        <li>Priority support</li>
       </ul>
       <a href="register.html" class="plan-btn outline">Get Started</a>
     </div>
   </div>
 
-  <!-- Enterprise row -->
   <div style="margin-top:16px;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;" class="reveal">
     <div>
       <div style="font-family:var(--mono);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue-bright);margin-bottom:8px;">Enterprise</div>
@@ -469,11 +464,11 @@
     <div>
       <div class="faq-item reveal" style="border-top:1px solid var(--border);">
         <h3>Is TRAXE legally binding?</h3>
-        <p>TRAXE creates a declaration-based, cryptographically signed record of what you claim about your content. This is aligned with the EU AI Act's transparency requirements for AI-generated material. While TRAXE is not a court document, it provides an auditable, timestamped disclosure record that can be presented to regulators, platforms, and clients as evidence of compliance intent.</p>
+        <p>TRAXE creates a declaration-based, independently verifiable record of what you claim about your content. This is aligned with the EU AI Act's transparency requirements for AI-generated material. While TRAXE is not a court document, it provides an auditable, timestamped disclosure record that can be presented to regulators, platforms, and clients as evidence of compliance intent.</p>
       </div>
       <div class="faq-item reveal reveal-delay-1">
         <h3>Does TRAXE detect if content is AI-generated?</h3>
-        <p>No — and intentionally so. No AI detection tool available today is reliable enough to make a legal or commercial verdict. TRAXE is declaration-based: you declare the origin of your content and sign it cryptographically. This is the correct model for EU AI Act compliance, which requires disclosure, not detection.</p>
+        <p>No — and intentionally so. No detection tool available today is reliable enough to make a legal or commercial verdict. TRAXE is declaration-based: you declare the origin of your content and it is independently certified. This is the correct model for EU AI Act compliance, which requires disclosure, not detection.</p>
       </div>
       <div class="faq-item reveal reveal-delay-2">
         <h3>What happens if I run out of verifications?</h3>
@@ -481,20 +476,20 @@
       </div>
       <div class="faq-item reveal reveal-delay-3">
         <h3>Can I use TRAXE for client campaigns?</h3>
-        <p>Yes — this is the primary use case. Upload the campaign asset, declare origin and tools, and share the verify URL with your client. They can independently verify the record at any time with no TRAXE account required. Studio and Agency plans include downloadable badge assets you can embed directly in campaign deliverables.</p>
+        <p>Yes — this is the primary use case. Upload the campaign asset, declare origin and tools, and share the verify link with your client. They can independently verify the record at any time with no TRAXE account required. Studio and Agency plans include downloadable badge assets you can embed directly in campaign deliverables.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- EU COMPLIANCE -->
+<!-- COMPLIANCE -->
 <section class="compliance" id="compliance">
   <div class="compliance-inner">
     <div>
       <div class="section-tag reveal">Compliance</div>
       <h2 class="section-title reveal">Built for the<br/>EU AI Act 2026.</h2>
       <p class="section-sub reveal reveal-delay-1">The EU AI Act requires transparency and disclosure for AI-generated content. TRAXE gives you a structured, verifiable way to meet these obligations — before regulators come asking.</p>
-      <p style="font-family:var(--mono);font-size:12px;color:var(--muted3);line-height:1.8;" class="reveal reveal-delay-2">Every TRAXE record includes a cryptographic signature, SHA-256 file fingerprint, declared origin, and timestamped audit trail. This is not just a badge — it's a legal-grade disclosure record.</p>
+      <p style="font-family:var(--mono);font-size:12px;color:var(--muted3);line-height:1.8;" class="reveal reveal-delay-2">Every TRAXE record includes a certified signature, a permanent content fingerprint, declared origin, and a timestamped audit trail. This is not just a badge — it's a disclosure record built for the compliance era.</p>
     </div>
     <div class="compliance-visual reveal reveal-delay-1">
       <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;">Live verification records</div>
@@ -502,7 +497,7 @@
       <div class="demo-badge"><div class="demo-badge-dot"></div><span class="demo-badge-label">TRAXE Verified — Hybrid</span><span class="demo-badge-id">TRX-A4F2C891</span></div>
       <div class="demo-badge"><div class="demo-badge-dot"></div><span class="demo-badge-label">TRAXE Verified — Concept</span><span class="demo-badge-id">TRX-3D7E1042</span></div>
       <div class="demo-badge"><div class="demo-badge-dot"></div><span class="demo-badge-label">TRAXE Verified — Documentary</span><span class="demo-badge-id">TRX-9C0B5F37</span></div>
-      <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.6;">Each record is cryptographically signed with Ed25519<br/>and permanently stored with a SHA-256 fingerprint.</div>
+      <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.6;">Each record is independently verifiable and permanently stored.<br/>No account required to verify.</div>
     </div>
   </div>
 </section>
@@ -527,7 +522,7 @@
     <li><a href="#badges">Badge Types</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="https://traxe-backend.onrender.com/docs" target="_blank">API Docs</a></li>
+    <li><a href="mailto:hello@traxe.co">Contact</a></li>
   </ul>
   <div class="footer-right">
     <span>© 2026 TRAXE</span>
