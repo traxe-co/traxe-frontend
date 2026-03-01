@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TRAXE — Register Your Content</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #080910;
+      --surface: #0e1018;
+      --border: #1c2030;
+      --border-hover: #2b3a5c;
+      --blue: #2B5BE0;
+      --blue-bright: #4a7aff;
+      --blue-glow: rgba(43, 91, 224, 0.15);
+      --blue-glow-strong: rgba(43, 91, 224, 0.3);
+      --white: #f0f2f8;
+      --muted: #4a5068;
+      --muted-light: #6b7594;
+      --success: #22c55e;
+      --error: #ef4444;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-display);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ---- Background ---- */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(43, 91, 224, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(43, 91, 224, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-glow {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(43, 91, 224, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ---- Nav ---- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      border-bottom: 1px solid rgba(28, 32, 48, 0.8);
+      backdrop-filter: blur(20px);
+      background: rgba(8, 9, 16, 0.7);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--blue-bright);
+    }
+
+    .nav-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 2px;
+    }
+
+    /* ---- Main layout ---- */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 140px 24px 80px;
+    }
+
+    /* ---- Header ---- */
+    .page-header {
+      margin-bottom: 56px;
+    }
+
+    .page-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--blue-bright);
+      margin-bottom: 20px;
+    }
+
+    .page-tag::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: var(--blue-bright);
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .page-subtitle {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--muted-light);
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    /* ---- Form ---- */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    }
+
+    .form-section {
+      margin-bottom: 32px;
+    }
+
+    .form-section-title {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .form-group:last-child { margin-bottom: 0; }
+
+    label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted-light);
+    }
+
+    label .required {
+      color: var(--blue-bright);
+      margin-left: 4px;
+    }
+
+    input[type="text"],
+    select {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 12px 14px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--muted);
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px var(--blue-glow);
+    }
+
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper::after {
+      content: '▾';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted-light);
+      pointer-events: none;
+      font-size: 12px;
+    }
+
+    select option {
+      background: #0e1018;
+      color: var(--white);
+    }
+
+    /* ---- File upload ---- */
+    .file-upload-area {
+      border: 1px dashed var(--border);
+      border-radius: 3px;
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      background: var(--bg);
+    }
+
+    .file-upload-area:hover,
+    .file-upload-area.dragover {
+      border-color: var(--blue);
+      background: var(--blue-glow);
+    }
+
+    .file-upload-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+      opacity: 0.4;
+    }
+
+    .upload-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted-light);
+      line-height: 1.6;
+    }
+
+    .upload-label strong {
+      color: var(--blue-bright);
+      font-weight: 400;
+    }
+
+    .file-selected {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--success);
+    }
+
+    .file-selected.visible { display: flex; }
+
+    /* ---- Submit ---- */
+    .submit-btn {
+      width: 100%;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:hover {
+      background: var(--blue-bright);
+      box-shadow: 0 0 32px var(--blue-glow-strong);
+    }
+
+    .submit-btn:active { transform: scale(0.99); }
+
+    .submit-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .submit-btn .btn-text { transition: opacity 0.2s; }
+    .submit-btn .btn-loading {
+      display: none;
+      position: absolute;
+      inset: 0;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .submit-btn.loading .btn-text { opacity: 0; }
+    .submit-btn.loading .btn-loading { display: flex; }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    /* ---- Result panel ---- */
+    .result-panel {
+      display: none;
+      margin-top: 32px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      animation: fadeUp 0.4s ease;
+    }
+
+    .result-panel.visible { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-header {
+      background: rgba(43, 91, 224, 0.08);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .result-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      flex-shrink: 0;
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    .result-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue-bright);
+      background: rgba(43, 91, 224, 0.15);
+      padding: 3px 10px;
+      border-radius: 2px;
+      border: 1px solid rgba(43, 91, 224, 0.3);
+    }
+
+    .result-body {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .result-field label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .result-field span {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--white);
+    }
+
+    .result-field.full { grid-column: 1 / -1; }
+
+    .verify-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--blue-bright);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .verify-link:hover { text-decoration: underline; }
+
+    .copy-btn {
+      background: var(--border);
+      border: none;
+      color: var(--muted-light);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 2px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+
+    .copy-btn:hover { background: var(--blue); color: #fff; }
+
+    /* ---- Error ---- */
+    .error-panel {
+      display: none;
+      margin-top: 16px;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 3px;
+      padding: 14px 18px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--error);
+    }
+
+    .error-panel.visible { display: block; }
+
+    /* ---- Footer note ---- */
+    .footer-note {
+      margin-top: 24px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .footer-note a {
+      color: var(--muted-light);
+      text-decoration: none;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      main { padding: 120px 16px 60px; }
+      .form-card { padding: 24px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .result-body { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<nav>
+  <a class="logo" href="/">TRAX<span>E</span></a>
+  <span class="nav-tag">AI Verification Framework</span>
+</nav>
+
+<main>
+  <div class="page-header">
+    <div class="page-tag">Content Registration</div>
+    <h1>Register &amp;<br/>Verify Your Content</h1>
+    <p class="page-subtitle">
+      Upload your asset, declare its origin and tools used.<br/>
+      Receive a cryptographically signed TRAXE ID and public verification page.<br/>
+      EU AI Act 2026 aligned.
+    </p>
+  </div>
+
+  <div class="form-card">
+
+    <!-- File upload -->
+    <div class="form-section">
+      <div class="form-section-title">Asset</div>
+      <div class="form-group">
+        <label>File <span class="required">*</span></label>
+        <div class="file-upload-area" id="dropZone">
+          <input type="file" id="fileInput" accept="image/*,video/*" />
+          <div class="upload-icon">⬆</div>
+          <div class="upload-label" id="uploadLabel">
+            <strong>Click to upload</strong> or drag and drop<br/>
+            PNG, JPG, WEBP, MP4 — max 50MB
+          </div>
+          <div class="file-selected" id="fileSelected">
+            <span>✓</span>
+            <span id="fileName"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content info -->
+    <div class="form-section">
+      <div class="form-section-title">Content Details</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Title <span class="required">*</span></label>
+          <input type="text" id="title" placeholder="Campaign or asset name" />
+        </div>
+        <div class="form-group">
+          <label>Creator / Studio <span class="required">*</span></label>
+          <input type="text" id="creatorId" placeholder="Your name or studio" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Classification -->
+    <div class="form-section">
+      <div class="form-section-title">Classification</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Badge Category <span class="required">*</span></label>
+          <div class="select-wrapper">
+            <select id="badgeCategory">
+              <option value="" disabled selected>Select category</option>
+              <option value="visualization">Visualization</option>
+              <option value="concept">Concept</option>
+              <option value="documentary">Documentary</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Declared Origin <span class="required">*</span></label>
+          <div class="select-wrapper">
+            <select id="declaredOrigin">
+              <option value="" disabled selected>Select origin</option>
+              <option value="declared_ai">AI Generated</option>
+              <option value="declared_real">Real / Human-Made</option>
+              <option value="declared_hybrid">Hybrid (Real + AI)</option>
+              <option value="declared_unknown">Origin Unknown</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tool Used</label>
+        <div class="select-wrapper">
+          <select id="toolUsed">
+            <option value="" disabled selected>Select tool (optional)</option>
+            <option value="midjourney">MidJourney</option>
+            <option value="runway">Runway</option>
+            <option value="firefly">Adobe Firefly</option>
+            <option value="sora">Sora</option>
+            <option value="dalle">DALL·E</option>
+            <option value="stablediffusion">Stable Diffusion</option>
+            <option value="photoshop">Photoshop</option>
+            <option value="lightroom">Lightroom</option>
+            <option value="premiere">Premiere Pro</option>
+            <option value="aftereffects">After Effects</option>
+            <option value="iphone">iPhone Camera</option>
+            <option value="camera">Camera</option>
+            <option value="custom">Custom Model</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+      <span class="btn-text">Register &amp; Verify</span>
+      <span class="btn-loading"><div class="spinner"></div></span>
+    </button>
+
+    <div class="error-panel" id="errorPanel"></div>
+  </div>
+
+  <!-- Result -->
+  <div class="result-panel" id="resultPanel">
+    <div class="result-header">
+      <div class="result-dot"></div>
+      <span style="font-family:var(--font-mono);font-size:12px;color:var(--white)">Verified &amp; Registered</span>
+      <div class="result-badge" id="resultBadgeLabel"></div>
+    </div>
+    <div class="result-body">
+      <div class="result-field">
+        <label>TRAXE ID</label>
+        <span id="resultTraxeId" style="font-size:16px;font-weight:700;color:var(--blue-bright)"></span>
+      </div>
+      <div class="result-field">
+        <label>Submitted</label>
+        <span id="resultDate"></span>
+      </div>
+      <div class="result-field full">
+        <label>Verification URL</label>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+          <a class="verify-link" id="resultVerifyUrl" href="#" target="_blank"></a>
+          <button class="copy-btn" onclick="copyVerifyUrl()">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer-note">
+    TRAXE — AI Content Verification Framework &nbsp;·&nbsp; EU AI Act 2026 Aligned<br/>
+    Records are cryptographically signed and immutable. &nbsp;
+    <a href="https://traxe-backend.onrender.com/docs" target="_blank">API Docs</a>
+  </p>
+</main>
+
+<script>
+  const API_BASE = 'https://traxe-backend.onrender.com';
+
+  // File drag & drop
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const uploadLabel = document.getElementById('uploadLabel');
+  const fileSelected = document.getElementById('fileSelected');
+  const fileNameEl = document.getElementById('fileName');
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) showFile(fileInput.files[0]);
+  });
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const f = e.dataTransfer.files[0];
+    if (f) {
+      fileInput.files = e.dataTransfer.files;
+      showFile(f);
+    }
+  });
+
+  function showFile(file) {
+    uploadLabel.style.display = 'none';
+    fileSelected.classList.add('visible');
+    fileNameEl.textContent = file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
+  }
+
+  async function submitForm() {
+    const file = fileInput.files[0];
+    const title = document.getElementById('title').value.trim();
+    const creatorId = document.getElementById('creatorId').value.trim();
+    const badgeCategory = document.getElementById('badgeCategory').value;
+    const declaredOrigin = document.getElementById('declaredOrigin').value;
+    const toolUsed = document.getElementById('toolUsed').value;
+
+    const errorPanel = document.getElementById('errorPanel');
+    errorPanel.classList.remove('visible');
+
+    // Validate
+    if (!file) return showError('Please select a file to upload.');
+    if (!title) return showError('Please enter a title for your content.');
+    if (!creatorId) return showError('Please enter your creator or studio name.');
+    if (!badgeCategory) return showError('Please select a badge category.');
+    if (!declaredOrigin) return showError('Please select a declared origin.');
+
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    try {
+      const params = new URLSearchParams({
+        declared_origin: declaredOrigin,
+        badge_category: badgeCategory,
+        title: title,
+        creator_id: creatorId,
+      });
+      if (toolUsed) params.set('tool_used', toolUsed);
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch(`${API_BASE}/upload?${params.toString()}`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.detail || 'Upload failed. Please try again.');
+      }
+
+      showResult(data);
+
+    } catch (err) {
+      showError(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    }
+  }
+
+  function showError(msg) {
+    const panel = document.getElementById('errorPanel');
+    panel.textContent = '✗ ' + msg;
+    panel.classList.add('visible');
+  }
+
+  let currentVerifyUrl = '';
+
+  function showResult(data) {
+    document.getElementById('resultBadgeLabel').textContent = data.badge_label || '';
+    document.getElementById('resultTraxeId').textContent = data.traxe_id || '';
+    document.getElementById('resultDate').textContent = new Date().toISOString().slice(0, 10);
+
+    currentVerifyUrl = data.verify_url || '';
+    const link = document.getElementById('resultVerifyUrl');
+    link.href = currentVerifyUrl;
+    link.textContent = currentVerifyUrl;
+
+    document.getElementById('resultPanel').classList.add('visible');
+    document.getElementById('resultPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function copyVerifyUrl() {
+    if (!currentVerifyUrl) return;
+    navigator.clipboard.writeText(currentVerifyUrl).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = 'Copied';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
