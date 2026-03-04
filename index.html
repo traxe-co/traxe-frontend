@@ -23,8 +23,8 @@
       --muted2:    #4a5070;
       --muted3:    #6b7290;
       --green:     #22c55e;
-      --font:      'Syne', sans-serif;
-      --mono:      'DM Mono', monospace;
+      --font:      'Syne', system-ui, -apple-system, Arial, sans-serif;
+      --mono:      'DM Mono', 'Courier New', monospace;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -71,33 +71,33 @@
       background: radial-gradient(ellipse, rgba(20,80,180,0.1) 0%, transparent 60%);
       pointer-events: none;
     }
-    .hero-logo { height: 200px; width: auto; margin-bottom: 52px; animation: fadeUp .7s ease both; }
+    .hero-logo { height: 200px; width: auto; margin-bottom: 52px;  }
     .hero-pill {
       display: inline-flex; align-items: center; gap: 8px;
       font-family: var(--mono); font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
       color: var(--blue-br); border: 1px solid rgba(30,100,200,0.3);
       background: rgba(30,100,200,0.07); padding: 7px 16px; border-radius: 2px;
-      margin-bottom: 36px; animation: fadeUp .7s .06s ease both;
+      margin-bottom: 36px;
     }
     .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: blink 2s ease infinite; }
     .hero h1 {
       font-size: clamp(46px, 7.5vw, 104px); font-weight: 800;
       line-height: .96; letter-spacing: -3px; color: var(--white);
-      margin-bottom: 12px; animation: fadeUp .7s .12s ease both;
+      margin-bottom: 12px;
     }
     .hero h1 em { font-style: normal; color: var(--blue-br); display: block; }
     .hero-sub {
       font-family: var(--mono); font-size: 13px; color: var(--muted3);
       line-height: 1.9; max-width: 500px; margin: 28px auto 44px;
-      animation: fadeUp .7s .18s ease both;
+      
     }
-    .hero-btns { display: flex; gap: 14px; animation: fadeUp .7s .24s ease both; }
+    .hero-btns { display: flex; gap: 14px;  }
     .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; border-radius: 2px; cursor: pointer; border: none; transition: all .2s; font-family: var(--font); font-weight: 700; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; }
     .btn-solid { color: #fff; background: var(--blue); padding: 14px 28px; }
     .btn-solid:hover { background: var(--blue-br); box-shadow: 0 0 28px var(--blue-glow); }
     .btn-outline { color: var(--muted3); background: none; border: 1px solid var(--border2); padding: 14px 24px; }
     .btn-outline:hover { color: var(--white); border-color: var(--muted2); }
-    .hero-stats { display: flex; align-items: center; gap: 44px; margin-top: 76px; animation: fadeUp .7s .3s ease both; }
+    .hero-stats { display: flex; align-items: center; gap: 44px; margin-top: 76px;  }
     .stat-num { font-size: 30px; font-weight: 800; letter-spacing: -1px; color: var(--white); }
     .stat-num b { color: var(--blue-br); font-weight: 800; }
     .stat-lbl { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); margin-top: 5px; }
@@ -202,10 +202,10 @@
     .footer-links a:hover { color: var(--muted3); }
     .footer-right { font-family: var(--mono); font-size: 9px; color: var(--muted); display: flex; align-items: center; gap: 14px; }
     .eu-tag { border: 1px solid var(--border2); padding: 3px 8px; border-radius: 2px; letter-spacing: 1.5px; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeUp { from { opacity: 1; transform: none; } to { opacity: 1; transform: none; } }
     @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
-    .rev { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
-    .rev.in { opacity: 1; transform: none; }
+    .rev { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s ease; }
+    .rev.in { opacity: 1 !important; transform: none !important; }
     .d1 { transition-delay: .08s; } .d2 { transition-delay: .16s; } .d3 { transition-delay: .24s; }
     @media (max-width: 960px) {
       nav { padding: 0 20px; }
