@@ -172,6 +172,8 @@
       color: var(--muted2); margin-bottom: 8px;
     }
     .field-label span { color: var(--red); margin-left: 2px; }
+    /* Fix review grid overflow */
+    #review-box { overflow: hidden; word-break: break-word; }
     .field-input, .field-select {
       width: 100%; background: var(--bg);
       border: 1px solid var(--border2); border-radius: 2px;
@@ -730,7 +732,7 @@
     };
 
     reviewBox.innerHTML = `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;overflow:hidden;word-break:break-word;min-width:0;">
         <div><span style="color:var(--muted2);font-size:9px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:3px;">File</span>${selectedFile.name}</div>
         <div><span style="color:var(--muted2);font-size:9px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:3px;">Size</span>${formatBytes(selectedFile.size)}</div>
         <div><span style="color:var(--muted2);font-size:9px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:3px;">Title</span>${titleInput.value}</div>
@@ -766,6 +768,7 @@
 
       const res = await fetch(`${BACKEND}/upload?${params.toString()}`, {
         method: 'POST',
+        mode: 'cors',
         body: formData,
       });
 
