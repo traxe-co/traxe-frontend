@@ -446,7 +446,17 @@
           <label class="auth-label">Password</label>
           <input type="password" class="auth-input" id="signup-password" placeholder="Min. 8 characters"/>
         </div>
-        <button class="auth-btn" id="btn-signup">
+        <div class="auth-field" style="margin-bottom:18px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+            <input type="checkbox" id="terms-check" style="margin-top:3px;accent-color:#2563eb;flex-shrink:0;width:14px;height:14px;cursor:pointer;" onchange="document.getElementById('btn-signup').disabled=!this.checked;"/>
+            <span style="font-family:'DM Mono',monospace;font-size:10px;color:#6b7290;line-height:1.7;">
+              I confirm all content I submit will be accurate and truthful, and I agree to the
+              <a href="/terms.html" target="_blank" style="color:#2563eb;text-decoration:underline;">Terms of Service &amp; Disclaimer</a>.
+              I understand TRAXE provides verification infrastructure only and accepts no legal liability for my submissions.
+            </span>
+          </label>
+        </div>
+        <button class="auth-btn" id="btn-signup" disabled>
           <span class="auth-btn-text">Create Account →</span>
           <span class="auth-spin" style="display:none;">⟳</span>
         </button>
@@ -698,6 +708,11 @@
     document.getElementById('tab-' + (tab === 'reset' ? 'login' : tab))?.classList.add('active');
     document.getElementById('panel-' + tab)?.classList.add('active');
     clearAuthMessages();
+    // reset terms checkbox state when switching to signup
+    if (tab === 'signup') {
+      const cb = document.getElementById('terms-check');
+      if (cb) { cb.checked = false; document.getElementById('btn-signup').disabled = true; }
+    }
   }
 
   function clearAuthMessages() {
