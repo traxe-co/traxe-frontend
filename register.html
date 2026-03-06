@@ -7,556 +7,393 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg:        #060709;
-      --bg2:       #080a0f;
-      --surface:   #0c0e16;
-      --surface2:  #10121c;
-      --border:    #161924;
-      --border2:   #1e2234;
-      --blue:      #1a4fa8;
-      --blue-br:   #2e7dd4;
-      --blue-glow: rgba(30,100,200,0.15);
-      --white:     #dde2f0;
-      --white2:    #b8bdd4;
-      --muted:     #323750;
-      --muted2:    #4a5070;
-      --muted3:    #6b7290;
-      --green:     #22c55e;
-      --red:       #ef4444;
-      --font:      'Syne', system-ui, -apple-system, Arial, sans-serif;
-      --mono:      'DM Mono', 'Courier New', monospace;
+      --bg:         #f4f5f8;
+      --surface:    #ffffff;
+      --border:     #e2e5ee;
+      --border2:    #d0d4e4;
+      --blue:       #1a4fa8;
+      --blue-br:    #2563eb;
+      --blue-light: #eff4ff;
+      --blue-glow:  rgba(37,99,235,0.12);
+      --text:       #0f1220;
+      --text2:      #2d3348;
+      --muted:      #6b7290;
+      --muted2:     #9ba3bf;
+      --green:      #16a34a;
+      --green-bg:   #f0fdf4;
+      --red:        #dc2626;
+      --red-bg:     #fef2f2;
+      --font:       'Syne', system-ui, -apple-system, Arial, sans-serif;
+      --mono:       'DM Mono', 'Courier New', monospace;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
-      color: var(--white);
-      font-family: var(--font);
-      min-height: 100vh;
-      overflow-x: hidden;
-      line-height: 1;
+      background: var(--bg); color: var(--text);
+      font-family: var(--font); min-height: 100vh; overflow-x: hidden;
     }
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
-      background-image:
-        linear-gradient(rgba(30,100,200,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30,100,200,0.025) 1px, transparent 1px);
-      background-size: 80px 80px;
-      pointer-events: none; z-index: 0;
-    }
+
     /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      height: 90px; display: flex; align-items: center; justify-content: space-between;
-      padding: 0 52px;
-      background: rgba(6,7,9,0.88);
-      backdrop-filter: blur(20px);
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo { height: 80px; width: auto; display: block; }
-    .nav-back {
-      font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--muted3); text-decoration: none;
-      display: flex; align-items: center; gap: 8px; transition: color .2s;
+    .nav-logo {
+      font-family: var(--font); font-weight: 800; font-size: 16px;
+      letter-spacing: 5px; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
     }
-    .nav-back:hover { color: var(--white); }
+    .nav-logo span { color: var(--blue-br); }
+    .nav-back {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      transition: color .15s;
+    }
+    .nav-back:hover { color: var(--blue-br); }
 
     /* MAIN */
-    main {
-      position: relative; z-index: 1;
-      max-width: 680px; margin: 0 auto;
-      padding: 140px 24px 100px;
-    }
+    main { max-width: 620px; margin: 0 auto; padding: 96px 20px 80px; }
 
-    /* HEADER */
-    .page-tag {
-      font-family: var(--mono); font-size: 9px; letter-spacing: 3px;
+    .eyebrow {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 2.5px;
       text-transform: uppercase; color: var(--blue-br);
-      display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
     }
-    .page-tag::before { content: ''; display: block; width: 22px; height: 1px; background: var(--blue-br); }
-    .page-title {
-      font-size: clamp(32px, 5vw, 52px); font-weight: 800;
-      letter-spacing: -2px; line-height: 1.0; margin-bottom: 14px;
+    .eyebrow::before { content:''; width:20px; height:1px; background:var(--blue-br); }
+    h1 {
+      font-size: clamp(28px,5vw,44px); font-weight: 800;
+      letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 12px;
     }
-    .page-sub {
-      font-family: var(--mono); font-size: 12px; color: var(--muted3);
-      line-height: 1.85; margin-bottom: 48px;
+    .sub {
+      font-size: 14px; color: var(--muted); line-height: 1.7;
+      margin-bottom: 32px; max-width: 480px;
     }
 
-    /* FORM CARD */
-    .form-card {
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      border-radius: 3px;
+    /* CARD */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
       overflow: hidden;
-      position: relative;
-    }
-    .form-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--blue), var(--blue-br));
     }
 
-    /* STEPS */
-    .steps-nav {
-      display: flex; border-bottom: 1px solid var(--border);
-    }
-    .step-tab {
-      flex: 1; padding: 18px 16px; text-align: center;
+    /* TABS */
+    .tabs { display: flex; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .tab {
+      flex: 1; padding: 14px 10px; text-align: center;
       font-family: var(--mono); font-size: 9px; letter-spacing: 2px;
       text-transform: uppercase; color: var(--muted2);
-      border-right: 1px solid var(--border);
-      cursor: default; user-select: none;
-      transition: color .2s;
+      border-right: 1px solid var(--border); user-select: none;
     }
-    .step-tab:last-child { border-right: none; }
-    .step-tab.active { color: var(--blue-br); }
-    .step-tab.done { color: var(--green); }
-    .step-num {
-      display: block; font-size: 14px; font-weight: 700;
-      font-family: var(--font); margin-bottom: 4px;
+    .tab:last-child { border-right: none; }
+    .tab.active { color: var(--blue-br); background: var(--surface); }
+    .tab.done   { color: var(--green);   background: var(--surface); }
+    .tab-num { display: block; font-family: var(--font); font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+
+    /* PROGRESS */
+    .prog { height: 3px; background: var(--border); }
+    .prog-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--blue-br));
+      transition: width .4s ease; width: 0%;
     }
 
-    /* FORM BODY */
-    .form-body { padding: 36px 36px 28px; }
+    /* BODY */
+    .body { padding: 28px 28px 22px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
 
-    .step-panel { display: none; }
-    .step-panel.active { display: block; }
+    /* UPLOAD */
+    .drop-zone {
+      border: 1.5px dashed var(--border2); border-radius: 6px;
+      padding: 36px 20px; text-align: center; cursor: pointer;
+      background: var(--bg); transition: all .15s; position: relative; overflow: hidden;
+    }
+    .drop-zone:hover, .drop-zone.over { border-color: var(--blue-br); background: var(--blue-light); }
+    .drop-zone.filled { border-color: var(--green); background: var(--green-bg); }
+    .drop-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .drop-ico { font-size: 26px; margin-bottom: 10px; display: block; }
+    .drop-title { font-size: 14px; font-weight: 700; color: var(--text2); margin-bottom: 6px; }
+    .drop-hint { font-family: var(--mono); font-size: 11px; color: var(--muted); line-height: 1.6; }
 
-    /* UPLOAD ZONE */
-    .upload-zone {
-      border: 1px dashed var(--border2);
-      border-radius: 3px; padding: 48px 24px;
-      text-align: center; cursor: pointer;
-      transition: border-color .2s, background .2s;
-      position: relative; overflow: hidden;
+    .file-preview {
+      display: none; margin-top: 10px;
+      background: var(--green-bg); border: 1px solid #bbf7d0;
+      border-radius: 4px; padding: 10px 14px;
     }
-    .upload-zone:hover, .upload-zone.drag-over {
-      border-color: var(--blue-br);
-      background: rgba(30,100,200,0.04);
-    }
-    .upload-zone input[type=file] {
-      position: absolute; inset: 0; opacity: 0; cursor: pointer;
-    }
-    .upload-ico { font-size: 32px; margin-bottom: 14px; display: block; }
-    .upload-title {
-      font-size: 15px; font-weight: 700; letter-spacing: -.3px;
-      margin-bottom: 8px;
-    }
-    .upload-hint {
-      font-family: var(--mono); font-size: 11px; color: var(--muted3);
-      line-height: 1.7;
-    }
-    .upload-zone.has-file {
-      border-color: var(--green);
-      background: rgba(34,197,94,0.04);
-    }
-    .file-info {
-      display: none; margin-top: 20px;
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 2px; padding: 14px 16px;
-      font-family: var(--mono); font-size: 11px; color: var(--white2);
-      text-align: left;
-    }
-    .file-info.show { display: block; }
-    .file-info-name { font-weight: 500; margin-bottom: 4px; }
-    .file-info-size { color: var(--muted3); font-size: 10px; }
+    .file-preview.show { display: block; }
+    .fp-name { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--green); word-break: break-all; margin-bottom: 2px; }
+    .fp-size { font-family: var(--mono); font-size: 10px; color: var(--muted); }
 
-    /* FORM FIELDS */
-    .field-group { margin-bottom: 24px; }
-    .field-label {
+    /* FIELDS */
+    .fg { margin-bottom: 18px; }
+    .lbl {
       display: block; font-family: var(--mono); font-size: 9px;
-      letter-spacing: 2.5px; text-transform: uppercase;
-      color: var(--muted2); margin-bottom: 8px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
     }
-    .field-label span { color: var(--red); margin-left: 2px; }
-    /* Fix review grid overflow */
-    #review-box { overflow: hidden; word-break: break-word; }
-    .field-input, .field-select {
-      width: 100%; background: var(--bg);
-      border: 1px solid var(--border2); border-radius: 2px;
-      padding: 12px 14px; color: var(--white);
+    .lbl em { color: var(--red); font-style: normal; margin-left: 2px; }
+    .inp, .sel {
+      width: 100%; background: var(--surface);
+      border: 1.5px solid var(--border2); border-radius: 5px;
+      padding: 11px 13px; color: var(--text);
       font-family: var(--mono); font-size: 12px;
-      outline: none; transition: border-color .2s, box-shadow .2s;
+      outline: none; transition: border-color .15s, box-shadow .15s;
       appearance: none;
     }
-    .field-input:focus, .field-select:focus {
+    .inp::placeholder { color: var(--muted2); }
+    .inp:focus, .sel:focus {
       border-color: var(--blue-br);
-      box-shadow: 0 0 0 3px rgba(30,100,200,0.1);
+      box-shadow: 0 0 0 3px var(--blue-glow);
     }
-    .field-select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7290'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
-    .field-hint {
-      margin-top: 6px; font-family: var(--mono); font-size: 10px;
-      color: var(--muted); line-height: 1.5;
+    .sel {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7290'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 13px center; padding-right: 34px;
     }
+    .hint { margin-top: 5px; font-family: var(--mono); font-size: 10px; color: var(--muted2); }
 
-    /* BADGE GRID */
-    .badge-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    }
-    .badge-option { display: none; }
-    .badge-label {
-      display: block; cursor: pointer;
-      background: var(--bg); border: 1px solid var(--border2);
-      border-radius: 2px; padding: 16px;
-      transition: border-color .2s, background .2s;
-    }
-    .badge-label:hover { border-color: var(--muted2); }
-    .badge-option:checked + .badge-label {
-      border-color: var(--blue-br);
-      background: rgba(30,100,200,0.06);
-    }
-    .badge-ico { font-size: 20px; display: block; margin-bottom: 8px; }
-    .badge-name {
-      font-size: 12px; font-weight: 700; letter-spacing: -.2px;
-      margin-bottom: 4px;
-    }
-    .badge-desc {
-      font-family: var(--mono); font-size: 10px;
-      color: var(--muted3); line-height: 1.5;
-    }
+    /* BADGE + ORIGIN GRIDS */
+    .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .opt-radio { display: none; }
 
-    /* ORIGIN GRID */
-    .origin-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    }
-    .origin-option { display: none; }
-    .origin-label {
+    .badge-lbl {
       display: block; cursor: pointer;
-      background: var(--bg); border: 1px solid var(--border2);
-      border-radius: 2px; padding: 14px 16px;
-      transition: border-color .2s, background .2s;
-      display: flex; align-items: flex-start; gap: 10px;
+      background: var(--bg); border: 1.5px solid var(--border2);
+      border-radius: 6px; padding: 13px; transition: all .15s;
     }
-    .origin-label:hover { border-color: var(--muted2); }
-    .origin-option:checked + .origin-label {
-      border-color: var(--blue-br);
-      background: rgba(30,100,200,0.06);
+    .badge-lbl:hover { border-color: var(--blue-br); background: var(--blue-light); }
+    .opt-radio:checked + .badge-lbl { border-color: var(--blue-br); background: var(--blue-light); }
+    .b-ico { font-size: 18px; display: block; margin-bottom: 6px; }
+    .b-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .b-desc { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 1.4; }
+
+    .origin-lbl {
+      display: flex; align-items: flex-start; gap: 10px; cursor: pointer;
+      background: var(--bg); border: 1.5px solid var(--border2);
+      border-radius: 6px; padding: 12px 13px; transition: all .15s;
     }
-    .origin-dot {
-      width: 14px; height: 14px; border-radius: 50%;
-      border: 1px solid var(--border2); flex-shrink: 0; margin-top: 2px;
-      transition: border-color .2s, background .2s;
-      position: relative;
+    .origin-lbl:hover { border-color: var(--blue-br); background: var(--blue-light); }
+    .opt-radio:checked + .origin-lbl { border-color: var(--blue-br); background: var(--blue-light); }
+    .rdot {
+      width: 15px; height: 15px; border-radius: 50%;
+      border: 2px solid var(--border2); flex-shrink: 0; margin-top: 1px;
+      transition: all .15s; position: relative;
     }
-    .origin-option:checked + .origin-label .origin-dot {
-      border-color: var(--blue-br); background: var(--blue-br);
+    .opt-radio:checked + .origin-lbl .rdot { border-color: var(--blue-br); background: var(--blue-br); }
+    .rdot::after {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%); width: 5px; height: 5px;
+      border-radius: 50%; background: white; opacity: 0; transition: opacity .15s;
     }
-    .origin-dot::after {
-      content: ''; position: absolute;
-      top: 50%; left: 50%; transform: translate(-50%,-50%);
-      width: 5px; height: 5px; border-radius: 50%;
-      background: #fff; opacity: 0;
-      transition: opacity .2s;
+    .opt-radio:checked + .origin-lbl .rdot::after { opacity: 1; }
+    .o-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .o-desc { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+
+    /* REVIEW */
+    .review-wrap {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 18px;
     }
-    .origin-option:checked + .origin-label .origin-dot::after { opacity: 1; }
-    .origin-text-wrap { flex: 1; }
-    .origin-name {
-      font-size: 12px; font-weight: 700; margin-bottom: 3px;
+    .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
+    .ri label {
+      display: block; font-family: var(--mono); font-size: 9px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted2); margin-bottom: 3px;
     }
-    .origin-desc {
-      font-family: var(--mono); font-size: 10px; color: var(--muted3);
-    }
+    .ri span { font-family: var(--mono); font-size: 12px; color: var(--text2); word-break: break-word; }
 
     /* BUTTONS */
     .btn-row {
-      display: flex; gap: 12px; margin-top: 28px;
-      padding-top: 24px; border-top: 1px solid var(--border);
+      display: flex; gap: 10px; margin-top: 22px;
+      padding-top: 18px; border-top: 1px solid var(--border);
     }
     .btn {
       font-family: var(--font); font-weight: 700; font-size: 10px;
-      letter-spacing: 3px; text-transform: uppercase;
-      padding: 13px 24px; border-radius: 2px; border: none;
-      cursor: pointer; transition: all .2s;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 12px 22px; border-radius: 5px; border: none; cursor: pointer; transition: all .15s;
     }
-    .btn-primary {
-      background: var(--blue); color: #fff; flex: 1;
-    }
-    .btn-primary:hover { background: var(--blue-br); box-shadow: 0 0 24px var(--blue-glow); }
-    .btn-primary:disabled {
-      opacity: .4; cursor: not-allowed;
-      box-shadow: none; background: var(--blue);
-    }
-    .btn-ghost {
-      background: none; color: var(--muted3);
-      border: 1px solid var(--border2);
-    }
-    .btn-ghost:hover { color: var(--white); border-color: var(--muted2); }
+    .btn-p { background: var(--blue-br); color: #fff; flex: 1; }
+    .btn-p:hover:not(:disabled) { background: var(--blue); box-shadow: 0 4px 16px var(--blue-glow); }
+    .btn-p:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-g { background: none; color: var(--muted); border: 1.5px solid var(--border2); }
+    .btn-g:hover { color: var(--text); border-color: var(--muted2); }
 
-    /* PROGRESS */
-    .progress-bar {
-      height: 2px; background: var(--border);
-      position: relative; overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%; background: linear-gradient(90deg, var(--blue), var(--blue-br));
-      transition: width .4s ease;
-      width: 0%;
-    }
-
-    /* LOADING STATE */
-    .submit-loading { display: none; }
-    .submitting .submit-loading { display: flex; align-items: center; gap: 10px; }
-    .submitting .submit-text { display: none; }
+    .spin-wrap { display: none; align-items: center; gap: 8px; }
+    .submitting .spin-wrap { display: flex; }
+    .submitting .btn-text { display: none; }
     .spinner {
-      width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.2);
-      border-top-color: #fff; border-radius: 50%;
-      animation: spin .7s linear infinite;
+      width: 13px; height: 13px; border: 2px solid rgba(255,255,255,.3);
+      border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* INFO / ERROR */
+    .info-box {
+      margin-top: 14px; background: var(--blue-light);
+      border: 1px solid #bfdbfe; border-radius: 5px;
+      padding: 12px 14px; font-family: var(--mono); font-size: 11px;
+      color: var(--blue); line-height: 1.6;
+    }
+    .err-box {
+      display: none; margin-top: 12px;
+      background: var(--red-bg); border: 1px solid #fecaca;
+      border-radius: 5px; padding: 12px 14px;
+      font-family: var(--mono); font-size: 11px; color: var(--red); line-height: 1.6;
+    }
+    .err-box.show { display: block; }
+
     /* SUCCESS */
-    .success-panel {
-      display: none; padding: 48px 36px;
-      text-align: center;
+    .success { display: none; padding: 48px 28px; text-align: center; }
+    .success.show { display: block; }
+    .s-check {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--green-bg); border: 2px solid #bbf7d0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin: 0 auto 18px; color: var(--green);
     }
-    .success-panel.show { display: block; }
-    .success-ico { font-size: 48px; margin-bottom: 20px; display: block; }
-    .success-title {
-      font-size: 24px; font-weight: 800; letter-spacing: -1px;
-      margin-bottom: 10px;
+    .s-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 8px; }
+    .s-sub { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
+    .traxe-id {
+      display: inline-block;
+      background: var(--bg); border: 1.5px solid var(--border2);
+      border-radius: 5px; padding: 13px 24px;
+      font-family: var(--mono); font-size: 16px; font-weight: 500;
+      color: var(--blue-br); letter-spacing: 2px; margin-bottom: 22px;
     }
-    .success-sub {
-      font-family: var(--mono); font-size: 12px; color: var(--muted3);
-      line-height: 1.85; margin-bottom: 28px;
-    }
-    .traxe-id-box {
-      background: var(--bg); border: 1px solid var(--border2);
-      border-radius: 2px; padding: 16px 20px;
-      font-family: var(--mono); font-size: 14px;
-      color: var(--blue-br); letter-spacing: 2px;
-      margin-bottom: 24px; display: inline-block;
-    }
-    .success-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn-verify {
+    .s-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn-v {
       font-family: var(--font); font-weight: 700; font-size: 10px;
-      letter-spacing: 3px; text-transform: uppercase;
-      padding: 13px 24px; border-radius: 2px; cursor: pointer;
-      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
-      background: var(--blue); color: #fff; border: none;
-      transition: all .2s;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 12px 22px; border-radius: 5px;
+      background: var(--blue-br); color: #fff; border: none;
+      cursor: pointer; text-decoration: none; transition: all .15s;
     }
-    .btn-verify:hover { background: var(--blue-br); box-shadow: 0 0 24px var(--blue-glow); }
-    .btn-again {
+    .btn-v:hover { background: var(--blue); }
+    .btn-a {
       font-family: var(--font); font-weight: 700; font-size: 10px;
-      letter-spacing: 3px; text-transform: uppercase;
-      padding: 13px 24px; border-radius: 2px; cursor: pointer;
-      text-decoration: none; display: inline-flex; align-items: center;
-      background: none; color: var(--muted3);
-      border: 1px solid var(--border2);
-      transition: all .2s;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 12px 22px; border-radius: 5px;
+      background: none; color: var(--muted);
+      border: 1.5px solid var(--border2);
+      cursor: pointer; text-decoration: none; transition: all .15s;
     }
-    .btn-again:hover { color: var(--white); border-color: var(--muted2); }
-
-    /* ERROR */
-    .error-box {
-      display: none; margin-top: 16px;
-      background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2);
-      border-radius: 2px; padding: 14px 16px;
-      font-family: var(--mono); font-size: 11px; color: #f87171;
-      line-height: 1.6;
-    }
-    .error-box.show { display: block; }
-
-    /* INFO ROW */
-    .info-row {
-      margin: 20px 0 0;
-      background: rgba(30,100,200,0.05);
-      border: 1px solid rgba(30,100,200,0.12);
-      border-radius: 2px; padding: 14px 16px;
-      font-family: var(--mono); font-size: 11px;
-      color: var(--muted3); line-height: 1.6;
-    }
-    .info-row strong { color: var(--white2); font-weight: 400; }
+    .btn-a:hover { color: var(--text); border-color: var(--muted2); }
 
     /* FOOTER */
     footer {
-      position: relative; z-index: 1;
-      padding: 28px 52px;
+      padding: 22px 40px;
       border-top: 1px solid var(--border);
-      display: flex; align-items: center;
-      justify-content: space-between; flex-wrap: wrap; gap: 16px;
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
     }
-    .footer-logo { height: 44px; width: auto; opacity: .5; }
-    .footer-text {
-      font-family: var(--mono); font-size: 9px; color: var(--muted);
-    }
+    .f-logo { font-family: var(--font); font-weight: 800; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted2); }
+    .f-logo span { color: var(--blue-br); }
+    .f-text { font-family: var(--mono); font-size: 10px; color: var(--muted2); }
 
-    @media (max-width: 600px) {
-      nav { padding: 0 20px; }
-      main { padding: 120px 16px 80px; }
-      .form-body { padding: 24px 20px 20px; }
-      .badge-grid, .origin-grid { grid-template-columns: 1fr; }
+    @media (max-width: 560px) {
+      nav { padding: 0 16px; }
+      main { padding: 84px 12px 60px; }
+      .body { padding: 20px 16px 16px; }
+      .opt-grid { grid-template-columns: 1fr; }
+      .review-grid { grid-template-columns: 1fr; }
       .btn-row { flex-direction: column; }
-      footer { padding: 24px 20px; }
-      .success-panel { padding: 36px 24px; }
+      footer { padding: 18px 16px; }
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="/"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABgAAAAQACAYAAAAncZJCAAC3s0lEQVR4nOzdd5wdVfnH8e85M3Pv3ZKEEkAglBQSQpUqoqiIvStiQQRFkBCaQiiKioKCiCIKgoiAgqA/CyooKBZQkKIgghBqgjQBaUm23DIz5/z+mDuzdzeb3U2yIbvh83695nX31p07M3fu7vOc8zwSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYBdZdf5Zff/Jsv9k6M/3A+zZZf+nbAAAAAAAAAADAOLHOuksS6AcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGsys7pXAAAw9s3cYis/YcIEWWvlnJP3XmEYDvkca+1K/U7vs/LAxgz+VRWG4TLvM8Ys875cmqZD3m+tLdZhMEmS9Ls+8LFDPVeSGo2GgiCQJFWrVd0z/85V8p289Vbb+/b29n77zntf/O6B8u3Wen9+W+tl6zZuvT7Y8wcTx3GxLq37Ol/y42fg78h/TtO03zZufR1Jam9vV5IkqtVq6unpUU9Pj+6979/83TMKtpy1jd9xxx1Vr9dVq9XUaDTknJOU7QfnXFeeH1LfV+p7lLFGSaaTpKQkwzxlWqfbrxGVGtaRLHlCVNqtVBgVHqHJhMtf3tEqSgHI3kIzQMzRJpnAAAAABJRU5ErkJggg==" alt="TRAXE" class="nav-logo"/></a>
+  <a href="/" class="nav-logo">TRAX<span>E</span></a>
   <a href="/" class="nav-back">← Back to Home</a>
 </nav>
 
 <main>
-  <div class="page-tag">Register Content</div>
-  <h1 class="page-title">Certify your work.</h1>
-  <p class="page-sub">Upload your asset, declare its origin, and receive a permanent TRAXE ID — a tamper-proof verification record you can share with anyone.</p>
+  <div class="eyebrow">Register Content</div>
+  <h1>Certify your work.</h1>
+  <p class="sub">Upload your asset, declare its origin, and receive a permanent TRAXE ID — a tamper-proof record you can share with anyone.</p>
 
-  <div class="form-card">
-    <div class="steps-nav">
-      <div class="step-tab active" id="tab-1">
-        <span class="step-num">01</span>Upload
-      </div>
-      <div class="step-tab" id="tab-2">
-        <span class="step-num">02</span>Declare
-      </div>
-      <div class="step-tab" id="tab-3">
-        <span class="step-num">03</span>Certify
-      </div>
-    </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progress"></div>
-    </div>
+  <div class="card">
 
-    <!-- SUCCESS PANEL (hidden until done) -->
-    <div class="success-panel" id="success-panel">
-      <span class="success-ico">✓</span>
-      <div class="success-title">Content Registered</div>
-      <p class="success-sub">Your asset has been certified and permanently recorded.<br/>Share your TRAXE ID as proof of transparent, compliant production.</p>
-      <div class="traxe-id-box" id="success-traxe-id">TRX-XXXXXXXX</div>
-      <div class="success-btns">
-        <a class="btn-verify" id="verify-link" href="#" target="_blank">View Certificate →</a>
-        <a class="btn-again" href="register.html">Register Another</a>
+    <div class="tabs">
+      <div class="tab active" id="tab-1"><span class="tab-num">01</span>Upload</div>
+      <div class="tab" id="tab-2"><span class="tab-num">02</span>Declare</div>
+      <div class="tab" id="tab-3"><span class="tab-num">03</span>Certify</div>
+    </div>
+    <div class="prog"><div class="prog-fill" id="progress"></div></div>
+
+    <!-- SUCCESS -->
+    <div class="success" id="success-panel">
+      <div class="s-check">✓</div>
+      <div class="s-title">Content Registered</div>
+      <p class="s-sub">Your asset is certified and permanently on record.<br/>Share your TRAXE ID as proof of transparent production.</p>
+      <div class="traxe-id" id="success-traxe-id">TRX-XXXXXXXX</div>
+      <div class="s-btns">
+        <a class="btn-v" id="verify-link" href="#" target="_blank">View Certificate →</a>
+        <a class="btn-a" href="register.html">Register Another</a>
       </div>
     </div>
 
-    <!-- STEP 1: UPLOAD -->
-    <div class="form-body step-panel active" id="step-1">
-      <div class="field-group">
-        <label class="field-label">Asset File <span>*</span></label>
-        <div class="upload-zone" id="upload-zone">
+    <!-- STEP 1 -->
+    <div class="body panel active" id="step-1">
+      <div class="fg">
+        <label class="lbl">Asset File <em>*</em></label>
+        <div class="drop-zone" id="drop-zone">
           <input type="file" id="file-input" accept="image/*,video/*,audio/*"/>
-          <span class="upload-ico">⬆</span>
-          <div class="upload-title">Drop your file here</div>
-          <div class="upload-hint">Images, video, or audio · Max 50MB<br/>JPG, PNG, MP4, MOV, MP3, WAV</div>
+          <span class="drop-ico">⬆</span>
+          <div class="drop-title">Drop your file here or click to browse</div>
+          <div class="drop-hint">Images, video, or audio · Max 50MB · JPG, PNG, MP4, MOV, MP3</div>
         </div>
-        <div class="file-info" id="file-info">
-          <div class="file-info-name" id="file-name">—</div>
-          <div class="file-info-size" id="file-size">—</div>
+        <div class="file-preview" id="file-preview">
+          <div class="fp-name" id="fp-name">—</div>
+          <div class="fp-size" id="fp-size">—</div>
         </div>
       </div>
 
-      <div class="field-group">
-        <label class="field-label" for="title-input">Content Title <span>*</span></label>
-        <input type="text" class="field-input" id="title-input" placeholder="e.g. Campaign Hero Visual — Spring 2026" maxlength="200"/>
+      <div class="fg">
+        <label class="lbl" for="title-inp">Content Title <em>*</em></label>
+        <input type="text" class="inp" id="title-inp" placeholder="e.g. Campaign Hero Visual — Spring 2026" maxlength="200"/>
       </div>
 
-      <div class="field-group">
-        <label class="field-label" for="creator-input">Creator / Studio Name</label>
-        <input type="text" class="field-input" id="creator-input" placeholder="e.g. Studio Noir · hello@studio.com"/>
-        <div class="field-hint">This will appear on your public verification record.</div>
+      <div class="fg">
+        <label class="lbl" for="creator-inp">Creator / Studio Name</label>
+        <input type="text" class="inp" id="creator-inp" placeholder="e.g. Studio Noir · hello@studio.com"/>
+        <div class="hint">Appears on your public verification record.</div>
       </div>
 
       <div class="btn-row">
-        <button class="btn btn-primary" id="btn-next-1" disabled>Continue →</button>
+        <button class="btn btn-p" id="btn1" disabled>Continue →</button>
       </div>
     </div>
 
-    <!-- STEP 2: DECLARE -->
-    <div class="form-body step-panel" id="step-2">
-
-      <div class="field-group">
-        <label class="field-label">Badge Type <span>*</span></label>
-        <div class="badge-grid">
-          <div>
-            <input type="radio" name="badge" id="badge-concept" value="concept" class="badge-option"/>
-            <label for="badge-concept" class="badge-label">
-              <span class="badge-ico">💡</span>
-              <div class="badge-name">Concept</div>
-              <div class="badge-desc">AI-generated conceptual work, mood boards, early-stage visuals</div>
-            </label>
-          </div>
-          <div>
-            <input type="radio" name="badge" id="badge-visualization" value="visualization" class="badge-option"/>
-            <label for="badge-visualization" class="badge-label">
-              <span class="badge-ico">◈</span>
-              <div class="badge-name">Visualization</div>
-              <div class="badge-desc">Photorealistic AI visuals for campaigns and advertising</div>
-            </label>
-          </div>
-          <div>
-            <input type="radio" name="badge" id="badge-documentary" value="documentary" class="badge-option"/>
-            <label for="badge-documentary" class="badge-label">
-              <span class="badge-ico">◻</span>
-              <div class="badge-name">Documentary</div>
-              <div class="badge-desc">Real photography or video with declared authenticity</div>
-            </label>
-          </div>
-          <div>
-            <input type="radio" name="badge" id="badge-hybrid" value="hybrid" class="badge-option"/>
-            <label for="badge-hybrid" class="badge-label">
-              <span class="badge-ico">⬡</span>
-              <div class="badge-name">Hybrid</div>
-              <div class="badge-desc">Real photography combined with AI enhancement</div>
-            </label>
-          </div>
+    <!-- STEP 2 -->
+    <div class="body panel" id="step-2">
+      <div class="fg">
+        <label class="lbl">Badge Type <em>*</em></label>
+        <div class="opt-grid">
+          <div><input type="radio" name="badge" id="b-concept" value="concept" class="opt-radio"/><label for="b-concept" class="badge-lbl"><span class="b-ico">💡</span><div class="b-name">Concept</div><div class="b-desc">AI-generated conceptual work, mood boards, early-stage visuals</div></label></div>
+          <div><input type="radio" name="badge" id="b-viz" value="visualization" class="opt-radio"/><label for="b-viz" class="badge-lbl"><span class="b-ico">◈</span><div class="b-name">Visualization</div><div class="b-desc">Photorealistic AI visuals for campaigns and advertising</div></label></div>
+          <div><input type="radio" name="badge" id="b-doc" value="documentary" class="opt-radio"/><label for="b-doc" class="badge-lbl"><span class="b-ico">◻</span><div class="b-name">Documentary</div><div class="b-desc">Real photography or video with declared authenticity</div></label></div>
+          <div><input type="radio" name="badge" id="b-hyb" value="hybrid" class="opt-radio"/><label for="b-hyb" class="badge-lbl"><span class="b-ico">⬡</span><div class="b-name">Hybrid</div><div class="b-desc">Real photography combined with AI enhancement</div></label></div>
         </div>
       </div>
 
-      <div class="field-group">
-        <label class="field-label">Origin Declaration <span>*</span></label>
-        <div class="origin-grid">
-          <div>
-            <input type="radio" name="origin" id="origin-ai" value="declared_ai" class="origin-option"/>
-            <label for="origin-ai" class="origin-label">
-              <div class="origin-dot"></div>
-              <div class="origin-text-wrap">
-                <div class="origin-name">AI Generated</div>
-                <div class="origin-desc">Fully created by AI tools</div>
-              </div>
-            </label>
-          </div>
-          <div>
-            <input type="radio" name="origin" id="origin-real" value="declared_real" class="origin-option"/>
-            <label for="origin-real" class="origin-label">
-              <div class="origin-dot"></div>
-              <div class="origin-text-wrap">
-                <div class="origin-name">Real / Human-Made</div>
-                <div class="origin-desc">Original human photography or creation</div>
-              </div>
-            </label>
-          </div>
-          <div>
-            <input type="radio" name="origin" id="origin-hybrid" value="declared_hybrid" class="origin-option"/>
-            <label for="origin-hybrid" class="origin-label">
-              <div class="origin-dot"></div>
-              <div class="origin-text-wrap">
-                <div class="origin-name">Hybrid</div>
-                <div class="origin-desc">Real content enhanced with AI</div>
-              </div>
-            </label>
-          </div>
-          <div>
-            <input type="radio" name="origin" id="origin-unknown" value="declared_unknown" class="origin-option"/>
-            <label for="origin-unknown" class="origin-label">
-              <div class="origin-dot"></div>
-              <div class="origin-text-wrap">
-                <div class="origin-name">Not Disclosed</div>
-                <div class="origin-desc">Origin not specified</div>
-              </div>
-            </label>
-          </div>
+      <div class="fg">
+        <label class="lbl">Origin Declaration <em>*</em></label>
+        <div class="opt-grid">
+          <div><input type="radio" name="origin" id="o-ai" value="declared_ai" class="opt-radio"/><label for="o-ai" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">AI Generated</div><div class="o-desc">Fully created by AI tools</div></div></label></div>
+          <div><input type="radio" name="origin" id="o-real" value="declared_real" class="opt-radio"/><label for="o-real" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Real / Human-Made</div><div class="o-desc">Original human photography</div></div></label></div>
+          <div><input type="radio" name="origin" id="o-hyb" value="declared_hybrid" class="opt-radio"/><label for="o-hyb" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Hybrid</div><div class="o-desc">Real content + AI enhanced</div></div></label></div>
+          <div><input type="radio" name="origin" id="o-unk" value="declared_unknown" class="opt-radio"/><label for="o-unk" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Not Disclosed</div><div class="o-desc">Origin not specified</div></div></label></div>
         </div>
       </div>
 
-      <div class="field-group">
-        <label class="field-label" for="tool-select">Tool / Software Used</label>
-        <select class="field-select" id="tool-select">
+      <div class="fg">
+        <label class="lbl" for="tool-sel">Tool / Software Used</label>
+        <select class="sel" id="tool-sel">
           <option value="">Select tool…</option>
           <option value="midjourney">MidJourney</option>
           <option value="runway">Runway</option>
@@ -576,229 +413,166 @@
       </div>
 
       <div class="btn-row">
-        <button class="btn btn-ghost" id="btn-back-2">← Back</button>
-        <button class="btn btn-primary" id="btn-next-2" disabled>Continue →</button>
+        <button class="btn btn-g" id="btn2-back">← Back</button>
+        <button class="btn btn-p" id="btn2" disabled>Continue →</button>
       </div>
     </div>
 
-    <!-- STEP 3: REVIEW + SUBMIT -->
-    <div class="form-body step-panel" id="step-3">
-      <div class="field-group">
-        <label class="field-label">Review & Submit</label>
-        <div id="review-box" style="background:var(--bg);border:1px solid var(--border);border-radius:2px;padding:20px;font-family:var(--mono);font-size:11px;line-height:2;color:var(--white2);">
+    <!-- STEP 3 -->
+    <div class="body panel" id="step-3">
+      <div class="fg">
+        <label class="lbl">Review & Submit</label>
+        <div class="review-wrap">
+          <div class="review-grid" id="review-grid"></div>
         </div>
       </div>
 
-      <div class="info-row">
-        ℹ &nbsp;<strong>First verification is always free.</strong> Your asset will be permanently fingerprinted and stored. This record cannot be deleted or altered.
+      <div class="info-box">
+        ℹ &nbsp;<strong>First verification is always free.</strong> Your asset will be permanently fingerprinted. This record cannot be deleted or altered.
       </div>
 
-      <div class="error-box" id="error-box"></div>
+      <div class="err-box" id="err-box"></div>
 
       <div class="btn-row">
-        <button class="btn btn-ghost" id="btn-back-3">← Back</button>
-        <button class="btn btn-primary" id="btn-submit">
-          <span class="submit-text">Register Content →</span>
-          <span class="submit-loading"><span class="spinner"></span>Registering…</span>
+        <button class="btn btn-g" id="btn3-back">← Back</button>
+        <button class="btn btn-p" id="btn-submit">
+          <span class="btn-text">Register Content →</span>
+          <span class="spin-wrap"><span class="spinner"></span>Registering…</span>
         </button>
       </div>
     </div>
 
-  </div><!-- /form-card -->
+  </div>
 </main>
 
 <footer>
-  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABgAAAAQACAYAAAAncZJCAAC3s0lEQVR4nOzdd5wdVfnH8e85M3Pv3ZKEEkAglBQSQpUqoqiIvStiQQRFkBCaQiiKioKCiCIKgoiAgqA/CyooKBZQkKIgghBqgjQBaUm23DIz5/z+mDuzdzeb3U2yIbvh83695nX31p07M3fu7vOc8zwSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYBdZdf5Zff/Jsv9k6M/3A+zZZf+nbAAAAAAAAAADAOLHOuksS6AcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGsys7pXAAAw9s3cYis/YcIEWWvlnJP3XmEYDvkca+1K/U7vs/LAxgz+VRWG4TLvM8Ys875cmqZD3m+tLdZhMEmS9Ls+8LFDPVeSGo2GgiCQJFWrVd0z/85V8p289Vbb+/b29n77zntf/O6B8u3Wen9+W+tl6zZuvT7Y8wcTx3GxLq37Ol/y42fg78h/TtO03zZufR1Jam9vV5IkqtVq6unpUU9Pj+6979/83TMKtpy1jd9xxx1Vr9dVq9XUaDTknJOU7QfnXFeeH1LfV+p7lLFGSaaTpKQkwzxlWqfbrxGVGtaRLHlCVNqtVBgVHqHJhMtf3tEqSgHI3kIzQMzRJpnAAAAABJRU5ErkJggg==" alt="TRAXE" class="footer-logo"/>
-  <div class="footer-text">© 2026 TRAXE · EU AI Act 2026 Aligned</div>
+  <div class="f-logo">TRAX<span>E</span></div>
+  <div class="f-text">© 2026 TRAXE · EU AI Act 2026 Aligned</div>
 </footer>
 
 <script>
   const BACKEND = 'https://traxe-backend.onrender.com';
-
-  // State
-  let currentStep = 1;
   let selectedFile = null;
 
-  // Elements
-  const fileInput    = document.getElementById('file-input');
-  const uploadZone   = document.getElementById('upload-zone');
-  const fileInfo     = document.getElementById('file-info');
-  const fileName     = document.getElementById('file-name');
-  const fileSize     = document.getElementById('file-size');
-  const titleInput   = document.getElementById('title-input');
-  const creatorInput = document.getElementById('creator-input');
-  const toolSelect   = document.getElementById('tool-select');
-  const btnNext1     = document.getElementById('btn-next-1');
-  const btnNext2     = document.getElementById('btn-next-2');
-  const btnBack2     = document.getElementById('btn-back-2');
-  const btnBack3     = document.getElementById('btn-back-3');
-  const btnSubmit    = document.getElementById('btn-submit');
-  const errorBox     = document.getElementById('error-box');
-  const reviewBox    = document.getElementById('review-box');
-  const successPanel = document.getElementById('success-panel');
-  const progress     = document.getElementById('progress');
+  const $ = id => document.getElementById(id);
+  const fileInput  = $('file-input');
+  const dropZone   = $('drop-zone');
+  const filePreview= $('file-preview');
+  const fpName     = $('fp-name');
+  const fpSize     = $('fp-size');
+  const titleInp   = $('title-inp');
+  const creatorInp = $('creator-inp');
+  const toolSel    = $('tool-sel');
+  const btn1       = $('btn1');
+  const btn2       = $('btn2');
+  const progress   = $('progress');
+  const errBox     = $('err-box');
+  const reviewGrid = $('review-grid');
+  const successPanel = $('success-panel');
 
-  // --- FILE HANDLING ---
-  function formatBytes(bytes) {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  function fmt(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(2) + ' MB';
   }
 
-  function handleFile(file) {
-    if (!file) return;
-    selectedFile = file;
-    uploadZone.classList.add('has-file');
-    fileName.textContent = file.name;
-    fileSize.textContent = formatBytes(file.size) + ' · ' + (file.type || 'unknown type');
-    fileInfo.classList.add('show');
+  function setFile(f) {
+    if (!f) return;
+    selectedFile = f;
+    dropZone.classList.add('filled');
+    fpName.textContent = f.name;
+    fpSize.textContent = fmt(f.size) + ' · ' + (f.type || 'unknown');
+    filePreview.classList.add('show');
     checkStep1();
   }
 
-  fileInput.addEventListener('change', e => handleFile(e.target.files[0]));
+  fileInput.addEventListener('change', e => setFile(e.target.files[0]));
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
+  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('over'); setFile(e.dataTransfer.files[0]); });
 
-  uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
-  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
-  uploadZone.addEventListener('drop', e => {
-    e.preventDefault();
-    uploadZone.classList.remove('drag-over');
-    handleFile(e.dataTransfer.files[0]);
-  });
+  function checkStep1() { btn1.disabled = !(selectedFile && titleInp.value.trim()); }
+  titleInp.addEventListener('input', checkStep1);
 
-  function checkStep1() {
-    btnNext1.disabled = !(selectedFile && titleInput.value.trim().length > 0);
-  }
-  titleInput.addEventListener('input', checkStep1);
-
-  // --- STEP 2 VALIDATION ---
   function checkStep2() {
-    const badge  = document.querySelector('input[name="badge"]:checked');
-    const origin = document.querySelector('input[name="origin"]:checked');
-    btnNext2.disabled = !(badge && origin);
+    btn2.disabled = !(document.querySelector('input[name="badge"]:checked') && document.querySelector('input[name="origin"]:checked'));
   }
-  document.querySelectorAll('input[name="badge"], input[name="origin"]').forEach(el => {
-    el.addEventListener('change', checkStep2);
-  });
+  document.querySelectorAll('input[name="badge"], input[name="origin"]').forEach(el => el.addEventListener('change', checkStep2));
 
-  // --- STEP NAVIGATION ---
-  function showStep(n) {
-    // Panels
-    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById(`step-${n}`).classList.add('active');
-
-    // Tabs
-    document.querySelectorAll('.step-tab').forEach((t, i) => {
+  function goStep(n) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    $('step-' + n)?.classList.add('active');
+    document.querySelectorAll('.tab').forEach((t, i) => {
       t.classList.remove('active', 'done');
       if (i + 1 < n) t.classList.add('done');
       if (i + 1 === n) t.classList.add('active');
     });
-
-    // Progress
-    const pct = { 1: 10, 2: 50, 3: 85 };
-    progress.style.width = (pct[n] || 10) + '%';
-
-    currentStep = n;
+    progress.style.width = ({1:8, 2:50, 3:85}[n] || 8) + '%';
   }
 
-  btnNext1.addEventListener('click', () => showStep(2));
-  btnBack2.addEventListener('click', () => showStep(1));
+  btn1.addEventListener('click', () => goStep(2));
+  $('btn2-back').addEventListener('click', () => goStep(1));
+  btn2.addEventListener('click', () => { buildReview(); goStep(3); });
+  $('btn3-back').addEventListener('click', () => goStep(2));
 
-  btnNext2.addEventListener('click', () => {
-    buildReview();
-    showStep(3);
-  });
-  btnBack3.addEventListener('click', () => showStep(2));
-
-  // --- REVIEW ---
   function buildReview() {
     const badge  = document.querySelector('input[name="badge"]:checked');
     const origin = document.querySelector('input[name="origin"]:checked');
-    const tool   = toolSelect.value;
-
-    const badgeLabels = {
-      concept: 'Concept', visualization: 'Visualization',
-      documentary: 'Documentary', hybrid: 'Hybrid'
-    };
-    const originLabels = {
-      declared_ai: 'AI Generated', declared_real: 'Real / Human-Made',
-      declared_hybrid: 'Hybrid', declared_unknown: 'Not Disclosed'
-    };
-    const toolLabels = {
-      midjourney: 'MidJourney', runway: 'Runway', firefly: 'Adobe Firefly',
-      sora: 'Sora', dalle: 'DALL·E', stablediffusion: 'Stable Diffusion',
-      photoshop: 'Photoshop', lightroom: 'Lightroom', premiere: 'Premiere Pro',
-      aftereffects: 'After Effects', iphone: 'iPhone Camera',
-      camera: 'Camera', custom: 'Custom Model', unknown: 'Unknown'
-    };
-
-    reviewBox.innerHTML = `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;overflow:hidden;word-break:break-word;min-width:0;">
-        <div><span style="color:var(--muted2);font-size:9px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:3px;">File</span>${selectedFile.name}</div>
-        <div><span style="color:var(--muted2);font-size:9px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:3px;">Size</span>${formatBytes(selectedFile.size)}</div>
-        <div><span style="color:var(--muted2);font-size:9px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:3px;">Title</span>${titleInput.value}</div>
-        <div><span style="color:var(--muted2);font-size:9px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:3px;">Creator</span>${creatorInput.value || '—'}</div>
-        <div><span style="color:var(--muted2);font-size:9px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:3px;">Badge</span>${badgeLabels[badge?.value] || '—'}</div>
-        <div><span style="color:var(--muted2);font-size:9px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:3px;">Origin</span>${originLabels[origin?.value] || '—'}</div>
-        ${tool ? `<div><span style="color:var(--muted2);font-size:9px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:3px;">Tool</span>${toolLabels[tool] || tool}</div>` : ''}
-      </div>
-    `;
+    const tool   = toolSel.value;
+    const bL = {concept:'Concept', visualization:'Visualization', documentary:'Documentary', hybrid:'Hybrid'};
+    const oL = {declared_ai:'AI Generated', declared_real:'Real / Human-Made', declared_hybrid:'Hybrid', declared_unknown:'Not Disclosed'};
+    const tL = {midjourney:'MidJourney', runway:'Runway', firefly:'Adobe Firefly', sora:'Sora', dalle:'DALL·E', stablediffusion:'Stable Diffusion', photoshop:'Photoshop', lightroom:'Lightroom', premiere:'Premiere Pro', aftereffects:'After Effects', iphone:'iPhone Camera', camera:'Camera', custom:'Custom Model', unknown:'Unknown'};
+    const rows = [
+      ['File', selectedFile.name], ['Size', fmt(selectedFile.size)],
+      ['Title', titleInp.value], ['Creator', creatorInp.value || '—'],
+      ['Badge', bL[badge?.value] || '—'], ['Origin', oL[origin?.value] || '—'],
+    ];
+    if (tool) rows.push(['Tool', tL[tool] || tool]);
+    reviewGrid.innerHTML = rows.map(([l,v]) => `<div class="ri"><label>${l}</label><span>${v}</span></div>`).join('');
   }
 
-  // --- SUBMIT ---
-  btnSubmit.addEventListener('click', async () => {
+  $('btn-submit').addEventListener('click', async () => {
     const badge  = document.querySelector('input[name="badge"]:checked');
     const origin = document.querySelector('input[name="origin"]:checked');
-    const tool   = toolSelect.value;
+    const tool   = toolSel.value;
+    const btnEl  = $('btn-submit');
 
-    errorBox.classList.remove('show');
-    btnSubmit.classList.add('submitting');
-    btnSubmit.disabled = true;
+    errBox.classList.remove('show');
+    btnEl.classList.add('submitting');
+    btnEl.disabled = true;
 
     try {
       const params = new URLSearchParams({
         declared_origin: origin.value,
-        badge_category:  badge.value,
-        title:           titleInput.value.trim(),
+        badge_category: badge.value,
+        title: titleInp.value.trim(),
       });
-      if (creatorInput.value.trim()) params.append('creator_id', creatorInput.value.trim());
+      if (creatorInp.value.trim()) params.append('creator_id', creatorInp.value.trim());
       if (tool) params.append('tool_used', tool);
 
-      const formData = new FormData();
-      formData.append('file', selectedFile);
+      const fd = new FormData();
+      fd.append('file', selectedFile);
 
-      const res = await fetch(`${BACKEND}/upload?${params.toString()}`, {
-        method: 'POST',
-        mode: 'cors',
-        body: formData,
-      });
-
+      const res = await fetch(`${BACKEND}/upload?${params}`, { method:'POST', mode:'cors', body:fd });
       const data = await res.json();
 
-      if (!res.ok || !data.ok) {
-        throw new Error(data.detail || data.error || 'Upload failed. Please try again.');
-      }
+      if (!res.ok || !data.ok) throw new Error(data.detail || data.error || 'Upload failed.');
 
-      // SUCCESS
       progress.style.width = '100%';
-      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.step-tab').forEach(t => t.classList.add('done'));
-
-      document.getElementById('success-traxe-id').textContent = data.traxe_id;
-
-      const verifyUrl = data.verify_url || `${BACKEND}/verify/${data.traxe_id}`;
-      document.getElementById('verify-link').href = verifyUrl;
-
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.add('done'));
+      $('success-traxe-id').textContent = data.traxe_id;
+      $('verify-link').href = data.verify_url || `${BACKEND}/verify/${data.traxe_id}`;
       successPanel.classList.add('show');
 
     } catch (err) {
-      errorBox.textContent = '⚠ ' + (err.message || 'Something went wrong. Please try again.');
-      errorBox.classList.add('show');
+      errBox.textContent = '⚠ ' + (err.message || 'Something went wrong.');
+      errBox.classList.add('show');
     } finally {
-      btnSubmit.classList.remove('submitting');
-      btnSubmit.disabled = false;
+      btnEl.classList.remove('submitting');
+      btnEl.disabled = false;
     }
   });
 </script>
-
 </body>
 </html>
