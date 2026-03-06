@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TRAXE — Register Content</title>
+  <title>TRAXE — Content Verification Platform</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -14,6 +14,7 @@
       --blue:       #1a4fa8;
       --blue-br:    #2563eb;
       --blue-light: #eff4ff;
+      --blue-mid:   #dbeafe;
       --blue-glow:  rgba(37,99,235,0.12);
       --text:       #0f1220;
       --text2:      #2d3348;
@@ -21,558 +22,642 @@
       --muted2:     #9ba3bf;
       --green:      #16a34a;
       --green-bg:   #f0fdf4;
-      --red:        #dc2626;
-      --red-bg:     #fef2f2;
       --font:       'Syne', system-ui, -apple-system, Arial, sans-serif;
       --mono:       'DM Mono', 'Courier New', monospace;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       background: var(--bg); color: var(--text);
-      font-family: var(--font); min-height: 100vh; overflow-x: hidden;
+      font-family: var(--font); overflow-x: hidden; line-height: 1;
     }
 
-    /* NAV */
+    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       height: 64px; display: flex; align-items: center; justify-content: space-between;
-      padding: 0 40px;
+      padding: 0 52px;
       background: rgba(255,255,255,0.95); backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-family: var(--font); font-weight: 800; font-size: 16px;
+      font-family: var(--font); font-weight: 800; font-size: 17px;
       letter-spacing: 5px; text-transform: uppercase;
       color: var(--text); text-decoration: none;
     }
-    .nav-logo span { color: var(--blue-br); }
-    .nav-back {
+    .nav-logo .e { color: var(--blue-br); }
+    .nav-logo .co { color: var(--muted2); font-weight: 400; letter-spacing: 2px; font-size: 13px; text-transform: lowercase; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-link {
       font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px;
       text-transform: uppercase; color: var(--muted); text-decoration: none;
       transition: color .15s;
     }
-    .nav-back:hover { color: var(--blue-br); }
+    .nav-link:hover { color: var(--blue-br); }
+    .nav-cta {
+      font-family: var(--font); font-weight: 700; font-size: 10px;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 10px 20px; border-radius: 5px;
+      background: var(--blue-br); color: #fff; text-decoration: none;
+      transition: all .15s;
+    }
+    .nav-cta:hover { background: var(--blue); box-shadow: 0 4px 16px var(--blue-glow); }
 
-    /* MAIN */
-    main { max-width: 620px; margin: 0 auto; padding: 96px 20px 80px; }
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 100px 24px 80px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: .5; pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 600px; pointer-events: none;
+      background: radial-gradient(ellipse, rgba(37,99,235,0.06) 0%, transparent 70%);
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 760px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--blue-br);
+      background: var(--blue-light); border: 1px solid #bfdbfe;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 28px;
+    }
+    .hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
+    h1 {
+      font-size: clamp(40px, 7vw, 80px); font-weight: 800;
+      letter-spacing: -3px; line-height: 1.0;
+      color: var(--text); margin-bottom: 24px;
+    }
+    h1 em { color: var(--blue-br); font-style: normal; }
+    .hero-sub {
+      font-size: 17px; color: var(--muted); line-height: 1.75;
+      max-width: 520px; margin: 0 auto 40px;
+    }
+    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-hero-p {
+      font-family: var(--font); font-weight: 700; font-size: 11px;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 14px 32px; border-radius: 5px;
+      background: var(--blue-br); color: #fff; text-decoration: none;
+      transition: all .15s; border: none; cursor: pointer;
+    }
+    .btn-hero-p:hover { background: var(--blue); box-shadow: 0 6px 24px var(--blue-glow); }
+    .btn-hero-g {
+      font-family: var(--font); font-weight: 700; font-size: 11px;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 14px 32px; border-radius: 5px;
+      background: none; color: var(--text2);
+      border: 1.5px solid var(--border2); text-decoration: none;
+      transition: all .15s;
+    }
+    .btn-hero-g:hover { border-color: var(--blue-br); color: var(--blue-br); }
+    .hero-stats {
+      display: flex; gap: 48px; justify-content: center; flex-wrap: wrap;
+      margin-top: 64px; padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-size: 28px; font-weight: 800; letter-spacing: -1px;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .stat-label {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted2);
+    }
 
-    .eyebrow {
+    /* ── SECTION WRAPPER ── */
+    section { padding: 96px 24px; }
+    .section-inner { max-width: 1060px; margin: 0 auto; }
+    .section-tag {
       font-family: var(--mono); font-size: 10px; letter-spacing: 2.5px;
       text-transform: uppercase; color: var(--blue-br);
       display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
     }
-    .eyebrow::before { content:''; width:20px; height:1px; background:var(--blue-br); }
-    h1 {
-      font-size: clamp(28px,5vw,44px); font-weight: 800;
-      letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 12px;
+    .section-tag::before { content:''; width:20px; height:1px; background:var(--blue-br); }
+    .section-title {
+      font-size: clamp(26px, 4vw, 40px); font-weight: 800;
+      letter-spacing: -1.5px; line-height: 1.1;
+      color: var(--text); margin-bottom: 16px;
     }
-    .sub {
-      font-size: 14px; color: var(--muted); line-height: 1.7;
-      margin-bottom: 32px; max-width: 480px;
+    .section-sub {
+      font-size: 15px; color: var(--muted); line-height: 1.75;
+      max-width: 520px; margin-bottom: 56px;
     }
 
-    /* CARD */
-    .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    /* ── HOW IT WORKS ── */
+    #how { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+      background: var(--border); border: 1px solid var(--border); border-radius: 8px;
       overflow: hidden;
     }
+    .step-card {
+      background: var(--surface); padding: 36px 28px;
+      position: relative;
+    }
+    .step-num {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted2); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .step-num::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .step-ico { font-size: 32px; margin-bottom: 16px; display: block; }
+    .step-title {
+      font-size: 18px; font-weight: 700; letter-spacing: -.4px;
+      color: var(--text); margin-bottom: 10px;
+    }
+    .step-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-    /* TABS */
-    .tabs { display: flex; background: var(--bg); border-bottom: 1px solid var(--border); }
-    .tab {
-      flex: 1; padding: 14px 10px; text-align: center;
+    /* ── BADGE TYPES ── */
+    #badges { background: var(--bg); }
+    .badges-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    }
+    .badge-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 28px; transition: all .15s;
+    }
+    .badge-card:hover { border-color: var(--blue-br); box-shadow: 0 4px 20px var(--blue-glow); }
+    .badge-pill {
+      display: inline-flex; align-items: center; gap: 6px;
       font-family: var(--mono); font-size: 9px; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--muted2);
-      border-right: 1px solid var(--border); user-select: none;
+      text-transform: uppercase; color: var(--blue-br);
+      background: var(--blue-light); border: 1px solid #bfdbfe;
+      padding: 4px 10px; border-radius: 20px; margin-bottom: 14px;
     }
-    .tab:last-child { border-right: none; }
-    .tab.active { color: var(--blue-br); background: var(--surface); }
-    .tab.done   { color: var(--green);   background: var(--surface); }
-    .tab-num { display: block; font-family: var(--font); font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    .badge-title {
+      font-size: 18px; font-weight: 700; letter-spacing: -.4px;
+      color: var(--text); margin-bottom: 8px;
+    }
+    .badge-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-    /* PROGRESS */
-    .prog { height: 3px; background: var(--border); }
-    .prog-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--blue), var(--blue-br));
-      transition: width .4s ease; width: 0%;
+    /* ── PRICING ── */
+    #pricing { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .plans-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
     }
-
-    /* BODY */
-    .body { padding: 28px 28px 22px; }
-    .panel { display: none; }
-    .panel.active { display: block; }
-
-    /* UPLOAD */
-    .drop-zone {
-      border: 1.5px dashed var(--border2); border-radius: 6px;
-      padding: 36px 20px; text-align: center; cursor: pointer;
-      background: var(--bg); transition: all .15s; position: relative; overflow: hidden;
-    }
-    .drop-zone:hover, .drop-zone.over { border-color: var(--blue-br); background: var(--blue-light); }
-    .drop-zone.filled { border-color: var(--green); background: var(--green-bg); }
-    .drop-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-    .drop-ico { font-size: 26px; margin-bottom: 10px; display: block; }
-    .drop-title { font-size: 14px; font-weight: 700; color: var(--text2); margin-bottom: 6px; }
-    .drop-hint { font-family: var(--mono); font-size: 11px; color: var(--muted); line-height: 1.6; }
-
-    .file-preview {
-      display: none; margin-top: 10px;
-      background: var(--green-bg); border: 1px solid #bbf7d0;
-      border-radius: 4px; padding: 10px 14px;
-    }
-    .file-preview.show { display: block; }
-    .fp-name { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--green); word-break: break-all; margin-bottom: 2px; }
-    .fp-size { font-family: var(--mono); font-size: 10px; color: var(--muted); }
-
-    /* FIELDS */
-    .fg { margin-bottom: 18px; }
-    .lbl {
-      display: block; font-family: var(--mono); font-size: 9px;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 6px;
-    }
-    .lbl em { color: var(--red); font-style: normal; margin-left: 2px; }
-    .inp, .sel {
-      width: 100%; background: var(--surface);
-      border: 1.5px solid var(--border2); border-radius: 5px;
-      padding: 11px 13px; color: var(--text);
-      font-family: var(--mono); font-size: 12px;
-      outline: none; transition: border-color .15s, box-shadow .15s;
-      appearance: none;
-    }
-    .inp::placeholder { color: var(--muted2); }
-    .inp:focus, .sel:focus {
-      border-color: var(--blue-br);
-      box-shadow: 0 0 0 3px var(--blue-glow);
-    }
-    .sel {
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7290'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 13px center; padding-right: 34px;
-    }
-    .hint { margin-top: 5px; font-family: var(--mono); font-size: 10px; color: var(--muted2); }
-
-    /* BADGE + ORIGIN GRIDS */
-    .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .opt-radio { display: none; }
-
-    .badge-lbl {
-      display: block; cursor: pointer;
+    .plan-card {
       background: var(--bg); border: 1.5px solid var(--border2);
-      border-radius: 6px; padding: 13px; transition: all .15s;
+      border-radius: 8px; padding: 32px 24px; position: relative;
+      transition: all .15s;
     }
-    .badge-lbl:hover { border-color: var(--blue-br); background: var(--blue-light); }
-    .opt-radio:checked + .badge-lbl { border-color: var(--blue-br); background: var(--blue-light); }
-    .b-ico { font-size: 18px; display: block; margin-bottom: 6px; }
-    .b-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
-    .b-desc { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 1.4; }
-
-    .origin-lbl {
-      display: flex; align-items: flex-start; gap: 10px; cursor: pointer;
-      background: var(--bg); border: 1.5px solid var(--border2);
-      border-radius: 6px; padding: 12px 13px; transition: all .15s;
+    .plan-card:hover { border-color: var(--blue-br); box-shadow: 0 4px 20px var(--blue-glow); }
+    .plan-card.featured {
+      background: var(--blue-br); border-color: var(--blue-br);
+      color: #fff;
     }
-    .origin-lbl:hover { border-color: var(--blue-br); background: var(--blue-light); }
-    .opt-radio:checked + .origin-lbl { border-color: var(--blue-br); background: var(--blue-light); }
-    .rdot {
-      width: 15px; height: 15px; border-radius: 50%;
-      border: 2px solid var(--border2); flex-shrink: 0; margin-top: 1px;
-      transition: all .15s; position: relative;
+    .plan-tag {
+      font-family: var(--mono); font-size: 9px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted2); margin-bottom: 20px;
     }
-    .opt-radio:checked + .origin-lbl .rdot { border-color: var(--blue-br); background: var(--blue-br); }
-    .rdot::after {
-      content: ''; position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%); width: 5px; height: 5px;
-      border-radius: 50%; background: white; opacity: 0; transition: opacity .15s;
+    .plan-card.featured .plan-tag { color: rgba(255,255,255,0.6); }
+    .plan-name {
+      font-size: 20px; font-weight: 800; letter-spacing: -.5px;
+      color: var(--text); margin-bottom: 6px;
     }
-    .opt-radio:checked + .origin-lbl .rdot::after { opacity: 1; }
-    .o-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
-    .o-desc { font-family: var(--mono); font-size: 10px; color: var(--muted); }
-
-    /* REVIEW */
-    .review-wrap {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 6px; padding: 18px;
+    .plan-card.featured .plan-name { color: #fff; }
+    .plan-price {
+      font-size: 36px; font-weight: 800; letter-spacing: -2px;
+      color: var(--text); margin-bottom: 4px; line-height: 1;
     }
-    .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
-    .ri label {
-      display: block; font-family: var(--mono); font-size: 9px;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--muted2); margin-bottom: 3px;
+    .plan-card.featured .plan-price { color: #fff; }
+    .plan-period {
+      font-family: var(--mono); font-size: 11px; color: var(--muted2);
+      margin-bottom: 24px;
     }
-    .ri span { font-family: var(--mono); font-size: 12px; color: var(--text2); word-break: break-word; }
-
-    /* BUTTONS */
-    .btn-row {
-      display: flex; gap: 10px; margin-top: 22px;
-      padding-top: 18px; border-top: 1px solid var(--border);
+    .plan-card.featured .plan-period { color: rgba(255,255,255,0.6); }
+    .plan-divider {
+      height: 1px; background: var(--border2); margin-bottom: 22px;
     }
-    .btn {
+    .plan-card.featured .plan-divider { background: rgba(255,255,255,0.2); }
+    .plan-feature {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-family: var(--mono); font-size: 11px; color: var(--text2);
+      margin-bottom: 10px; line-height: 1.5;
+    }
+    .plan-card.featured .plan-feature { color: rgba(255,255,255,0.85); }
+    .plan-check { color: var(--green); font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+    .plan-card.featured .plan-check { color: #86efac; }
+    .plan-btn {
+      display: block; width: 100%; margin-top: 28px;
       font-family: var(--font); font-weight: 700; font-size: 10px;
       letter-spacing: 2.5px; text-transform: uppercase;
-      padding: 12px 22px; border-radius: 5px; border: none; cursor: pointer; transition: all .15s;
+      padding: 12px; border-radius: 5px; text-align: center;
+      text-decoration: none; transition: all .15s; border: none; cursor: pointer;
     }
-    .btn-p { background: var(--blue-br); color: #fff; flex: 1; }
-    .btn-p:hover:not(:disabled) { background: var(--blue); box-shadow: 0 4px 16px var(--blue-glow); }
-    .btn-p:disabled { opacity: .4; cursor: not-allowed; }
-    .btn-g { background: none; color: var(--muted); border: 1.5px solid var(--border2); }
-    .btn-g:hover { color: var(--text); border-color: var(--muted2); }
+    .plan-btn-p { background: var(--blue-br); color: #fff; }
+    .plan-btn-p:hover { background: var(--blue); box-shadow: 0 4px 16px var(--blue-glow); }
+    .plan-btn-g { background: none; color: var(--text2); border: 1.5px solid var(--border2); }
+    .plan-btn-g:hover { border-color: var(--blue-br); color: var(--blue-br); }
+    .plan-btn-w { background: rgba(255,255,255,0.15); color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
+    .plan-btn-w:hover { background: rgba(255,255,255,0.25); }
 
-    .spin-wrap { display: none; align-items: center; gap: 8px; }
-    .submitting .spin-wrap { display: flex; }
-    .submitting .btn-text { display: none; }
-    .spinner {
-      width: 13px; height: 13px; border: 2px solid rgba(255,255,255,.3);
-      border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite;
+    /* ── FAQ ── */
+    #faq { background: var(--bg); }
+    .faq-list { max-width: 680px; }
+    .faq-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; margin-bottom: 10px; overflow: hidden;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* INFO / ERROR */
-    .info-box {
-      margin-top: 14px; background: var(--blue-light);
-      border: 1px solid #bfdbfe; border-radius: 5px;
-      padding: 12px 14px; font-family: var(--mono); font-size: 11px;
-      color: var(--blue); line-height: 1.6;
+    .faq-q {
+      padding: 18px 22px; font-size: 14px; font-weight: 700;
+      color: var(--text); cursor: pointer; display: flex;
+      align-items: center; justify-content: space-between; gap: 16px;
+      letter-spacing: -.2px; user-select: none;
     }
-    .err-box {
-      display: none; margin-top: 12px;
-      background: var(--red-bg); border: 1px solid #fecaca;
-      border-radius: 5px; padding: 12px 14px;
-      font-family: var(--mono); font-size: 11px; color: var(--red); line-height: 1.6;
+    .faq-arrow {
+      font-size: 16px; color: var(--muted2); flex-shrink: 0;
+      transition: transform .2s;
     }
-    .err-box.show { display: block; }
-
-    /* SUCCESS */
-    .success { display: none; padding: 48px 28px; text-align: center; }
-    .success.show { display: block; }
-    .s-check {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--green-bg); border: 2px solid #bbf7d0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px; margin: 0 auto 18px; color: var(--green);
-    }
-    .s-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 8px; }
-    .s-sub { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
-    .traxe-id {
-      display: inline-block;
-      background: var(--bg); border: 1.5px solid var(--border2);
-      border-radius: 5px; padding: 13px 24px;
-      font-family: var(--mono); font-size: 16px; font-weight: 500;
-      color: var(--blue-br); letter-spacing: 2px; margin-bottom: 22px;
-    }
-    .s-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .btn-v {
-      font-family: var(--font); font-weight: 700; font-size: 10px;
-      letter-spacing: 2.5px; text-transform: uppercase;
-      padding: 12px 22px; border-radius: 5px;
-      background: var(--blue-br); color: #fff; border: none;
-      cursor: pointer; text-decoration: none; transition: all .15s;
-    }
-    .btn-v:hover { background: var(--blue); }
-    .btn-a {
-      font-family: var(--font); font-weight: 700; font-size: 10px;
-      letter-spacing: 2.5px; text-transform: uppercase;
-      padding: 12px 22px; border-radius: 5px;
-      background: none; color: var(--muted);
-      border: 1.5px solid var(--border2);
-      cursor: pointer; text-decoration: none; transition: all .15s;
-    }
-    .btn-a:hover { color: var(--text); border-color: var(--muted2); }
-
-    /* FOOTER */
-    footer {
-      padding: 22px 40px;
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+    .faq-a {
+      display: none; padding: 0 22px 18px;
+      font-size: 13px; color: var(--muted); line-height: 1.75;
       border-top: 1px solid var(--border);
-      background: var(--surface);
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
     }
-    .f-logo { font-family: var(--font); font-weight: 800; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted2); }
-    .f-logo span { color: var(--blue-br); }
-    .f-text { font-family: var(--mono); font-size: 10px; color: var(--muted2); }
+    .faq-a.show { display: block; padding-top: 16px; }
 
-    @media (max-width: 560px) {
-      nav { padding: 0 16px; }
-      main { padding: 84px 12px 60px; }
-      .body { padding: 20px 16px 16px; }
-      .opt-grid { grid-template-columns: 1fr; }
-      .review-grid { grid-template-columns: 1fr; }
-      .btn-row { flex-direction: column; }
-      footer { padding: 18px 16px; }
+    /* ── EU COMPLIANCE ── */
+    #compliance { background: var(--blue-br); padding: 72px 24px; }
+    .compliance-inner {
+      max-width: 760px; margin: 0 auto; text-align: center;
+    }
+    .compliance-tag {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 2.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.6);
+      margin-bottom: 16px;
+    }
+    .compliance-title {
+      font-size: clamp(24px, 4vw, 36px); font-weight: 800;
+      letter-spacing: -1px; color: #fff; margin-bottom: 16px; line-height: 1.1;
+    }
+    .compliance-sub {
+      font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.75;
+      margin-bottom: 36px;
+    }
+    .compliance-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .c-tag {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 8px 14px; border-radius: 4px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text); padding: 52px 52px 32px;
+    }
+    .footer-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      flex-wrap: wrap; gap: 40px; margin-bottom: 48px;
+      padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-brand-logo {
+      font-family: var(--font); font-weight: 800; font-size: 17px;
+      letter-spacing: 5px; text-transform: uppercase; color: #fff;
+      margin-bottom: 12px;
+    }
+    .footer-brand-logo span { color: var(--blue-br); }
+    .footer-co { color: rgba(255,255,255,0.3) !important; font-weight: 400 !important; letter-spacing: 2px !important; font-size: 13px !important; text-transform: lowercase !important; }
+    .footer-tagline {
+      font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.4);
+      max-width: 220px; line-height: 1.7;
+    }
+    .footer-col-title {
+      font-family: var(--mono); font-size: 9px; letter-spacing: 2.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 16px;
+    }
+    .footer-link {
+      display: block; font-family: var(--mono); font-size: 12px;
+      color: rgba(255,255,255,0.6); text-decoration: none;
+      margin-bottom: 10px; transition: color .15s;
+    }
+    .footer-link:hover { color: #fff; }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-copy {
+      font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.3);
+    }
+    .footer-eu {
+      font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.1);
+      padding: 5px 10px; border-radius: 3px;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .badges-grid { grid-template-columns: 1fr; }
+      .plans-grid { grid-template-columns: 1fr; }
+      footer { padding: 40px 20px 24px; }
+      .footer-top { flex-direction: column; }
+    }
+    @media (max-width: 580px) {
+      section { padding: 64px 16px; }
+      h1 { letter-spacing: -2px; }
     }
   </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo">TRAX<span>E</span></a>
-  <a href="/" class="nav-back">← Back to Home</a>
+  <a href="/" class="nav-logo">TRAX<span class="e">E</span><span class="co">.co</span></a>
+  <div class="nav-links">
+    <a href="#how" class="nav-link">How It Works</a>
+    <a href="#badges" class="nav-link">Badge Types</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+    <a href="register.html" class="nav-cta">Register Content →</a>
+  </div>
 </nav>
 
-<main>
-  <div class="eyebrow">Register Content</div>
-  <h1>Certify your work.</h1>
-  <p class="sub">Upload your asset, declare its origin, and receive a permanent TRAXE ID — a tamper-proof record you can share with anyone.</p>
-
-  <div class="card">
-
-    <div class="tabs">
-      <div class="tab active" id="tab-1"><span class="tab-num">01</span>Upload</div>
-      <div class="tab" id="tab-2"><span class="tab-num">02</span>Declare</div>
-      <div class="tab" id="tab-3"><span class="tab-num">03</span>Certify</div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <span class="hero-dot"></span>
+      EU AI Act 2026 Compliant
     </div>
-    <div class="prog"><div class="prog-fill" id="progress"></div></div>
-
-    <!-- SUCCESS -->
-    <div class="success" id="success-panel">
-      <div class="s-check">✓</div>
-      <div class="s-title">Content Registered</div>
-      <p class="s-sub">Your asset is certified and permanently on record.<br/>Share your TRAXE ID as proof of transparent production.</p>
-      <div class="traxe-id" id="success-traxe-id">TRX-XXXXXXXX</div>
-      <div class="s-btns">
-        <a class="btn-v" id="verify-link" href="#" target="_blank">View Certificate →</a>
-        <a class="btn-a" href="register.html">Register Another</a>
-      </div>
+    <h1>Prove your content<br/>is <em>real.</em> Or isn't.</h1>
+    <p class="hero-sub">TRAXE gives creators, studios, and brands a cryptographic certificate of origin — immutable proof of what your content is, and where it came from.</p>
+    <div class="hero-btns">
+      <a href="register.html" class="btn-hero-p">Register Content →</a>
+      <a href="#how" class="btn-hero-g">See How It Works</a>
     </div>
-
-    <!-- STEP 1 -->
-    <div class="body panel active" id="step-1">
-      <div class="fg">
-        <label class="lbl">Asset File <em>*</em></label>
-        <div class="drop-zone" id="drop-zone">
-          <input type="file" id="file-input" accept="image/*,video/*,audio/*"/>
-          <span class="drop-ico">⬆</span>
-          <div class="drop-title">Drop your file here or click to browse</div>
-          <div class="drop-hint">Images, video, or audio · Max 50MB · JPG, PNG, MP4, MOV, MP3</div>
-        </div>
-        <div class="file-preview" id="file-preview">
-          <div class="fp-name" id="fp-name">—</div>
-          <div class="fp-size" id="fp-size">—</div>
-        </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">SHA-256</div>
+        <div class="stat-label">Cryptographic Signing</div>
       </div>
-
-      <div class="fg">
-        <label class="lbl" for="title-inp">Content Title <em>*</em></label>
-        <input type="text" class="inp" id="title-inp" placeholder="e.g. Campaign Hero Visual — Spring 2026" maxlength="200"/>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Badge Categories</div>
       </div>
-
-      <div class="fg">
-        <label class="lbl" for="creator-inp">Creator / Studio Name</label>
-        <input type="text" class="inp" id="creator-inp" placeholder="e.g. Studio Noir · hello@studio.com"/>
-        <div class="hint">Appears on your public verification record.</div>
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Immutable Records</div>
       </div>
-
-      <div class="btn-row">
-        <button class="btn btn-p" id="btn1" disabled>Continue →</button>
+      <div>
+        <div class="stat-num">2026</div>
+        <div class="stat-label">EU AI Act Ready</div>
       </div>
     </div>
-
-    <!-- STEP 2 -->
-    <div class="body panel" id="step-2">
-      <div class="fg">
-        <label class="lbl">Badge Type <em>*</em></label>
-        <div class="opt-grid">
-          <div><input type="radio" name="badge" id="b-concept" value="concept" class="opt-radio"/><label for="b-concept" class="badge-lbl"><span class="b-ico">💡</span><div class="b-name">Concept</div><div class="b-desc">AI-generated conceptual work, mood boards, early-stage visuals</div></label></div>
-          <div><input type="radio" name="badge" id="b-viz" value="visualization" class="opt-radio"/><label for="b-viz" class="badge-lbl"><span class="b-ico">◈</span><div class="b-name">Visualization</div><div class="b-desc">Photorealistic AI visuals for campaigns and advertising</div></label></div>
-          <div><input type="radio" name="badge" id="b-doc" value="documentary" class="opt-radio"/><label for="b-doc" class="badge-lbl"><span class="b-ico">◻</span><div class="b-name">Documentary</div><div class="b-desc">Real photography or video with declared authenticity</div></label></div>
-          <div><input type="radio" name="badge" id="b-hyb" value="hybrid" class="opt-radio"/><label for="b-hyb" class="badge-lbl"><span class="b-ico">⬡</span><div class="b-name">Hybrid</div><div class="b-desc">Real photography combined with AI enhancement</div></label></div>
-        </div>
-      </div>
-
-      <div class="fg">
-        <label class="lbl">Origin Declaration <em>*</em></label>
-        <div class="opt-grid">
-          <div><input type="radio" name="origin" id="o-ai" value="declared_ai" class="opt-radio"/><label for="o-ai" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">AI Generated</div><div class="o-desc">Fully created by AI tools</div></div></label></div>
-          <div><input type="radio" name="origin" id="o-real" value="declared_real" class="opt-radio"/><label for="o-real" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Real / Human-Made</div><div class="o-desc">Original human photography</div></div></label></div>
-          <div><input type="radio" name="origin" id="o-hyb" value="declared_hybrid" class="opt-radio"/><label for="o-hyb" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Hybrid</div><div class="o-desc">Real content + AI enhanced</div></div></label></div>
-          <div><input type="radio" name="origin" id="o-unk" value="declared_unknown" class="opt-radio"/><label for="o-unk" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Not Disclosed</div><div class="o-desc">Origin not specified</div></div></label></div>
-        </div>
-      </div>
-
-      <div class="fg">
-        <label class="lbl" for="tool-sel">Tool / Software Used</label>
-        <select class="sel" id="tool-sel">
-          <option value="">Select tool…</option>
-          <option value="midjourney">MidJourney</option>
-          <option value="runway">Runway</option>
-          <option value="firefly">Adobe Firefly</option>
-          <option value="sora">Sora</option>
-          <option value="dalle">DALL·E</option>
-          <option value="stablediffusion">Stable Diffusion</option>
-          <option value="photoshop">Photoshop</option>
-          <option value="lightroom">Lightroom</option>
-          <option value="premiere">Premiere Pro</option>
-          <option value="aftereffects">After Effects</option>
-          <option value="iphone">iPhone Camera</option>
-          <option value="camera">Camera</option>
-          <option value="custom">Custom Model</option>
-          <option value="unknown">Unknown</option>
-        </select>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn btn-g" id="btn2-back">← Back</button>
-        <button class="btn btn-p" id="btn2" disabled>Continue →</button>
-      </div>
-    </div>
-
-    <!-- STEP 3 -->
-    <div class="body panel" id="step-3">
-      <div class="fg">
-        <label class="lbl">Review & Submit</label>
-        <div class="review-wrap">
-          <div class="review-grid" id="review-grid"></div>
-        </div>
-      </div>
-
-      <div class="info-box">
-        ℹ &nbsp;<strong>First verification is always free.</strong> Your asset will be permanently fingerprinted. This record cannot be deleted or altered.
-      </div>
-
-      <div class="err-box" id="err-box"></div>
-
-      <div class="btn-row">
-        <button class="btn btn-g" id="btn3-back">← Back</button>
-        <button class="btn btn-p" id="btn-submit">
-          <span class="btn-text">Register Content →</span>
-          <span class="spin-wrap"><span class="spinner"></span>Registering…</span>
-        </button>
-      </div>
-    </div>
-
   </div>
-</main>
+</section>
 
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-tag">How It Works</div>
+    <h2 class="section-title">Three steps to verified content.</h2>
+    <p class="section-sub">From upload to certificate in under a minute. No technical knowledge required.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <span class="step-ico">⬆</span>
+        <div class="step-title">Upload Your Asset</div>
+        <p class="step-desc">Upload any image, video, or audio file. TRAXE instantly generates a SHA-256 cryptographic fingerprint of your content — unique to every file.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <span class="step-ico">◈</span>
+        <div class="step-title">Declare Its Origin</div>
+        <p class="step-desc">Specify whether your content is AI-generated, real, hybrid, or unknown. Select the badge type that best describes your work. Transparency is the foundation.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <span class="step-ico">✓</span>
+        <div class="step-title">Receive Your TRAXE ID</div>
+        <p class="step-desc">Get a permanent, publicly verifiable TRAXE ID. Share it with clients, publishers, or platforms as cryptographic proof of transparent content production.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BADGE TYPES -->
+<section id="badges">
+  <div class="section-inner">
+    <div class="section-tag">Badge Types</div>
+    <h2 class="section-title">Four categories of verified content.</h2>
+    <p class="section-sub">Every asset registered with TRAXE receives a badge that clearly communicates its origin and production method.</p>
+    <div class="badges-grid">
+      <div class="badge-card">
+        <div class="badge-pill">💡 Concept</div>
+        <div class="badge-title">TRAXE VERIFIED — Concept</div>
+        <p class="badge-desc">For AI-generated conceptual work, mood boards, and early-stage creative visuals. Ideal for pitches, ideation, and exploration phases where AI tools were used to generate initial ideas.</p>
+      </div>
+      <div class="badge-card">
+        <div class="badge-pill">◈ Visualization</div>
+        <div class="badge-title">TRAXE VERIFIED — Visualization</div>
+        <p class="badge-desc">For photorealistic AI-generated visuals used in campaigns, advertising, and marketing. Declares professional use of AI generation tools with full transparency.</p>
+      </div>
+      <div class="badge-card">
+        <div class="badge-pill">◻ Documentary</div>
+        <div class="badge-title">TRAXE VERIFIED — Documentary</div>
+        <p class="badge-desc">For real photography or video content captured by human creators. Certifies authenticity of documentary content — no AI generation was used in the production.</p>
+      </div>
+      <div class="badge-card">
+        <div class="badge-pill">⬡ Hybrid</div>
+        <div class="badge-title">TRAXE VERIFIED — Hybrid</div>
+        <p class="badge-desc">For content that combines real photography or footage with AI enhancement, retouching, or generation. Honestly declares the mixed-origin nature of modern content production.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="section-tag">Pricing</div>
+    <h2 class="section-title">Simple, transparent pricing.</h2>
+    <p class="section-sub">Start free. Scale as your studio grows. All plans include cryptographic signing and public verification pages.</p>
+    <div class="plans-grid" style="grid-template-columns: repeat(5, 1fr);">
+      <div class="plan-card">
+        <div class="plan-tag">Free Forever</div>
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">€0</div>
+        <div class="plan-period">per month</div>
+        <div class="plan-divider"></div>
+        <div class="plan-feature"><span class="plan-check">✓</span>3 verifications / month</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>All 4 badge categories</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>Public verification page</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>TRAXE ID certificate</div>
+        <a href="register.html" class="plan-btn plan-btn-p">Get Started Free</a>
+      </div>
+      <div class="plan-card">
+        <div class="plan-tag">Freelancer</div>
+        <div class="plan-name">Creator</div>
+        <div class="plan-price">€29</div>
+        <div class="plan-period">per month · or €290/yr</div>
+        <div class="plan-divider"></div>
+        <div class="plan-feature"><span class="plan-check">✓</span>20 verifications / month</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>All 4 badge categories</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>Public verification page</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>Email support</div>
+        <a href="register.html" class="plan-btn plan-btn-p">Start Creator Plan</a>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-tag">Most Popular</div>
+        <div class="plan-name">Studio</div>
+        <div class="plan-price">€149</div>
+        <div class="plan-period">per month · or €1,490/yr</div>
+        <div class="plan-divider"></div>
+        <div class="plan-feature"><span class="plan-check">✓</span>100 verifications / month</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>Branded verification pages</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>API access</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>Priority support</div>
+        <a href="register.html" class="plan-btn plan-btn-w">Start Studio Plan</a>
+      </div>
+      <div class="plan-card">
+        <div class="plan-tag">Agency</div>
+        <div class="plan-name">Agency</div>
+        <div class="plan-price">€349</div>
+        <div class="plan-period">per month · or €3,490/yr</div>
+        <div class="plan-divider"></div>
+        <div class="plan-feature"><span class="plan-check">✓</span>350 verifications / month</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>White-label certificates</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>Team management</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>Dedicated support</div>
+        <a href="register.html" class="plan-btn plan-btn-p">Start Agency Plan</a>
+      </div>
+      <div class="plan-card">
+        <div class="plan-tag">Enterprise</div>
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price" style="font-size:24px;letter-spacing:-1px;">Custom</div>
+        <div class="plan-period">annual contract</div>
+        <div class="plan-divider"></div>
+        <div class="plan-feature"><span class="plan-check">✓</span>Unlimited verifications</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>Full white-label</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>SLA + custom integrations</div>
+        <div class="plan-feature"><span class="plan-check">✓</span>Onboarding & training</div>
+        <a href="/cdn-cgi/l/email-protection#48202d242427083c3a29302d662b27" class="plan-btn plan-btn-p">Contact Sales</a>
+      </div>
+    </div>
+    <p style="margin-top:20px;font-family:var(--mono);font-size:11px;color:var(--muted2);text-align:center;">
+      Annual billing saves 2 months · All paid plans include SHA-256 cryptographic signing
+    </p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-title">Common questions.</h2>
+    <p class="section-sub">Everything you need to know about TRAXE and content verification.</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">What is a TRAXE ID? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">A TRAXE ID is a permanent, publicly verifiable identifier tied to a cryptographic fingerprint (SHA-256 hash) of your content. It proves that a specific file existed at a specific moment in time, and that you declared its origin honestly. Anyone can verify a TRAXE ID at any time.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can a TRAXE certificate be faked or altered? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">No. Each certificate is cryptographically signed using Ed25519 — a state-of-the-art digital signature algorithm. The certificate is tied to the exact file content: if the file changes even by a single pixel, the hash no longer matches. Records are immutable and cannot be altered after creation.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Does TRAXE detect whether content is AI-generated? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">No — TRAXE is a declaration platform, not a detection tool. The creator declares the origin of their content. This transparency-first model aligns with the EU AI Act's requirements for disclosed AI content. TRAXE verifies that the declaration was made, not that it's accurate.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Who is TRAXE designed for? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">TRAXE is built for photographers, videographers, creative studios, advertising agencies, and any professional who produces visual content — whether AI-generated or human-made. It's particularly valuable for teams working with AI tools who need to demonstrate compliance with emerging regulations.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is the EU AI Act, and does TRAXE help with compliance? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">The EU AI Act (coming into force 2026) requires disclosure of AI-generated content in certain contexts, especially in advertising, media, and public communications. TRAXE provides a standardised, verifiable way to disclose AI involvement — supporting compliance without replacing legal advice.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is the first verification really free? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">Yes. Every new account includes 5 free verifications per month on the Starter plan, permanently. No credit card required. Paid plans unlock more verifications, API access, and custom branding.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EU COMPLIANCE CTA -->
+<section id="compliance">
+  <div class="compliance-inner">
+    <div class="compliance-tag">EU AI Act 2026</div>
+    <h2 class="compliance-title">Built for the age of AI transparency.</h2>
+    <p class="compliance-sub">As AI-generated content becomes indistinguishable from reality, transparency isn't just ethical — it's becoming legally required. TRAXE is your infrastructure for compliant content production.</p>
+    <div class="compliance-tags">
+      <span class="c-tag">EU AI Act Aligned</span>
+      <span class="c-tag">GDPR Compatible</span>
+      <span class="c-tag">Cryptographically Signed</span>
+      <span class="c-tag">Immutable Records</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <div class="f-logo">TRAX<span>E</span></div>
-  <div class="f-text">© 2026 TRAXE · EU AI Act 2026 Aligned</div>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-logo">TRAX<span>E</span><span class="footer-co">.co</span></div>
+      <div class="footer-tagline">Content Verification Platform for the AI generation.</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Product</div>
+      <a href="register.html" class="footer-link">Register Content</a>
+      <a href="#how" class="footer-link">How It Works</a>
+      <a href="#badges" class="footer-link">Badge Types</a>
+      <a href="#pricing" class="footer-link">Pricing</a>
+    </div>
+    <div>
+      <div class="footer-col-title">Verify</div>
+      <a href="https://traxe-backend.onrender.com/health" class="footer-link">API Status</a>
+      <a href="#faq" class="footer-link">FAQ</a>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <a href="#" class="footer-link">Privacy Policy</a>
+      <a href="#" class="footer-link">Terms of Service</a>
+      <a href="#" class="footer-link">EU AI Act Info</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 TRAXE. All rights reserved.</div>
+    <div class="footer-eu">EU AI ACT 2026</div>
+  </div>
 </footer>
 
-<script>
-  const BACKEND = 'https://traxe-backend.onrender.com';
-  let selectedFile = null;
-
-  const $ = id => document.getElementById(id);
-  const fileInput  = $('file-input');
-  const dropZone   = $('drop-zone');
-  const filePreview= $('file-preview');
-  const fpName     = $('fp-name');
-  const fpSize     = $('fp-size');
-  const titleInp   = $('title-inp');
-  const creatorInp = $('creator-inp');
-  const toolSel    = $('tool-sel');
-  const btn1       = $('btn1');
-  const btn2       = $('btn2');
-  const progress   = $('progress');
-  const errBox     = $('err-box');
-  const reviewGrid = $('review-grid');
-  const successPanel = $('success-panel');
-
-  function fmt(b) {
-    if (b < 1024) return b + ' B';
-    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
-    return (b/1048576).toFixed(2) + ' MB';
-  }
-
-  function setFile(f) {
-    if (!f) return;
-    selectedFile = f;
-    dropZone.classList.add('filled');
-    fpName.textContent = f.name;
-    fpSize.textContent = fmt(f.size) + ' · ' + (f.type || 'unknown');
-    filePreview.classList.add('show');
-    checkStep1();
-  }
-
-  fileInput.addEventListener('change', e => setFile(e.target.files[0]));
-  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
-  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
-  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('over'); setFile(e.dataTransfer.files[0]); });
-
-  function checkStep1() { btn1.disabled = !(selectedFile && titleInp.value.trim()); }
-  titleInp.addEventListener('input', checkStep1);
-
-  function checkStep2() {
-    btn2.disabled = !(document.querySelector('input[name="badge"]:checked') && document.querySelector('input[name="origin"]:checked'));
-  }
-  document.querySelectorAll('input[name="badge"], input[name="origin"]').forEach(el => el.addEventListener('change', checkStep2));
-
-  function goStep(n) {
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    $('step-' + n)?.classList.add('active');
-    document.querySelectorAll('.tab').forEach((t, i) => {
-      t.classList.remove('active', 'done');
-      if (i + 1 < n) t.classList.add('done');
-      if (i + 1 === n) t.classList.add('active');
-    });
-    progress.style.width = ({1:8, 2:50, 3:85}[n] || 8) + '%';
-  }
-
-  btn1.addEventListener('click', () => goStep(2));
-  $('btn2-back').addEventListener('click', () => goStep(1));
-  btn2.addEventListener('click', () => { buildReview(); goStep(3); });
-  $('btn3-back').addEventListener('click', () => goStep(2));
-
-  function buildReview() {
-    const badge  = document.querySelector('input[name="badge"]:checked');
-    const origin = document.querySelector('input[name="origin"]:checked');
-    const tool   = toolSel.value;
-    const bL = {concept:'Concept', visualization:'Visualization', documentary:'Documentary', hybrid:'Hybrid'};
-    const oL = {declared_ai:'AI Generated', declared_real:'Real / Human-Made', declared_hybrid:'Hybrid', declared_unknown:'Not Disclosed'};
-    const tL = {midjourney:'MidJourney', runway:'Runway', firefly:'Adobe Firefly', sora:'Sora', dalle:'DALL·E', stablediffusion:'Stable Diffusion', photoshop:'Photoshop', lightroom:'Lightroom', premiere:'Premiere Pro', aftereffects:'After Effects', iphone:'iPhone Camera', camera:'Camera', custom:'Custom Model', unknown:'Unknown'};
-    const rows = [
-      ['File', selectedFile.name], ['Size', fmt(selectedFile.size)],
-      ['Title', titleInp.value], ['Creator', creatorInp.value || '—'],
-      ['Badge', bL[badge?.value] || '—'], ['Origin', oL[origin?.value] || '—'],
-    ];
-    if (tool) rows.push(['Tool', tL[tool] || tool]);
-    reviewGrid.innerHTML = rows.map(([l,v]) => `<div class="ri"><label>${l}</label><span>${v}</span></div>`).join('');
-  }
-
-  $('btn-submit').addEventListener('click', async () => {
-    const badge  = document.querySelector('input[name="badge"]:checked');
-    const origin = document.querySelector('input[name="origin"]:checked');
-    const tool   = toolSel.value;
-    const btnEl  = $('btn-submit');
-
-    errBox.classList.remove('show');
-    btnEl.classList.add('submitting');
-    btnEl.disabled = true;
-
-    try {
-      const params = new URLSearchParams({
-        declared_origin: origin.value,
-        badge_category: badge.value,
-        title: titleInp.value.trim(),
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const ans  = item.querySelector('.faq-a');
+      const isOpen = item.classList.contains('open');
+      // close all
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-a').classList.remove('show');
       });
-      if (creatorInp.value.trim()) params.append('creator_id', creatorInp.value.trim());
-      if (tool) params.append('tool_used', tool);
-
-      const fd = new FormData();
-      fd.append('file', selectedFile);
-
-      const res = await fetch(`${BACKEND}/upload?${params}`, { method:'POST', mode:'cors', body:fd });
-      const data = await res.json();
-
-      if (!res.ok || !data.ok) throw new Error(data.detail || data.error || 'Upload failed.');
-
-      progress.style.width = '100%';
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.tab').forEach(t => t.classList.add('done'));
-      $('success-traxe-id').textContent = data.traxe_id;
-      $('verify-link').href = data.verify_url || `${BACKEND}/verify/${data.traxe_id}`;
-      successPanel.classList.add('show');
-
-    } catch (err) {
-      errBox.textContent = '⚠ ' + (err.message || 'Something went wrong.');
-      errBox.classList.add('show');
-    } finally {
-      btnEl.classList.remove('submitting');
-      btnEl.disabled = false;
-    }
+      if (!isOpen) {
+        item.classList.add('open');
+        ans.classList.add('show');
+      }
+    });
   });
-</script>
-</body>
-</html>
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+  
