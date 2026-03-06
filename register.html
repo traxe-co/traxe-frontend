@@ -304,13 +304,173 @@
       .btn-row { flex-direction: column; }
       footer { padding: 18px 16px; }
     }
+
+    /* ── AUTH MODAL ── */
+    .auth-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(15,18,32,0.55); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .auth-overlay.show { opacity: 1; pointer-events: all; }
+    .auth-modal {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; width: 100%; max-width: 420px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15); overflow: hidden;
+      transform: translateY(16px); transition: transform .2s;
+    }
+    .auth-overlay.show .auth-modal { transform: translateY(0); }
+    .auth-top { height: 3px; background: linear-gradient(90deg, var(--blue), var(--blue-br)); }
+    .auth-header { padding: 26px 28px 0; }
+    .auth-logo { margin-bottom: 18px; display: block; }
+    .auth-title { font-size: 20px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 6px; }
+    .auth-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 22px; line-height: 1.6; }
+    .auth-tabs { display: flex; border-bottom: 1px solid var(--border); margin: 0 28px; }
+    .auth-tab {
+      flex: 1; padding: 10px; text-align: center;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted2); cursor: pointer;
+      border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .15s;
+    }
+    .auth-tab.active { color: var(--blue-br); border-bottom-color: var(--blue-br); }
+    .auth-body { padding: 22px 28px 26px; }
+    .auth-panel { display: none; }
+    .auth-panel.active { display: block; }
+    .auth-field { margin-bottom: 15px; }
+    .auth-label {
+      display: block; font-family: var(--mono); font-size: 9px;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+    }
+    .auth-input {
+      width: 100%; background: var(--bg);
+      border: 1.5px solid var(--border2); border-radius: 5px;
+      padding: 11px 13px; color: var(--text);
+      font-family: var(--mono); font-size: 12px;
+      outline: none; transition: border-color .15s, box-shadow .15s;
+    }
+    .auth-input::placeholder { color: var(--muted2); }
+    .auth-input:focus { border-color: var(--blue-br); box-shadow: 0 0 0 3px var(--blue-glow); }
+    .auth-btn {
+      width: 100%; padding: 13px;
+      font-family: var(--font); font-weight: 700; font-size: 10px;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      background: var(--blue-br); color: #fff;
+      border: none; border-radius: 5px; cursor: pointer;
+      transition: all .15s; margin-top: 4px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .auth-btn:hover:not(:disabled) { background: var(--blue); }
+    .auth-btn:disabled { opacity: .5; cursor: not-allowed; }
+    .auth-err {
+      display: none; margin-bottom: 14px;
+      background: var(--red-bg); border: 1px solid #fecaca;
+      border-radius: 4px; padding: 10px 12px;
+      font-family: var(--mono); font-size: 11px; color: var(--red);
+    }
+    .auth-err.show { display: block; }
+    .auth-ok {
+      display: none; margin-bottom: 14px;
+      background: var(--green-bg); border: 1px solid #bbf7d0;
+      border-radius: 4px; padding: 10px 12px;
+      font-family: var(--mono); font-size: 11px; color: var(--green);
+    }
+    .auth-ok.show { display: block; }
+    .auth-note {
+      text-align: center; margin-top: 16px;
+      font-family: var(--mono); font-size: 10px; color: var(--muted2);
+    }
+    .auth-note a { color: var(--blue-br); cursor: pointer; text-decoration: none; }
+    .auth-note a:hover { text-decoration: underline; }
+    .nav-user { display: flex; align-items: center; gap: 10px; }
+    .nav-user-email {
+      font-family: var(--mono); font-size: 10px; color: var(--muted);
+      max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .nav-user-usage {
+      font-family: var(--mono); font-size: 10px; color: var(--blue-br);
+      background: var(--blue-light); border: 1px solid #bfdbfe;
+      padding: 3px 9px; border-radius: 20px;
+    }
+    .nav-logout {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--muted);
+      background: none; border: 1.5px solid var(--border2);
+      padding: 6px 12px; border-radius: 4px; cursor: pointer; transition: all .15s;
+    }
+    .nav-logout:hover { color: var(--red); border-color: #fca5a5; }
   </style>
 </head>
 <body>
 
+<!-- AUTH MODAL -->
+<div class="auth-overlay" id="auth-overlay">
+  <div class="auth-modal">
+    <div class="auth-top"></div>
+    <div class="auth-header">
+      <span class="auth-logo nav-logo">TRAX<span class="e">E</span><span class="co">.co</span></span>
+      <div class="auth-title">Welcome to TRAXE</div>
+      <div class="auth-sub">Create an account or sign in to register and track your verified content.</div>
+    </div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</div>
+      <div class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Create Account</div>
+    </div>
+    <div class="auth-body">
+      <div class="auth-err" id="auth-err"></div>
+      <div class="auth-ok" id="auth-ok"></div>
+
+      <!-- LOGIN -->
+      <div class="auth-panel active" id="panel-login">
+        <div class="auth-field">
+          <label class="auth-label">Email</label>
+          <input type="email" class="auth-input" id="login-email" placeholder="you@studio.com"/>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Password</label>
+          <input type="password" class="auth-input" id="login-password" placeholder="••••••••"/>
+        </div>
+        <button class="auth-btn" id="btn-login">
+          <span class="auth-btn-text">Sign In →</span>
+          <span class="auth-spin" style="display:none;">⟳</span>
+        </button>
+        <div class="auth-note"><a onclick="switchTab('reset')">Forgot password?</a></div>
+      </div>
+
+      <!-- SIGNUP -->
+      <div class="auth-panel" id="panel-signup">
+        <div class="auth-field">
+          <label class="auth-label">Email</label>
+          <input type="email" class="auth-input" id="signup-email" placeholder="you@studio.com"/>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Password</label>
+          <input type="password" class="auth-input" id="signup-password" placeholder="Min. 8 characters"/>
+        </div>
+        <button class="auth-btn" id="btn-signup">
+          <span class="auth-btn-text">Create Account →</span>
+          <span class="auth-spin" style="display:none;">⟳</span>
+        </button>
+        <div class="auth-note">Already have an account? <a onclick="switchTab('login')">Sign in</a></div>
+      </div>
+
+      <!-- RESET -->
+      <div class="auth-panel" id="panel-reset">
+        <div class="auth-field">
+          <label class="auth-label">Email</label>
+          <input type="email" class="auth-input" id="reset-email" placeholder="you@studio.com"/>
+        </div>
+        <button class="auth-btn" id="btn-reset">Send Reset Link →</button>
+        <div class="auth-note"><a onclick="switchTab('login')">← Back to sign in</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <nav>
     <a href="/" class="nav-logo">TRAX<span class="e">E</span><span class="co">.co</span></a>
-  <a href="/" class="nav-back">← Back to Home</a>
+  <div id="nav-auth-area">
+    <!-- filled by JS -->
+  </div>
 </nav>
 
 <main>
@@ -452,24 +612,176 @@
   <div class="f-text">© 2026 TRAXE · EU AI Act 2026 Aligned</div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const BACKEND = 'https://traxe-backend.onrender.com';
+  // ── SUPABASE ──────────────────────────────────────────────
+  const SUPABASE_URL = 'https://rwzodfaartqffrnepyar.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_vUuGTbA546lTOvqDMMDbqA_-nTGz4Gi';
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const BACKEND  = 'https://traxe-backend.onrender.com';
+  const FREE_LIMIT = 3;
+
+  // ── AUTH STATE ────────────────────────────────────────────
+  let currentUser = null;
+
+  async function initAuth() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      currentUser = session.user;
+      onLoggedIn();
+    } else {
+      showAuthModal();
+    }
+  }
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' && session?.user) {
+      currentUser = session.user;
+      onLoggedIn();
+    } else if (event === 'SIGNED_OUT') {
+      currentUser = null;
+      showAuthModal();
+    }
+  });
+
+  function showAuthModal() {
+    document.getElementById('auth-overlay').classList.add('show');
+    updateNavGuest();
+  }
+
+  function hideAuthModal() {
+    document.getElementById('auth-overlay').classList.remove('show');
+  }
+
+  async function onLoggedIn() {
+    hideAuthModal();
+    const usage = await getUsage();
+    updateNavUser(currentUser.email, usage);
+  }
+
+  // ── USAGE TRACKING ────────────────────────────────────────
+  async function getUsage() {
+    try {
+      const { count } = await supabase
+        .from('submissions')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', currentUser.id);
+      return count || 0;
+    } catch { return 0; }
+  }
+
+  // ── NAV ───────────────────────────────────────────────────
+  function updateNavUser(email, usage) {
+    const area = document.getElementById('nav-auth-area');
+    const remaining = Math.max(0, FREE_LIMIT - usage);
+    area.innerHTML = `
+      <div class="nav-user">
+        <span class="nav-user-email">${email}</span>
+        <span class="nav-user-usage">${remaining} free left</span>
+        <button class="nav-logout" onclick="handleLogout()">Sign Out</button>
+      </div>`;
+  }
+
+  function updateNavGuest() {
+    const area = document.getElementById('nav-auth-area');
+    area.innerHTML = `<a href="/" class="nav-back">← Back to Home</a>`;
+  }
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+  }
+
+  // ── AUTH TABS ─────────────────────────────────────────────
+  function switchTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + (tab === 'reset' ? 'login' : tab))?.classList.add('active');
+    document.getElementById('panel-' + tab)?.classList.add('active');
+    clearAuthMessages();
+  }
+
+  function clearAuthMessages() {
+    const err = document.getElementById('auth-err');
+    const ok  = document.getElementById('auth-ok');
+    err.classList.remove('show'); ok.classList.remove('show');
+  }
+
+  function showAuthErr(msg) {
+    const el = document.getElementById('auth-err');
+    el.textContent = '⚠ ' + msg; el.classList.add('show');
+    document.getElementById('auth-ok').classList.remove('show');
+  }
+
+  function showAuthOk(msg) {
+    const el = document.getElementById('auth-ok');
+    el.textContent = '✓ ' + msg; el.classList.add('show');
+    document.getElementById('auth-err').classList.remove('show');
+  }
+
+  function setAuthLoading(btnId, loading) {
+    const btn = document.getElementById(btnId);
+    btn.disabled = loading;
+    btn.querySelector('.auth-btn-text').style.display = loading ? 'none' : 'inline';
+    const spin = btn.querySelector('.auth-spin');
+    if (spin) spin.style.display = loading ? 'inline' : 'none';
+  }
+
+  // ── LOGIN ─────────────────────────────────────────────────
+  document.getElementById('btn-login').addEventListener('click', async () => {
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-password').value;
+    if (!email || !pass) return showAuthErr('Please fill in all fields.');
+    setAuthLoading('btn-login', true); clearAuthMessages();
+    const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+    setAuthLoading('btn-login', false);
+    if (error) showAuthErr(error.message);
+  });
+
+  // ── SIGNUP ────────────────────────────────────────────────
+  document.getElementById('btn-signup').addEventListener('click', async () => {
+    const email = document.getElementById('signup-email').value.trim();
+    const pass  = document.getElementById('signup-password').value;
+    if (!email || !pass) return showAuthErr('Please fill in all fields.');
+    if (pass.length < 8) return showAuthErr('Password must be at least 8 characters.');
+    setAuthLoading('btn-signup', true); clearAuthMessages();
+    const { error } = await supabase.auth.signUp({
+      email, password: pass,
+      options: { emailRedirectTo: 'https://traxe-frontend.onrender.com/register.html' }
+    });
+    setAuthLoading('btn-signup', false);
+    if (error) showAuthErr(error.message);
+    else showAuthOk('Check your email to confirm your account, then sign in.');
+  });
+
+  // ── RESET ─────────────────────────────────────────────────
+  document.getElementById('btn-reset').addEventListener('click', async () => {
+    const email = document.getElementById('reset-email').value.trim();
+    if (!email) return showAuthErr('Please enter your email address.');
+    clearAuthMessages();
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://traxe-frontend.onrender.com/register.html'
+    });
+    if (error) showAuthErr(error.message);
+    else showAuthOk('Password reset email sent. Check your inbox.');
+  });
+
+  // ── UPLOAD FORM ───────────────────────────────────────────
   let selectedFile = null;
 
   const $ = id => document.getElementById(id);
-  const fileInput  = $('file-input');
-  const dropZone   = $('drop-zone');
-  const filePreview= $('file-preview');
-  const fpName     = $('fp-name');
-  const fpSize     = $('fp-size');
-  const titleInp   = $('title-inp');
-  const creatorInp = $('creator-inp');
-  const toolSel    = $('tool-sel');
-  const btn1       = $('btn1');
-  const btn2       = $('btn2');
-  const progress   = $('progress');
-  const errBox     = $('err-box');
-  const reviewGrid = $('review-grid');
+  const fileInput   = $('file-input');
+  const dropZone    = $('drop-zone');
+  const filePreview = $('file-preview');
+  const fpName      = $('fp-name');
+  const fpSize      = $('fp-size');
+  const titleInp    = $('title-inp');
+  const creatorInp  = $('creator-inp');
+  const toolSel     = $('tool-sel');
+  const btn1        = $('btn1');
+  const btn2        = $('btn2');
+  const progress    = $('progress');
+  const errBox      = $('err-box');
+  const reviewGrid  = $('review-grid');
   const successPanel = $('success-panel');
 
   function fmt(b) {
@@ -534,6 +846,15 @@
   }
 
   $('btn-submit').addEventListener('click', async () => {
+    if (!currentUser) return showAuthModal();
+
+    const usage = await getUsage();
+    if (usage >= FREE_LIMIT) {
+      errBox.textContent = '⚠ You have used all 3 free verifications. Upgrade your plan to continue.';
+      errBox.classList.add('show');
+      return;
+    }
+
     const badge  = document.querySelector('input[name="badge"]:checked');
     const origin = document.querySelector('input[name="origin"]:checked');
     const tool   = toolSel.value;
@@ -548,6 +869,7 @@
         declared_origin: origin.value,
         badge_category: badge.value,
         title: titleInp.value.trim(),
+        user_id: currentUser.id,
       });
       if (creatorInp.value.trim()) params.append('creator_id', creatorInp.value.trim());
       if (tool) params.append('tool_used', tool);
@@ -555,7 +877,7 @@
       const fd = new FormData();
       fd.append('file', selectedFile);
 
-      const res = await fetch(`${BACKEND}/upload?${params}`, { method:'POST', mode:'cors', body:fd });
+      const res  = await fetch(`${BACKEND}/upload?${params}`, { method:'POST', mode:'cors', body:fd });
       const data = await res.json();
 
       if (!res.ok || !data.ok) throw new Error(data.detail || data.error || 'Upload failed.');
@@ -567,6 +889,10 @@
       $('verify-link').href = data.verify_url || `${BACKEND}/verify/${data.traxe_id}`;
       successPanel.classList.add('show');
 
+      // refresh usage in nav
+      const newUsage = await getUsage();
+      updateNavUser(currentUser.email, newUsage);
+
     } catch (err) {
       errBox.textContent = '⚠ ' + (err.message || 'Something went wrong.');
       errBox.classList.add('show');
@@ -575,6 +901,9 @@
       btnEl.disabled = false;
     }
   });
+
+  // ── INIT ──────────────────────────────────────────────────
+  initAuth();
 </script>
 </body>
 </html>
