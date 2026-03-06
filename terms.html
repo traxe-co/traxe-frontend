@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TRAXE — Terms of Service & Disclaimer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f4f5f8; --surface: #ffffff; --border: #e2e5ee; --border2: #d0d4e4;
+      --blue: #1a4fa8; --blue-br: #2563eb; --blue-light: #eff4ff;
+      --text: #0f1220; --text2: #2d3348; --muted: #6b7290; --muted2: #9ba3bf;
+      --font: 'Syne', system-ui, sans-serif; --mono: 'DM Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font); font-weight: 800; font-size: 16px;
+      letter-spacing: 5px; text-transform: uppercase; color: var(--text); text-decoration: none;
+    }
+    .nav-logo .e { color: var(--blue-br); }
+    .nav-logo .co { color: var(--muted2); font-weight: 400; letter-spacing: 2px; font-size: 12px; text-transform: lowercase; }
+    .nav-back { font-family: var(--mono); font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 1px; }
+    .nav-back:hover { color: var(--blue-br); }
+
+    main { max-width: 760px; margin: 0 auto; padding: 100px 24px 80px; }
+
+    .page-header { margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .page-tag {
+      display: inline-block; font-family: var(--mono); font-size: 9px;
+      letter-spacing: 3px; text-transform: uppercase; color: var(--blue-br);
+      background: var(--blue-light); border: 1px solid #bfdbfe;
+      padding: 5px 12px; border-radius: 20px; margin-bottom: 20px;
+    }
+    h1 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
+    .page-meta { font-family: var(--mono); font-size: 11px; color: var(--muted2); }
+
+    .disclaimer-box {
+      background: #fffbeb; border: 1.5px solid #fbbf24;
+      border-radius: 8px; padding: 20px 24px; margin-bottom: 48px;
+    }
+    .disclaimer-box strong {
+      display: block; font-family: var(--mono); font-size: 10px;
+      letter-spacing: 2px; text-transform: uppercase; color: #b45309; margin-bottom: 8px;
+    }
+    .disclaimer-box p { font-size: 14px; line-height: 1.7; color: #92400e; }
+
+    .section { margin-bottom: 40px; }
+    .section h2 {
+      font-size: 16px; font-weight: 800; letter-spacing: -0.3px;
+      margin-bottom: 14px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border); color: var(--text);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section h2 .num {
+      font-family: var(--mono); font-size: 10px; color: var(--blue-br);
+      background: var(--blue-light); border: 1px solid #bfdbfe;
+      padding: 2px 8px; border-radius: 4px; font-weight: 400;
+    }
+    .section p, .section li {
+      font-size: 14px; line-height: 1.8; color: var(--text2); margin-bottom: 10px;
+    }
+    .section ul { padding-left: 20px; }
+    .section li { margin-bottom: 6px; }
+    .section strong { color: var(--text); }
+
+    .highlight-box {
+      background: var(--blue-light); border: 1px solid #bfdbfe;
+      border-radius: 6px; padding: 16px 20px; margin: 16px 0;
+      font-family: var(--mono); font-size: 12px; color: var(--blue);
+      line-height: 1.7;
+    }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 24px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface);
+    }
+    .footer-logo { font-family: var(--font); font-weight: 800; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--text); }
+    .footer-logo .e { color: var(--blue-br); }
+    .footer-logo .co { color: var(--muted2); font-weight: 400; font-size: 10px; text-transform: lowercase; letter-spacing: 2px; }
+    .footer-text { font-family: var(--mono); font-size: 10px; color: var(--muted2); }
+
+    @media (max-width: 560px) {
+      nav { padding: 0 16px; }
+      main { padding: 84px 16px 60px; }
+      footer { padding: 18px 16px; flex-direction: column; gap: 8px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">TRAX<span class="e">E</span><span class="co">.co</span></a>
+  <a href="/" class="nav-back">← Back to Home</a>
+</nav>
+
+<main>
+  <div class="page-header">
+    <div class="page-tag">Legal · Terms of Service</div>
+    <h1>Terms of Service &amp; Disclaimer</h1>
+    <div class="page-meta">Effective date: 1 March 2026 &nbsp;·&nbsp; Last updated: 6 March 2026</div>
+  </div>
+
+  <div class="disclaimer-box">
+    <strong>⚠ Important Notice</strong>
+    <p>TRAXE provides a content verification and timestamping infrastructure service only. TRAXE does not verify the legal ownership, authorship, copyright status, or authenticity of any submitted content. A TRAXE verification certificate does not constitute legal proof of ownership or copyright. TRAXE accepts no legal liability for claims arising from the use of its verification records.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">01</span> About TRAXE</h2>
+    <p>TRAXE (operated as TRAXE.co) is a content verification and registration platform that provides cryptographic timestamping, hash fingerprinting, and origin declaration services for digital content. TRAXE is designed to assist creators, studios, and organisations in documenting the declared origin and submission date of digital assets.</p>
+    <p>TRAXE operates in support of transparency obligations under the <strong>EU AI Act (2024/1689)</strong> and related regulatory frameworks. However, TRAXE itself is not a legal authority, certification body, notary, or regulatory agency.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">02</span> Scope of Service — What TRAXE Does and Does Not Do</h2>
+    <p>TRAXE provides the following services:</p>
+    <ul>
+      <li>Cryptographic SHA-256 fingerprinting of uploaded files</li>
+      <li>Timestamping of submission date and time</li>
+      <li>Recording of user-declared origin information (e.g. AI-generated, human-made, hybrid)</li>
+      <li>Issuance of a unique TRAXE Verification ID (TRXE-XXXXXXXX)</li>
+      <li>A publicly accessible verification page linked to each submission</li>
+    </ul>
+    <p><strong>TRAXE does not:</strong></p>
+    <ul>
+      <li>Verify the accuracy or truthfulness of any information submitted by users</li>
+      <li>Confirm copyright ownership or intellectual property rights</li>
+      <li>Guarantee that submitted content is original, non-infringing, or lawfully owned</li>
+      <li>Provide legal, regulatory, or compliance advice</li>
+      <li>Act as a substitute for legal counsel or official certification</li>
+    </ul>
+    <div class="highlight-box">
+      A TRAXE certificate records what a user declared at the time of submission. It does not independently verify or validate those declarations.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">03</span> User Declaration &amp; Accuracy of Submissions</h2>
+    <p>By creating a TRAXE account and submitting content, you hereby declare and confirm that:</p>
+    <ul>
+      <li>All information submitted during registration — including declared origin, tool used, creator identity, and file metadata — is <strong>accurate, truthful, and complete</strong> to the best of your knowledge.</li>
+      <li>You are the creator, rights holder, or authorised representative of the content you submit.</li>
+      <li>You understand that submitting false, misleading, or inaccurate declarations may constitute fraud or misrepresentation under applicable law.</li>
+      <li>You take full legal responsibility for the accuracy of all declarations made through your account.</li>
+      <li>You will not use TRAXE to submit content that infringes third-party intellectual property rights, contains illegal material, or is intended to deceive or mislead.</li>
+    </ul>
+    <p>TRAXE reserves the right to suspend or terminate accounts found to be submitting false or fraudulent information.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">04</span> Limitation of Liability</h2>
+    <p>To the maximum extent permitted by applicable law:</p>
+    <ul>
+      <li>TRAXE, its operators, directors, employees, and affiliates shall not be held liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of the platform.</li>
+      <li>TRAXE is not liable for any legal claims, disputes, or proceedings initiated by third parties against you in connection with content you have submitted.</li>
+      <li>TRAXE is not responsible for the misuse of verification certificates by you or any third party.</li>
+      <li>TRAXE does not warrant that its services are error-free, uninterrupted, or legally sufficient for any particular regulatory purpose.</li>
+      <li>You use TRAXE entirely at your own risk and discretion.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">05</span> Intellectual Property</h2>
+    <p>You retain all rights to the content you submit. By submitting content, you grant TRAXE a limited, non-exclusive licence to store, process, hash, and display the submitted metadata and file fingerprint solely for the purpose of providing the verification service.</p>
+    <p>TRAXE does not claim ownership of any content submitted to the platform. Uploaded files are stored securely and are not shared with third parties except as required by law.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">06</span> Account Responsibility</h2>
+    <p>You are responsible for maintaining the security of your account credentials. All submissions made through your account are attributed to you. TRAXE is not liable for unauthorised access to your account resulting from your failure to maintain secure credentials.</p>
+    <p>Each account is subject to the usage limits of the selected plan. Circumventing plan limits through multiple accounts is prohibited and may result in account termination.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">07</span> EU AI Act Compliance Context</h2>
+    <p>TRAXE is designed to assist organisations in meeting transparency and disclosure obligations under the <strong>EU AI Act (Regulation 2024/1689)</strong>, which requires providers and deployers of certain AI systems to disclose AI-generated content to end users.</p>
+    <p>However, TRAXE's verification certificates are not official regulatory filings and do not constitute compliance certification. Users are responsible for ensuring their own legal compliance with applicable AI regulations in their jurisdiction. TRAXE recommends consulting qualified legal counsel for compliance advice.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">08</span> Governing Law</h2>
+    <p>These Terms of Service are governed by and construed in accordance with the laws of the <strong>Netherlands</strong>. Any disputes arising from these terms or your use of TRAXE shall be subject to the exclusive jurisdiction of the courts of the Netherlands.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">09</span> Changes to These Terms</h2>
+    <p>TRAXE reserves the right to update these Terms of Service at any time. Continued use of the platform following any update constitutes acceptance of the revised terms. We will notify registered users of material changes via email.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">10</span> Contact</h2>
+    <p>For questions regarding these terms, please contact us at <strong>legal@traxe.co</strong>.</p>
+  </div>
+</main>
+
+<footer>
+  <span class="footer-logo">TRAX<span class="e">E</span><span class="co">.co</span></span>
+  <span class="footer-text">© 2026 TRAXE · Content Verification Platform · Netherlands</span>
+</footer>
+
+</body>
+</html>
