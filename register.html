@@ -75,9 +75,7 @@
     /* CARD */
     .card {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      overflow: hidden;
+      border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden;
     }
 
     /* TABS */
@@ -96,8 +94,7 @@
     /* PROGRESS */
     .prog { height: 3px; background: var(--border); }
     .prog-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--blue), var(--blue-br));
+      height: 100%; background: linear-gradient(90deg, var(--blue), var(--blue-br));
       transition: width .4s ease; width: 0%;
     }
 
@@ -132,8 +129,7 @@
     .fg { margin-bottom: 18px; }
     .lbl {
       display: block; font-family: var(--mono); font-size: 9px;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 6px;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
     }
     .lbl em { color: var(--red); font-style: normal; margin-left: 2px; }
     .inp, .sel {
@@ -141,14 +137,10 @@
       border: 1.5px solid var(--border2); border-radius: 5px;
       padding: 11px 13px; color: var(--text);
       font-family: var(--mono); font-size: 12px;
-      outline: none; transition: border-color .15s, box-shadow .15s;
-      appearance: none;
+      outline: none; transition: border-color .15s, box-shadow .15s; appearance: none;
     }
     .inp::placeholder { color: var(--muted2); }
-    .inp:focus, .sel:focus {
-      border-color: var(--blue-br);
-      box-shadow: 0 0 0 3px var(--blue-glow);
-    }
+    .inp:focus, .sel:focus { border-color: var(--blue-br); box-shadow: 0 0 0 3px var(--blue-glow); }
     .sel {
       cursor: pointer;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7290'/%3E%3C/svg%3E");
@@ -159,7 +151,6 @@
     /* BADGE + ORIGIN GRIDS */
     .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .opt-radio { display: none; }
-
     .badge-lbl {
       display: block; cursor: pointer;
       background: var(--bg); border: 1.5px solid var(--border2);
@@ -170,7 +161,6 @@
     .b-ico { font-size: 18px; display: block; margin-bottom: 6px; }
     .b-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
     .b-desc { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 1.4; }
-
     .origin-lbl {
       display: flex; align-items: flex-start; gap: 10px; cursor: pointer;
       background: var(--bg); border: 1.5px solid var(--border2);
@@ -194,15 +184,11 @@
     .o-desc { font-family: var(--mono); font-size: 10px; color: var(--muted); }
 
     /* REVIEW */
-    .review-wrap {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 6px; padding: 18px;
-    }
+    .review-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 18px; }
     .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
     .ri label {
       display: block; font-family: var(--mono); font-size: 9px;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--muted2); margin-bottom: 3px;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); margin-bottom: 3px;
     }
     .ri span { font-family: var(--mono); font-size: 12px; color: var(--text2); word-break: break-word; }
 
@@ -221,7 +207,6 @@
     .btn-p:disabled { opacity: .4; cursor: not-allowed; }
     .btn-g { background: none; color: var(--muted); border: 1.5px solid var(--border2); }
     .btn-g:hover { color: var(--text); border-color: var(--muted2); }
-
     .spin-wrap { display: none; align-items: center; gap: 8px; }
     .submitting .spin-wrap { display: flex; }
     .submitting .btn-text { display: none; }
@@ -258,8 +243,7 @@
     .s-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 8px; }
     .s-sub { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
     .traxe-id {
-      display: inline-block;
-      background: var(--bg); border: 1.5px solid var(--border2);
+      display: inline-block; background: var(--bg); border: 1.5px solid var(--border2);
       border-radius: 5px; padding: 13px 24px;
       font-family: var(--mono); font-size: 16px; font-weight: 500;
       color: var(--blue-br); letter-spacing: 2px; margin-bottom: 22px;
@@ -277,17 +261,14 @@
       font-family: var(--font); font-weight: 700; font-size: 10px;
       letter-spacing: 2.5px; text-transform: uppercase;
       padding: 12px 22px; border-radius: 5px;
-      background: none; color: var(--muted);
-      border: 1.5px solid var(--border2);
+      background: none; color: var(--muted); border: 1.5px solid var(--border2);
       cursor: pointer; text-decoration: none; transition: all .15s;
     }
     .btn-a:hover { color: var(--text); border-color: var(--muted2); }
 
     /* FOOTER */
     footer {
-      padding: 22px 40px;
-      border-top: 1px solid var(--border);
-      background: var(--surface);
+      padding: 22px 40px; border-top: 1px solid var(--border); background: var(--surface);
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
     }
     .f-logo { font-family: var(--font); font-weight: 800; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted2); }
@@ -305,7 +286,7 @@
       footer { padding: 18px 16px; }
     }
 
-    /* ── AUTH MODAL ── */
+    /* AUTH MODAL */
     .auth-overlay {
       position: fixed; inset: 0; z-index: 1000;
       background: rgba(15,18,32,0.55); backdrop-filter: blur(6px);
@@ -342,43 +323,31 @@
       letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
     }
     .auth-input {
-      width: 100%; background: var(--bg);
-      border: 1.5px solid var(--border2); border-radius: 5px;
-      padding: 11px 13px; color: var(--text);
-      font-family: var(--mono); font-size: 12px;
+      width: 100%; background: var(--bg); border: 1.5px solid var(--border2); border-radius: 5px;
+      padding: 11px 13px; color: var(--text); font-family: var(--mono); font-size: 12px;
       outline: none; transition: border-color .15s, box-shadow .15s;
     }
     .auth-input::placeholder { color: var(--muted2); }
     .auth-input:focus { border-color: var(--blue-br); box-shadow: 0 0 0 3px var(--blue-glow); }
     .auth-btn {
-      width: 100%; padding: 13px;
-      font-family: var(--font); font-weight: 700; font-size: 10px;
-      letter-spacing: 2.5px; text-transform: uppercase;
-      background: var(--blue-br); color: #fff;
-      border: none; border-radius: 5px; cursor: pointer;
-      transition: all .15s; margin-top: 4px;
+      width: 100%; padding: 13px; font-family: var(--font); font-weight: 700; font-size: 10px;
+      letter-spacing: 2.5px; text-transform: uppercase; background: var(--blue-br); color: #fff;
+      border: none; border-radius: 5px; cursor: pointer; transition: all .15s; margin-top: 4px;
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
     .auth-btn:hover:not(:disabled) { background: var(--blue); }
     .auth-btn:disabled { opacity: .5; cursor: not-allowed; }
     .auth-err {
-      display: none; margin-bottom: 14px;
-      background: var(--red-bg); border: 1px solid #fecaca;
-      border-radius: 4px; padding: 10px 12px;
-      font-family: var(--mono); font-size: 11px; color: var(--red);
+      display: none; margin-bottom: 14px; background: var(--red-bg); border: 1px solid #fecaca;
+      border-radius: 4px; padding: 10px 12px; font-family: var(--mono); font-size: 11px; color: var(--red);
     }
     .auth-err.show { display: block; }
     .auth-ok {
-      display: none; margin-bottom: 14px;
-      background: var(--green-bg); border: 1px solid #bbf7d0;
-      border-radius: 4px; padding: 10px 12px;
-      font-family: var(--mono); font-size: 11px; color: var(--green);
+      display: none; margin-bottom: 14px; background: var(--green-bg); border: 1px solid #bbf7d0;
+      border-radius: 4px; padding: 10px 12px; font-family: var(--mono); font-size: 11px; color: var(--green);
     }
     .auth-ok.show { display: block; }
-    .auth-note {
-      text-align: center; margin-top: 16px;
-      font-family: var(--mono); font-size: 10px; color: var(--muted2);
-    }
+    .auth-note { text-align: center; margin-top: 16px; font-family: var(--mono); font-size: 10px; color: var(--muted2); }
     .auth-note a { color: var(--blue-br); cursor: pointer; text-decoration: none; }
     .auth-note a:hover { text-decoration: underline; }
     .nav-user { display: flex; align-items: center; gap: 10px; }
@@ -388,13 +357,11 @@
     }
     .nav-user-usage {
       font-family: var(--mono); font-size: 10px; color: var(--blue-br);
-      background: var(--blue-light); border: 1px solid #bfdbfe;
-      padding: 3px 9px; border-radius: 20px;
+      background: var(--blue-light); border: 1px solid #bfdbfe; padding: 3px 9px; border-radius: 20px;
     }
     .nav-logout {
-      font-family: var(--mono); font-size: 10px; letter-spacing: 1px;
-      text-transform: uppercase; color: var(--muted);
-      background: none; border: 1.5px solid var(--border2);
+      font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted); background: none; border: 1.5px solid var(--border2);
       padding: 6px 12px; border-radius: 4px; cursor: pointer; transition: all .15s;
     }
     .nav-logout:hover { color: var(--red); border-color: #fca5a5; }
@@ -417,7 +384,7 @@
     </div>
     <div class="auth-body">
       <div class="auth-err" id="auth-err"></div>
-      <div class="auth-ok" id="auth-ok"></div>
+      <div class="auth-ok"  id="auth-ok"></div>
 
       <!-- LOGIN -->
       <div class="auth-panel active" id="panel-login">
@@ -448,7 +415,8 @@
         </div>
         <div class="auth-field" style="margin-bottom:18px;">
           <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
-            <input type="checkbox" id="terms-check" style="margin-top:3px;accent-color:#2563eb;flex-shrink:0;width:14px;height:14px;cursor:pointer;" onchange="document.getElementById('btn-signup').disabled=!this.checked;"/>
+            <input type="checkbox" id="terms-check" style="margin-top:3px;accent-color:#2563eb;flex-shrink:0;width:14px;height:14px;cursor:pointer;"
+              onchange="document.getElementById('btn-signup').disabled=!this.checked;"/>
             <span style="font-family:'DM Mono',monospace;font-size:10px;color:#6b7290;line-height:1.7;">
               I confirm all content I submit will be accurate and truthful, and I agree to the
               <a href="/terms.html" target="_blank" style="color:#2563eb;text-decoration:underline;">Terms of Service &amp; Disclaimer</a>.
@@ -477,10 +445,8 @@
 </div>
 
 <nav>
-    <a href="/" class="nav-logo">TRAX<span class="e">E</span><span class="co">.co</span></a>
-  <div id="nav-auth-area">
-    <!-- filled by JS -->
-  </div>
+  <a href="/" class="nav-logo">TRAX<span class="e">E</span><span class="co">.co</span></a>
+  <div id="nav-auth-area"><!-- filled by JS --></div>
 </nav>
 
 <main>
@@ -489,7 +455,6 @@
   <p class="sub">Upload your asset, declare its origin, and receive a permanent TRAXE ID — a tamper-proof record you can share with anyone.</p>
 
   <div class="card">
-
     <div class="tabs">
       <div class="tab active" id="tab-1"><span class="tab-num">01</span>Upload</div>
       <div class="tab" id="tab-2"><span class="tab-num">02</span>Declare</div>
@@ -524,18 +489,15 @@
           <div class="fp-size" id="fp-size">—</div>
         </div>
       </div>
-
       <div class="fg">
         <label class="lbl" for="title-inp">Content Title <em>*</em></label>
         <input type="text" class="inp" id="title-inp" placeholder="e.g. Campaign Hero Visual — Spring 2026" maxlength="200"/>
       </div>
-
       <div class="fg">
         <label class="lbl" for="creator-inp">Creator / Studio Name</label>
         <input type="text" class="inp" id="creator-inp" placeholder="e.g. Studio Noir · hello@studio.com"/>
         <div class="hint">Appears on your public verification record.</div>
       </div>
-
       <div class="btn-row">
         <button class="btn btn-p" id="btn1" disabled>Continue →</button>
       </div>
@@ -552,17 +514,15 @@
           <div><input type="radio" name="badge" id="b-hyb" value="hybrid" class="opt-radio"/><label for="b-hyb" class="badge-lbl"><span class="b-ico">⬡</span><div class="b-name">Hybrid</div><div class="b-desc">Real photography combined with AI enhancement</div></label></div>
         </div>
       </div>
-
       <div class="fg">
         <label class="lbl">Origin Declaration <em>*</em></label>
         <div class="opt-grid">
-          <div><input type="radio" name="origin" id="o-ai" value="declared_ai" class="opt-radio"/><label for="o-ai" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">AI Generated</div><div class="o-desc">Fully created by AI tools</div></div></label></div>
-          <div><input type="radio" name="origin" id="o-real" value="declared_real" class="opt-radio"/><label for="o-real" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Real / Human-Made</div><div class="o-desc">Original human photography</div></div></label></div>
-          <div><input type="radio" name="origin" id="o-hyb" value="declared_hybrid" class="opt-radio"/><label for="o-hyb" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Hybrid</div><div class="o-desc">Real content + AI enhanced</div></div></label></div>
-          <div><input type="radio" name="origin" id="o-unk" value="declared_unknown" class="opt-radio"/><label for="o-unk" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Not Disclosed</div><div class="o-desc">Origin not specified</div></div></label></div>
+          <div><input type="radio" name="origin" id="o-ai"   value="declared_ai"      class="opt-radio"/><label for="o-ai"   class="origin-lbl"><div class="rdot"></div><div><div class="o-name">AI Generated</div><div class="o-desc">Fully created by AI tools</div></div></label></div>
+          <div><input type="radio" name="origin" id="o-real" value="declared_real"     class="opt-radio"/><label for="o-real" class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Real / Human-Made</div><div class="o-desc">Original human photography</div></div></label></div>
+          <div><input type="radio" name="origin" id="o-hyb"  value="declared_hybrid"  class="opt-radio"/><label for="o-hyb"  class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Hybrid</div><div class="o-desc">Real content + AI enhanced</div></div></label></div>
+          <div><input type="radio" name="origin" id="o-unk"  value="declared_unknown" class="opt-radio"/><label for="o-unk"  class="origin-lbl"><div class="rdot"></div><div><div class="o-name">Not Disclosed</div><div class="o-desc">Origin not specified</div></div></label></div>
         </div>
       </div>
-
       <div class="fg">
         <label class="lbl" for="tool-sel">Tool / Software Used</label>
         <select class="sel" id="tool-sel">
@@ -583,7 +543,6 @@
           <option value="unknown">Unknown</option>
         </select>
       </div>
-
       <div class="btn-row">
         <button class="btn btn-g" id="btn2-back">← Back</button>
         <button class="btn btn-p" id="btn2" disabled>Continue →</button>
@@ -598,13 +557,10 @@
           <div class="review-grid" id="review-grid"></div>
         </div>
       </div>
-
       <div class="info-box">
         ℹ &nbsp;<strong>First verification is always free.</strong> Your asset will be permanently fingerprinted. This record cannot be deleted or altered.
       </div>
-
       <div class="err-box" id="err-box"></div>
-
       <div class="btn-row">
         <button class="btn btn-g" id="btn3-back">← Back</button>
         <button class="btn btn-p" id="btn-submit">
@@ -624,33 +580,35 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // ── SUPABASE ──────────────────────────────────────────────
-  const SUPABASE_URL = 'https://rwzodfaartqffrnepyar.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_vUuGTbA546lTOvqDMMDbqA_-nTGz4Gi';
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  const BACKEND  = 'https://traxe-backend.onrender.com';
-  const FREE_LIMIT = 3;
+(function () {
+  'use strict';
+
+  // ── SUPABASE (single declaration, wrapped in IIFE to avoid global scope conflicts) ──
+  const SUPABASE_URL  = 'https://rwzodfaartqffrnepyar.supabase.co';
+  const SUPABASE_KEY  = 'sb_publishable_vUuGTbA546lTOvqDMMDbqA_-nTGz4Gi';
+  const sb            = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const BACKEND       = 'https://traxe-backend.onrender.com';
+  const FREE_LIMIT    = 3;
 
   // ── AUTH STATE ────────────────────────────────────────────
   let currentUser = null;
 
   async function initAuth() {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session?.user) {
-      currentUser = session.user;
-      onLoggedIn();
-    } else {
+    try {
+      const { data: { session } } = await sb.auth.getSession();
+      if (session?.user) { currentUser = session.user; onLoggedIn(); }
+      else { showAuthModal(); }
+    } catch (e) {
+      console.warn('Auth init error:', e);
       showAuthModal();
     }
   }
 
-  supabase.auth.onAuthStateChange((event, session) => {
+  sb.auth.onAuthStateChange((event, session) => {
     if (event === 'SIGNED_IN' && session?.user) {
-      currentUser = session.user;
-      onLoggedIn();
+      currentUser = session.user; onLoggedIn();
     } else if (event === 'SIGNED_OUT') {
-      currentUser = null;
-      showAuthModal();
+      currentUser = null; showAuthModal();
     }
   });
 
@@ -658,21 +616,19 @@
     document.getElementById('auth-overlay').classList.add('show');
     updateNavGuest();
   }
-
   function hideAuthModal() {
     document.getElementById('auth-overlay').classList.remove('show');
   }
-
   async function onLoggedIn() {
     hideAuthModal();
     const usage = await getUsage();
     updateNavUser(currentUser.email, usage);
   }
 
-  // ── USAGE TRACKING ────────────────────────────────────────
+  // ── USAGE ─────────────────────────────────────────────────
   async function getUsage() {
     try {
-      const { count } = await supabase
+      const { count } = await sb
         .from('submissions')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', currentUser.id);
@@ -682,57 +638,49 @@
 
   // ── NAV ───────────────────────────────────────────────────
   function updateNavUser(email, usage) {
-    const area = document.getElementById('nav-auth-area');
     const remaining = Math.max(0, FREE_LIMIT - usage);
-    area.innerHTML = `
+    document.getElementById('nav-auth-area').innerHTML = `
       <div class="nav-user">
         <span class="nav-user-email">${email}</span>
         <span class="nav-user-usage">${remaining} free left</span>
         <button class="nav-logout" onclick="handleLogout()">Sign Out</button>
       </div>`;
   }
-
   function updateNavGuest() {
-    const area = document.getElementById('nav-auth-area');
-    area.innerHTML = `<a href="/" class="nav-back">← Back to Home</a>`;
+    document.getElementById('nav-auth-area').innerHTML =
+      `<a href="/" class="nav-back">← Back to Home</a>`;
   }
 
-  async function handleLogout() {
-    await supabase.auth.signOut();
-  }
+  // Exposed to inline onclick
+  window.handleLogout = async function () { await sb.auth.signOut(); };
 
   // ── AUTH TABS ─────────────────────────────────────────────
-  function switchTab(tab) {
+  window.switchTab = function (tab) {
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-' + (tab === 'reset' ? 'login' : tab))?.classList.add('active');
     document.getElementById('panel-' + tab)?.classList.add('active');
     clearAuthMessages();
-    // reset terms checkbox state when switching to signup
     if (tab === 'signup') {
       const cb = document.getElementById('terms-check');
       if (cb) { cb.checked = false; document.getElementById('btn-signup').disabled = true; }
     }
-  }
+  };
 
   function clearAuthMessages() {
-    const err = document.getElementById('auth-err');
-    const ok  = document.getElementById('auth-ok');
-    err.classList.remove('show'); ok.classList.remove('show');
+    document.getElementById('auth-err').classList.remove('show');
+    document.getElementById('auth-ok').classList.remove('show');
   }
-
   function showAuthErr(msg) {
     const el = document.getElementById('auth-err');
     el.textContent = '⚠ ' + msg; el.classList.add('show');
     document.getElementById('auth-ok').classList.remove('show');
   }
-
   function showAuthOk(msg) {
     const el = document.getElementById('auth-ok');
     el.textContent = '✓ ' + msg; el.classList.add('show');
     document.getElementById('auth-err').classList.remove('show');
   }
-
   function setAuthLoading(btnId, loading) {
     const btn = document.getElementById(btnId);
     btn.disabled = loading;
@@ -747,7 +695,7 @@
     const pass  = document.getElementById('login-password').value;
     if (!email || !pass) return showAuthErr('Please fill in all fields.');
     setAuthLoading('btn-login', true); clearAuthMessages();
-    const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+    const { error } = await sb.auth.signInWithPassword({ email, password: pass });
     setAuthLoading('btn-login', false);
     if (error) showAuthErr(error.message);
   });
@@ -759,7 +707,7 @@
     if (!email || !pass) return showAuthErr('Please fill in all fields.');
     if (pass.length < 8) return showAuthErr('Password must be at least 8 characters.');
     setAuthLoading('btn-signup', true); clearAuthMessages();
-    const { error } = await supabase.auth.signUp({
+    const { error } = await sb.auth.signUp({
       email, password: pass,
       options: { emailRedirectTo: 'https://traxe-frontend.onrender.com/register.html' }
     });
@@ -773,7 +721,7 @@
     const email = document.getElementById('reset-email').value.trim();
     if (!email) return showAuthErr('Please enter your email address.');
     clearAuthMessages();
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    const { error } = await sb.auth.resetPasswordForEmail(email, {
       redirectTo: 'https://traxe-frontend.onrender.com/register.html'
     });
     if (error) showAuthErr(error.message);
@@ -782,27 +730,27 @@
 
   // ── UPLOAD FORM ───────────────────────────────────────────
   let selectedFile = null;
-
   const $ = id => document.getElementById(id);
-  const fileInput   = $('file-input');
-  const dropZone    = $('drop-zone');
-  const filePreview = $('file-preview');
-  const fpName      = $('fp-name');
-  const fpSize      = $('fp-size');
-  const titleInp    = $('title-inp');
-  const creatorInp  = $('creator-inp');
-  const toolSel     = $('tool-sel');
-  const btn1        = $('btn1');
-  const btn2        = $('btn2');
-  const progress    = $('progress');
-  const errBox      = $('err-box');
-  const reviewGrid  = $('review-grid');
+
+  const fileInput    = $('file-input');
+  const dropZone     = $('drop-zone');
+  const filePreview  = $('file-preview');
+  const fpName       = $('fp-name');
+  const fpSize       = $('fp-size');
+  const titleInp     = $('title-inp');
+  const creatorInp   = $('creator-inp');
+  const toolSel      = $('tool-sel');
+  const btn1         = $('btn1');
+  const btn2         = $('btn2');
+  const progress     = $('progress');
+  const errBox       = $('err-box');
+  const reviewGrid   = $('review-grid');
   const successPanel = $('success-panel');
 
   function fmt(b) {
-    if (b < 1024) return b + ' B';
-    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
-    return (b/1048576).toFixed(2) + ' MB';
+    if (b < 1024)    return b + ' B';
+    if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+    return (b / 1048576).toFixed(2) + ' MB';
   }
 
   function setFile(f) {
@@ -816,17 +764,24 @@
   }
 
   fileInput.addEventListener('change', e => setFile(e.target.files[0]));
-  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
+  dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('over'); });
   dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
-  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('over'); setFile(e.dataTransfer.files[0]); });
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('over');
+    setFile(e.dataTransfer.files[0]);
+  });
 
   function checkStep1() { btn1.disabled = !(selectedFile && titleInp.value.trim()); }
   titleInp.addEventListener('input', checkStep1);
 
   function checkStep2() {
-    btn2.disabled = !(document.querySelector('input[name="badge"]:checked') && document.querySelector('input[name="origin"]:checked'));
+    btn2.disabled = !(
+      document.querySelector('input[name="badge"]:checked') &&
+      document.querySelector('input[name="origin"]:checked')
+    );
   }
-  document.querySelectorAll('input[name="badge"], input[name="origin"]').forEach(el => el.addEventListener('change', checkStep2));
+  document.querySelectorAll('input[name="badge"], input[name="origin"]')
+    .forEach(el => el.addEventListener('change', checkStep2));
 
   function goStep(n) {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -836,7 +791,7 @@
       if (i + 1 < n) t.classList.add('done');
       if (i + 1 === n) t.classList.add('active');
     });
-    progress.style.width = ({1:8, 2:50, 3:85}[n] || 8) + '%';
+    progress.style.width = ({ 1: 8, 2: 50, 3: 85 }[n] || 8) + '%';
   }
 
   btn1.addEventListener('click', () => goStep(2));
@@ -848,16 +803,21 @@
     const badge  = document.querySelector('input[name="badge"]:checked');
     const origin = document.querySelector('input[name="origin"]:checked');
     const tool   = toolSel.value;
-    const bL = {concept:'Concept', visualization:'Visualization', documentary:'Documentary', hybrid:'Hybrid'};
-    const oL = {declared_ai:'AI Generated', declared_real:'Real / Human-Made', declared_hybrid:'Hybrid', declared_unknown:'Not Disclosed'};
-    const tL = {midjourney:'MidJourney', runway:'Runway', firefly:'Adobe Firefly', sora:'Sora', dalle:'DALL·E', stablediffusion:'Stable Diffusion', photoshop:'Photoshop', lightroom:'Lightroom', premiere:'Premiere Pro', aftereffects:'After Effects', iphone:'iPhone Camera', camera:'Camera', custom:'Custom Model', unknown:'Unknown'};
+    const bL = { concept:'Concept', visualization:'Visualization', documentary:'Documentary', hybrid:'Hybrid' };
+    const oL = { declared_ai:'AI Generated', declared_real:'Real / Human-Made', declared_hybrid:'Hybrid', declared_unknown:'Not Disclosed' };
+    const tL = { midjourney:'MidJourney', runway:'Runway', firefly:'Adobe Firefly', sora:'Sora', dalle:'DALL·E', stablediffusion:'Stable Diffusion', photoshop:'Photoshop', lightroom:'Lightroom', premiere:'Premiere Pro', aftereffects:'After Effects', iphone:'iPhone Camera', camera:'Camera', custom:'Custom Model', unknown:'Unknown' };
     const rows = [
-      ['File', selectedFile.name], ['Size', fmt(selectedFile.size)],
-      ['Title', titleInp.value], ['Creator', creatorInp.value || '—'],
-      ['Badge', bL[badge?.value] || '—'], ['Origin', oL[origin?.value] || '—'],
+      ['File',    selectedFile.name],
+      ['Size',    fmt(selectedFile.size)],
+      ['Title',   titleInp.value],
+      ['Creator', creatorInp.value || '—'],
+      ['Badge',   bL[badge?.value]  || '—'],
+      ['Origin',  oL[origin?.value] || '—'],
     ];
     if (tool) rows.push(['Tool', tL[tool] || tool]);
-    reviewGrid.innerHTML = rows.map(([l,v]) => `<div class="ri"><label>${l}</label><span>${v}</span></div>`).join('');
+    reviewGrid.innerHTML = rows
+      .map(([l, v]) => `<div class="ri"><label>${l}</label><span>${v}</span></div>`)
+      .join('');
   }
 
   $('btn-submit').addEventListener('click', async () => {
@@ -882,19 +842,18 @@
     try {
       const params = new URLSearchParams({
         declared_origin: origin.value,
-        badge_category: badge.value,
-        title: titleInp.value.trim(),
-        user_id: currentUser.id,
+        badge_category:  badge.value,
+        title:           titleInp.value.trim(),
+        user_id:         currentUser.id,
       });
       if (creatorInp.value.trim()) params.append('creator_id', creatorInp.value.trim());
-      if (tool) params.append('tool_used', tool);
+      if (tool)                    params.append('tool_used',  tool);
 
       const fd = new FormData();
       fd.append('file', selectedFile);
 
-      const res  = await fetch(`${BACKEND}/upload?${params}`, { method:'POST', mode:'cors', body:fd });
+      const res  = await fetch(`${BACKEND}/upload?${params}`, { method: 'POST', mode: 'cors', body: fd });
       const data = await res.json();
-
       if (!res.ok || !data.ok) throw new Error(data.detail || data.error || 'Upload failed.');
 
       progress.style.width = '100%';
@@ -904,7 +863,6 @@
       $('verify-link').href = data.verify_url || `${BACKEND}/verify/${data.traxe_id}`;
       successPanel.classList.add('show');
 
-      // refresh usage in nav
       const newUsage = await getUsage();
       updateNavUser(currentUser.email, newUsage);
 
@@ -919,6 +877,8 @@
 
   // ── INIT ──────────────────────────────────────────────────
   initAuth();
+
+})();
 </script>
 </body>
 </html>
