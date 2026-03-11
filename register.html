@@ -468,6 +468,10 @@
       <div class="s-title">Content Registered</div>
       <p class="s-sub">Your asset is certified and permanently on record.<br/>Share your TRAXE ID as proof of transparent production.</p>
       <div class="traxe-id" id="success-traxe-id">TRX-XXXXXXXX</div>
+      <div id="scan-result-pill" style="display:none;margin:12px auto 0;max-width:360px;padding:10px 16px;border-radius:6px;font-family:var(--mono);font-size:12px;text-align:left;border:1px solid var(--border);background:var(--bg);">
+        <span id="scan-result-icon" style="margin-right:8px;">◎</span>
+        <span id="scan-result-text">—</span>
+      </div>
       <div class="s-btns">
         <a class="btn-v" id="verify-link" href="#" target="_blank">View Certificate →</a>
         <a class="btn-a" href="register.html">Register Another</a>
@@ -854,6 +858,19 @@
 
       const res  = await fetch(`${BACKEND}/upload?${params}`, { method: 'POST', mode: 'cors', body: fd });
       const data = await res.json();
+
+      // Duplicate file — already registered
+      if (res.status === 409) {
+        const detail = data.detail || {};
+        const verifyUrl = detail.verify_url || null;
+        const linkHtml = verifyUrl
+          ? ` <a href="${verifyUrl}" target="_blank" style="color:var(--blue-br);text-decoration:underline;">View existing certificate →</a>`
+          : '';
+        errBox.innerHTML = `⚠ This file has already been registered on TRAXE.${linkHtml}`;
+        errBox.classList.add('show');
+        return;
+      }
+
       if (!res.ok || !data.ok) throw new Error(data.detail || data.error || 'Upload failed.');
 
       progress.style.width = '100%';
@@ -861,6 +878,29 @@
       document.querySelectorAll('.tab').forEach(t => t.classList.add('done'));
       $('success-traxe-id').textContent = data.traxe_id;
       $('verify-link').href = data.verify_url || `${BACKEND}/verify/${data.traxe_id}`;
+
+      // Show scan result pill
+      const pill     = $('scan-result-pill');
+      const pillIcon = $('scan-result-icon');
+      const pillText = $('scan-result-text');
+      const conf     = data.scan_confidence != null ? `${data.scan_confidence}% likelihood AI-generated` : null;
+      const result   = data.scan_result || 'unavailable';
+      const icons    = { confirmed: '✅', flagged: '⚠️', inconclusive: '◎', unavailable: '—' };
+      pillIcon.textContent = icons[result] || '◎';
+      if (result === 'confirmed') {
+        pill.style.background = '#f0fdf4'; pill.style.borderColor = '#bbf7d0';
+        pillText.textContent = conf ? `${conf} · declaration confirmed` : 'Declaration confirmed';
+      } else if (result === 'flagged') {
+        pill.style.background = '#fef2f2'; pill.style.borderColor = '#fecaca';
+        pillText.textContent = conf ? `${conf} · declaration flagged` : 'Declaration flagged';
+      } else if (result === 'inconclusive') {
+        pill.style.background = '#fffbeb'; pill.style.borderColor = '#fde68a';
+        pillText.textContent = conf ? `${conf} · inconclusive` : 'Scan inconclusive';
+      } else {
+        pillText.textContent = 'AI scan not available';
+      }
+      pill.style.display = 'block';
+
       successPanel.classList.add('show');
 
       const newUsage = await getUsage();
