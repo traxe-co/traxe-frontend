@@ -426,15 +426,73 @@
     @media (max-width: 900px) {
       nav { padding: 0 20px; }
       .nav-links { display: none; }
+      .nav-divider { display: none; }
+      .nav-logo { font-size: 14px; letter-spacing: 3px; }
+      .nav-verify-btn { display: none; }
       .steps-grid { grid-template-columns: 1fr; }
       .badges-grid { grid-template-columns: 1fr; }
-      .plans-grid { grid-template-columns: 1fr; }
+      .plans-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
       footer { padding: 40px 20px 24px; }
-      .footer-top { flex-direction: column; }
+      .footer-top { flex-direction: column; gap: 32px; }
+      .footer-cols { flex-direction: column; gap: 24px; }
+      section { padding: 64px 20px; }
+      .section-tag { font-size: 9px; }
+      .hero { padding: 120px 20px 72px; }
+      .hero-actions { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .compliance-inner { flex-direction: column; gap: 16px; text-align: center; }
+      .compliance-badges { justify-content: center; }
+      .verify-box { padding: 28px 20px; }
+      .verify-input-row { flex-direction: column; }
+      .verify-input-row input { border-radius: 6px; border-right: 1px solid var(--border2); }
+      .verify-input-row button { border-radius: 6px; width: 100%; padding: 13px; }
+      .nav-hamburger { display: flex; }
+      .nav-cta { display: none; }
     }
     @media (max-width: 580px) {
-      section { padding: 64px 16px; }
-      h1 { letter-spacing: -2px; }
+      section { padding: 52px 16px; }
+      h1 { letter-spacing: -2px; font-size: clamp(28px, 9vw, 48px); }
+      .hero-sub { font-size: 14px; }
+      .plan-card { padding: 24px 20px; }
+      .badge-card { padding: 24px 20px; }
+      .step-card { padding: 24px 20px; }
+      .faq-q { font-size: 13px; padding: 16px; }
+      .faq-a { font-size: 13px; padding: 0 16px 16px; }
+      .footer-logo { font-size: 15px; }
+    }
+
+    /* HAMBURGER */
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; background: none; border: none; cursor: pointer;
+      padding: 6px; margin-left: 8px;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); border-radius: 2px; transition: all .2s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      display: none; flex-direction: column;
+      position: fixed; top: 68px; left: 0; right: 0; z-index: 199;
+      background: #fff; border-bottom: 1px solid var(--border);
+      padding: 16px 20px 24px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font); font-size: 15px; font-weight: 500;
+      color: var(--text2); text-decoration: none;
+      padding: 13px 0; border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu-cta {
+      margin-top: 12px; text-align: center;
+      background: var(--blue-br) !important; color: #fff !important;
+      border-radius: 8px; padding: 13px !important;
+      font-weight: 700 !important; border-bottom: none !important;
     }
 
     /* FOUNDER */
@@ -577,8 +635,19 @@
       </div>
     </div>
     <a href="register.html" class="nav-cta">Register Content →</a>
+    <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#how" onclick="closeMobileMenu()">How It Works</a>
+  <a href="#badges" onclick="closeMobileMenu()">Badge Types</a>
+  <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+  <a href="founder.html">Founder</a>
+  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="register.html" class="mobile-menu-cta">Register Content →</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -853,6 +922,17 @@
 
 <script>
   // Nav verify dropdown
+  function toggleMobileMenu() {
+    var menu = document.getElementById('mobile-menu');
+    var btn  = document.getElementById('nav-hamburger');
+    menu.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+  function closeMobileMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.getElementById('nav-hamburger').classList.remove('open');
+  }
+
   function toggleNavVerify() {
     var dd = document.getElementById('nav-verify-dropdown');
     dd.classList.toggle('open');
