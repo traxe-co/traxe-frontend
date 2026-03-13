@@ -655,7 +655,7 @@
   const SUPABASE_URL  = 'https://rwzodfaartqffrnepyar.supabase.co';
   const SUPABASE_KEY  = 'sb_publishable_vUuGTbA546lTOvqDMMDbqA_-nTGz4Gi';
   const sb            = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  const BACKEND       = 'https://traxe-backend.onrender.com';
+  const BACKEND       = 'https://api.traxe.co';
   const FREE_LIMIT    = 3;
 
   let currentUser = null;
@@ -749,7 +749,7 @@
     if (!email || !pass) return showAuthErr('Please fill in all fields.');
     if (pass.length < 8) return showAuthErr('Password must be at least 8 characters.');
     setAuthLoading('btn-signup', true); clearAuthMessages();
-    const { error } = await sb.auth.signUp({ email, password: pass, options: { emailRedirectTo: 'https://traxe-frontend.onrender.com/register.html' } });
+    const { error } = await sb.auth.signUp({ email, password: pass, options: { emailRedirectTo: 'https://www.traxe.co/register.html' } });
     setAuthLoading('btn-signup', false);
     if (error) showAuthErr(error.message);
     else showAuthOk('Check your email to confirm your account, then sign in.');
@@ -759,7 +759,7 @@
     const email = document.getElementById('reset-email').value.trim();
     if (!email) return showAuthErr('Please enter your email address.');
     clearAuthMessages();
-    const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: 'https://traxe-frontend.onrender.com/register.html' });
+    const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: 'https://www.traxe.co/register.html' });
     if (error) showAuthErr(error.message);
     else showAuthOk('Password reset email sent. Check your inbox.');
   });
