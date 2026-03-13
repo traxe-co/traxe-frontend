@@ -835,7 +835,7 @@
     </div>
     <div>
       <div class="footer-col-title">Verify</div>
-      <a href="https://traxe-backend.onrender.com/health" class="footer-link">API Status</a>
+      <a href="https://api.traxe.co/health" class="footer-link">API Status</a>
       <a href="#faq" class="footer-link">FAQ</a>
     </div>
     <div>
@@ -883,7 +883,7 @@
     }
     res.className = 'nvd-result show';
     res.textContent = 'Looking up…';
-    fetch('https://traxe-backend.onrender.com/verify/' + id)
+    fetch('https://api.traxe.co/verify/' + id)
       .then(function(r) { if (r.status === 404) return null; if (!r.ok) throw new Error(); return r.json(); })
       .then(function(data) {
         if (!data) {
@@ -891,7 +891,7 @@
           res.textContent = '✗ No certificate found for ' + id;
         } else {
           res.className = 'nvd-result show ok';
-          res.innerHTML = '✓ Verified — ' + (data.badge_type || '') + '<br><a href="https://traxe-backend.onrender.com/verify/' + id + '" target="_blank" style="color:var(--blue-br);">View full certificate →</a>';
+          res.innerHTML = '✓ Verified — ' + (data.badge_type || '') + '<br><a href="https://api.traxe.co/verify/' + id + '" target="_blank" style="color:var(--blue-br);">View full certificate →</a>';
         }
       })
       .catch(function() {
@@ -920,7 +920,7 @@
   });
 
   // Verify search
-  var BACKEND = 'https://traxe-backend.onrender.com';
+  var BACKEND = 'https://api.traxe.co';
 
   // Allow Enter key in input
   document.getElementById('verify-input').addEventListener('keydown', function(e) {
