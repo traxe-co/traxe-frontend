@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Founder — TRAXE.co</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <title>About Us — TRAXE.co</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --bg:#f4f5f8; --surface:#ffffff; --border:#e2e5ee; --border2:#d0d4e4;
       --blue:#1a4fa8; --blue-br:#2563eb; --blue-light:#eff4ff;
       --blue-glow:rgba(37,99,235,0.12); --text:#0f1220; --text2:#2d3348;
       --muted:#6b7290; --muted2:#9ba3bf;
-      --font:'Syne',system-ui,sans-serif; --mono:'DM Mono','Courier New',monospace;
+      
+      --font: 'Instrument Sans', system-ui, sans-serif; --mono:'DM Mono','Courier New',monospace;
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     body { background:var(--bg); color:var(--text); font-family:var(--font); overflow-x:hidden; }
@@ -79,6 +80,7 @@
     .nav-hamburger.open span:nth-child(2) { opacity:0; }
     .nav-hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
     @media (max-width:900px) {
+      *, *::before, *::after { max-width: 100%; }
       nav { padding:0 20px; }
       .nav-links { display:none; }
       .nav-divider { display:none; }
@@ -109,7 +111,7 @@
       <a href="index.html#how" class="nav-link">How It Works</a>
       <a href="index.html#badges" class="nav-link">Badge Types</a>
       <a href="index.html#pricing" class="nav-link">Pricing</a>
-      <a href="founder.html" class="nav-link active">Founder</a>
+      <a href="founder.html" class="nav-link active">About Us</a>
       <a href="index.html#faq" class="nav-link">FAQ</a>
     </div>
   </div>
@@ -120,7 +122,7 @@
     <a href="index.html#how">How It Works</a>
     <a href="index.html#badges">Badge Types</a>
     <a href="index.html#pricing">Pricing</a>
-    <a href="founder.html">Founder</a>
+    <a href="founder.html">About Us</a>
     <a href="index.html#faq">FAQ</a>
     <a href="register.html" class="mobile-menu-cta">Register Content →</a>
   </div>
