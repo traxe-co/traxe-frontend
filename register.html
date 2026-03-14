@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TRAXE — Register Content</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --bg:         #f4f5f8;
@@ -23,10 +23,12 @@
       --green-bg:   #f0fdf4;
       --red:        #dc2626;
       --red-bg:     #fef2f2;
-      --font:       'Syne', system-ui, -apple-system, Arial, sans-serif;
+      
+      --font: 'Instrument Sans', system-ui, sans-serif;
       --mono:       'DM Mono', 'Courier New', monospace;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; max-width: 100%; }
     body {
       background: var(--bg); color: var(--text);
       font-family: var(--font); min-height: 100vh; overflow-x: hidden;
@@ -330,6 +332,7 @@
     .f-text { font-family: var(--mono); font-size: 10px; color: var(--muted2); }
 
     @media (max-width: 560px) {
+      *, *::before, *::after { max-width: 100%; }
       nav { padding: 0 16px; }
       main { padding: 84px 12px 60px; }
       .body { padding: 20px 16px 16px; }
