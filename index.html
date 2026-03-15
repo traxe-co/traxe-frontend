@@ -132,7 +132,7 @@
       background: #1a1a1a;
     }
     .hero-bg img {
-      width: 100%; height: 100%; object-fit: cover; object-position: center 20%;
+      width: 100%; height: 100%; object-fit: cover; object-position: center 15%;
       display: block; opacity: 0.92;
     }
     .hero-bg::after {
@@ -765,16 +765,22 @@
       <p class="hero-supporting">AI content without proof is a liability.</p>
       <p class="hero-sub">Cryptographic proof of origin for creators, brands, and legal teams.</p>
 
-      <!-- AI CHECKER INPUT -->
-      <div class="hero-detect-wrap">
-        <div class="hero-detect-row">
-          <input id="hero-detect-url" type="url" class="hero-detect-input" placeholder="Paste any image URL to detect AI…" autocomplete="off" onkeydown="if(event.key==='Enter')heroDetect()"/>
-          <button class="hero-detect-btn" onclick="heroDetect()">Detect →</button>
+      <!-- AI DETECT INPUT -->
+      <div style="margin-bottom:20px;">
+        <div style="display:flex;gap:8px;justify-content:flex-end;">
+          <input id="hero-detect-url" type="url"
+            placeholder="Paste any image URL to detect AI…"
+            autocomplete="off"
+            onkeydown="if(event.key==='Enter')heroDetect()"
+            style="flex:1;max-width:280px;font-family:var(--font);font-size:13px;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);color:#fff;outline:none;"/>
+          <button onclick="heroDetect()"
+            style="font-family:var(--font);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:10px 18px;border-radius:8px;background:var(--blue-br);color:#fff;border:none;cursor:pointer;white-space:nowrap;">
+            Detect →
+          </button>
         </div>
-        <div class="hero-detect-hint">3 free checks · no account needed</div>
+        <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.4);text-align:right;margin-top:6px;letter-spacing:1px;">3 FREE SCANS · NO ACCOUNT NEEDED</div>
       </div>
 
-      <div class="hero-divider-line"></div>
       <div class="hero-btns">
         <a href="register.html" class="btn-hero-p">Register Content →</a>
         <a href="#how" class="btn-hero-g">See How It Works</a>
@@ -1079,6 +1085,10 @@
   function goDetect(e) {
     if (e) e.preventDefault();
     var url = document.getElementById('detect-url').value.trim();
+    window.location.href = url ? 'detect.html?url=' + encodeURIComponent(url) : 'detect.html';
+  }
+  function heroDetect() {
+    var url = document.getElementById('hero-detect-url').value.trim();
     window.location.href = url ? 'detect.html?url=' + encodeURIComponent(url) : 'detect.html';
   }
 
