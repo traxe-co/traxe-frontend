@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Content Scanner — TRAXE.co</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f4f5f8; --surface: #ffffff; --border: #e2e5ee; --border2: #d0d4e4;
+      --blue: #1a4fa8; --blue-br: #2563eb; --blue-light: #eff4ff;
+      --blue-glow: rgba(37,99,235,0.12);
+      --text: #0f1220; --text2: #2d3348; --muted: #6b7290; --muted2: #9ba3bf;
+      --green: #16a34a; --green-light: #f0fdf4;
+      --red: #dc2626; --red-light: #fef2f2;
+      --amber: #d97706; --amber-light: #fffbeb;
+      --font: 'Instrument Sans', system-ui, sans-serif;
+      --mono: 'DM Mono', 'Courier New', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; max-width: 100%; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 52px; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-left { display: flex; align-items: center; }
+    .nav-logo { font-weight: 800; font-size: 17px; letter-spacing: 5px; text-transform: uppercase; color: var(--text); text-decoration: none; margin-right: 28px; }
+    .nav-logo .e { color: var(--blue-br); }
+    .nav-logo .co { color: var(--muted2); font-weight: 400; letter-spacing: 2px; font-size: 13px; text-transform: lowercase; }
+    .nav-divider { width: 1px; height: 22px; background: var(--border2); margin-right: 28px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-link { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; padding: 6px 14px; border-radius: 6px; transition: all .15s; }
+    .nav-link:hover { color: var(--text); background: var(--bg); }
+    .nav-link.active { color: var(--blue-br); background: var(--blue-light); }
+    .nav-cta { font-weight: 700; font-size: 13px; padding: 8px 20px; border-radius: 8px; background: var(--blue-br); color: #fff; text-decoration: none; transition: all .15s; }
+    .nav-cta:hover { background: var(--blue); }
+    .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; margin-left: 8px; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all .2s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; z-index: 199; background: #fff; border-bottom: 1px solid var(--border); padding: 16px 20px 24px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 15px; font-weight: 500; color: var(--text2); text-decoration: none; padding: 13px 0; border-bottom: 1px solid var(--border); }
+    .mobile-menu-cta { margin-top: 12px; text-align: center; background: var(--blue-br) !important; color: #fff !important; border-radius: 8px; padding: 13px !important; font-weight: 700 !important; border-bottom: none !important; }
+
+    /* PAGE LAYOUT */
+    .page { max-width: 800px; margin: 0 auto; padding: 110px 24px 100px; }
+
+    /* HEADER */
+    .page-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--blue-br); display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .page-tag::before { content: ''; width: 20px; height: 1px; background: var(--blue-br); }
+    .page-title { font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -1px; line-height: 1.1; color: var(--text); margin-bottom: 12px; }
+    .page-sub { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 40px; max-width: 560px; }
+
+    /* FREE COUNTER */
+    .free-counter { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 28px; color: var(--green); background: var(--green-light); border: 1px solid rgba(22,163,74,0.2); }
+    .free-counter.warn { color: var(--amber); background: var(--amber-light); border-color: rgba(217,119,6,0.2); }
+    .free-counter.out { color: var(--red); background: var(--red-light); border-color: rgba(220,38,38,0.2); }
+    .counter-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+    /* UPLOAD CARD */
+    .scanner-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+    .scanner-tabs { display: flex; border-bottom: 1px solid var(--border); }
+    .scanner-tab { flex: 1; padding: 14px; font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; text-align: center; cursor: pointer; color: var(--muted); border: none; background: none; transition: all .15s; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .scanner-tab.active { color: var(--blue-br); border-bottom-color: var(--blue-br); background: var(--blue-light); }
+    .scanner-body { padding: 28px; }
+
+    /* URL INPUT */
+    .url-row { display: flex; gap: 10px; }
+    .url-input { flex: 1; font-family: var(--font); font-size: 14px; color: var(--text); background: var(--bg); border: 1px solid var(--border2); border-radius: 8px; padding: 12px 16px; outline: none; transition: border .15s; }
+    .url-input:focus { border-color: var(--blue-br); background: #fff; }
+    .url-input::placeholder { color: var(--muted2); }
+
+    /* FILE DROP */
+    .drop-zone { border: 2px dashed var(--border2); border-radius: 10px; padding: 40px 24px; text-align: center; cursor: pointer; transition: all .2s; background: var(--bg); }
+    .drop-zone:hover, .drop-zone.drag { border-color: var(--blue-br); background: var(--blue-light); }
+    .drop-zone-icon { font-size: 32px; margin-bottom: 12px; display: block; }
+    .drop-zone-title { font-size: 14px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+    .drop-zone-sub { font-size: 12px; color: var(--muted2); line-height: 1.6; }
+    .drop-zone input { display: none; }
+    .file-selected { display: none; align-items: center; gap: 12px; padding: 14px; background: var(--blue-light); border-radius: 8px; border: 1px solid rgba(37,99,235,0.2); }
+    .file-selected.show { display: flex; }
+    .file-name { font-size: 13px; font-weight: 600; color: var(--blue-br); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .file-size { font-family: var(--mono); font-size: 10px; color: var(--muted2); }
+    .file-clear { background: none; border: none; cursor: pointer; color: var(--muted2); font-size: 16px; padding: 0 4px; }
+
+    /* SCAN BUTTON */
+    .scan-btn { width: 100%; margin-top: 20px; font-family: var(--font); font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; padding: 14px; border-radius: 8px; background: var(--blue-br); color: #fff; border: none; cursor: pointer; transition: all .15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .scan-btn:hover { background: var(--blue); }
+    .scan-btn:disabled { background: var(--muted2); cursor: not-allowed; }
+    .scan-btn .spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; display: none; }
+    .scan-btn.loading .spinner { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .scanner-hint { font-family: var(--mono); font-size: 10px; color: var(--muted2); margin-top: 10px; text-align: center; }
+
+    /* RESULTS */
+    .results { display: none; }
+    .results.show { display: block; }
+
+    /* RESULT CARD */
+    .result-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+    .result-card-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+    .result-card-title { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    .result-card-body { padding: 20px; }
+
+    /* VERDICT */
+    .verdict-row { display: flex; align-items: center; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; }
+    .verdict-score-wrap { text-align: center; }
+    .verdict-score { font-size: 52px; font-weight: 700; letter-spacing: -3px; line-height: 1; color: var(--text); }
+    .verdict-score-label { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); margin-top: 4px; }
+    .verdict-badge { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 10px 20px; border-radius: 6px; }
+    .verdict-badge.real { background: var(--green-light); color: var(--green); border: 1px solid rgba(22,163,74,0.25); }
+    .verdict-badge.ai { background: var(--red-light); color: var(--red); border: 1px solid rgba(220,38,38,0.25); }
+    .verdict-badge.uncertain { background: var(--amber-light); color: var(--amber); border: 1px solid rgba(217,119,6,0.25); }
+    .verdict-desc { font-size: 13px; color: var(--muted); line-height: 1.7; flex: 1; min-width: 180px; }
+
+    /* BAR */
+    .conf-bar-wrap { margin-bottom: 8px; }
+    .conf-bar-labels { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; color: var(--muted2); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .conf-bar-track { height: 10px; background: var(--bg); border-radius: 5px; overflow: hidden; border: 1px solid var(--border); }
+    .conf-bar-fill { height: 100%; border-radius: 5px; transition: width 1.2s cubic-bezier(.4,0,.2,1); width: 0%; }
+    .conf-bar-fill.real { background: linear-gradient(90deg, #16a34a, #4ade80); }
+    .conf-bar-fill.ai { background: linear-gradient(90deg, #dc2626, #f87171); }
+    .conf-bar-fill.uncertain { background: linear-gradient(90deg, #d97706, #fbbf24); }
+
+    /* METADATA SIGNALS */
+    .signals-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .signal-item { padding: 12px 14px; background: var(--bg); border-radius: 8px; border: 1px solid var(--border); }
+    .signal-label { font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted2); margin-bottom: 5px; }
+    .signal-value { font-size: 13px; font-weight: 600; color: var(--text2); }
+    .signal-value.flag { color: var(--red); }
+    .signal-value.ok { color: var(--green); }
+    .signal-value.warn { color: var(--amber); }
+
+    /* REGISTRY CHECK */
+    .registry-row { display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 8px; }
+    .registry-row.found { background: var(--green-light); border: 1px solid rgba(22,163,74,0.2); }
+    .registry-row.not-found { background: var(--bg); border: 1px solid var(--border); }
+    .registry-icon { font-size: 22px; flex-shrink: 0; }
+    .registry-title { font-size: 14px; font-weight: 700; color: var(--text2); margin-bottom: 3px; }
+    .registry-sub { font-size: 12px; color: var(--muted); }
+    .registry-link { font-family: var(--mono); font-size: 10px; color: var(--blue-br); text-decoration: none; letter-spacing: 1px; }
+    .registry-link:hover { text-decoration: underline; }
+
+    /* DISCLAIMER */
+    .disclaimer { font-family: var(--mono); font-size: 10px; color: var(--muted2); line-height: 1.7; padding: 14px 16px; background: var(--bg); border-radius: 6px; border: 1px solid var(--border); margin-top: 16px; }
+
+    /* CTA */
+    .result-cta { background: var(--text); border-radius: 12px; padding: 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 8px; }
+    .result-cta-text { }
+    .result-cta-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .result-cta-sub { font-size: 13px; color: rgba(255,255,255,0.55); }
+    .result-cta-btn { font-family: var(--font); font-weight: 700; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 24px; border-radius: 8px; background: var(--blue-br); color: #fff; text-decoration: none; white-space: nowrap; transition: all .15s; }
+    .result-cta-btn:hover { background: var(--blue); }
+
+    /* GATE MODAL */
+    .gate { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(15,18,32,0.65); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px; }
+    .gate.show { display: flex; }
+    .gate-box { background: #fff; border-radius: 14px; padding: 44px 40px; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 32px 80px rgba(0,0,0,0.2); }
+    .gate-icon { font-size: 36px; margin-bottom: 16px; }
+    .gate-title { font-size: 22px; font-weight: 700; letter-spacing: -.5px; color: var(--text); margin-bottom: 10px; }
+    .gate-sub { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 28px; }
+    .gate-btn { display: block; font-family: var(--font); font-weight: 700; font-size: 13px; padding: 14px 28px; border-radius: 8px; background: var(--blue-br); color: #fff; text-decoration: none; margin-bottom: 12px; transition: all .15s; }
+    .gate-btn:hover { background: var(--blue); }
+    .gate-dismiss { font-size: 12px; color: var(--muted2); cursor: pointer; text-decoration: underline; }
+
+    footer { border-top: 1px solid var(--border); padding: 28px 24px; text-align: center; }
+    .footer-copy { font-family: var(--mono); font-size: 10px; color: var(--muted2); }
+    .footer-back { font-family: var(--mono); font-size: 11px; color: var(--muted2); text-decoration: none; margin-left: 20px; transition: color .15s; }
+    .footer-back:hover { color: var(--text); }
+
+    @media (max-width: 900px) {
+      *, *::before, *::after { max-width: 100%; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .page { padding: 100px 16px 80px; }
+      .signals-grid { grid-template-columns: 1fr; }
+      .url-row { flex-direction: column; }
+      .result-cta { flex-direction: column; }
+      .verdict-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">TRAX<span class="e">E</span><span class="co">.co</span></a>
+    <div class="nav-divider"></div>
+    <div class="nav-links">
+      <a href="index.html#how" class="nav-link">How It Works</a>
+      <a href="index.html#badges" class="nav-link">Badge Types</a>
+      <a href="index.html#pricing" class="nav-link">Pricing</a>
+      <a href="founder.html" class="nav-link">About Us</a>
+      <a href="index.html#faq" class="nav-link">FAQ</a>
+      <a href="detect.html" class="nav-link active">AI Scanner</a>
+    </div>
+  </div>
+  <a href="register.html" class="nav-cta">Register Content →</a>
+  <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html#how">How It Works</a>
+  <a href="index.html#badges">Badge Types</a>
+  <a href="index.html#pricing">Pricing</a>
+  <a href="founder.html">About Us</a>
+  <a href="index.html#faq">FAQ</a>
+  <a href="detect.html">AI Scanner</a>
+  <a href="register.html" class="mobile-menu-cta">Register Content →</a>
+</div>
+
+<div class="page">
+
+  <div class="page-tag">Free AI Scanner</div>
+  <h1 class="page-title">Is this content AI-generated?</h1>
+  <p class="page-sub">Upload an image or video, or paste a URL. We analyse AI probability, metadata signals, and check if the content is registered in the TRAXE registry. No account needed for your first 3 scans.</p>
+
+  <div class="free-counter" id="free-counter">
+    <span class="counter-dot"></span>
+    <span id="counter-text">3 free scans remaining</span>
+  </div>
+
+  <!-- SCANNER INPUT CARD -->
+  <div class="scanner-card">
+    <div class="scanner-tabs">
+      <button class="scanner-tab active" id="tab-url" onclick="switchTab('url')">🔗 &nbsp;URL</button>
+      <button class="scanner-tab" id="tab-file" onclick="switchTab('file')">📁 &nbsp;Upload File</button>
+    </div>
+    <div class="scanner-body">
+
+      <!-- URL PANEL -->
+      <div id="panel-url">
+        <div class="url-row">
+          <input class="url-input" id="url-input" type="url" placeholder="Paste any image or video URL…" autocomplete="off" onkeydown="if(event.key==='Enter')runScan()"/>
+        </div>
+        <p style="font-family:var(--mono);font-size:10px;color:var(--muted2);margin-top:10px;">Supports direct image/video URLs and most public web pages</p>
+      </div>
+
+      <!-- FILE PANEL -->
+      <div id="panel-file" style="display:none;">
+        <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
+          <span class="drop-zone-icon">⬆</span>
+          <div class="drop-zone-title">Drop your file here or click to browse</div>
+          <div class="drop-zone-sub">Images: JPG, PNG, WEBP, GIF · Videos: MP4, MOV, WEBM<br/>Max 50MB</div>
+          <input type="file" id="file-input" accept="image/*,video/*" onchange="fileSelected(event)"/>
+        </div>
+        <div class="file-selected" id="file-selected">
+          <span style="font-size:20px;">📄</span>
+          <div class="file-name" id="file-name">filename.jpg</div>
+          <div class="file-size" id="file-size">—</div>
+          <button class="file-clear" onclick="clearFile()">✕</button>
+        </div>
+      </div>
+
+      <button class="scan-btn" id="scan-btn" onclick="runScan()">
+        <div class="spinner"></div>
+        <span id="scan-btn-text">Scan Content</span>
+      </button>
+      <p class="scanner-hint">This scanner analyses content only. It does not create certificates. <a href="register.html" style="color:var(--blue-br);">Register content →</a> for a cryptographic certificate.</p>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <!-- AI PROBABILITY -->
+    <div class="result-card">
+      <div class="result-card-header">
+        <span class="result-card-title">AI Detection</span>
+        <span id="scan-timestamp" style="font-family:var(--mono);font-size:10px;color:var(--muted2);"></span>
+      </div>
+      <div class="result-card-body">
+        <div class="verdict-row">
+          <div class="verdict-score-wrap">
+            <div class="verdict-score" id="verdict-score">—</div>
+            <div class="verdict-score-label">AI probability</div>
+          </div>
+          <div class="verdict-badge" id="verdict-badge">—</div>
+          <div class="verdict-desc" id="verdict-desc">—</div>
+        </div>
+        <div class="conf-bar-wrap">
+          <div class="conf-bar-labels"><span>Human / Real</span><span>AI Generated</span></div>
+          <div class="conf-bar-track"><div class="conf-bar-fill" id="conf-bar"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- METADATA SIGNALS -->
+    <div class="result-card">
+      <div class="result-card-header">
+        <span class="result-card-title">Metadata Signals</span>
+      </div>
+      <div class="result-card-body">
+        <div class="signals-grid" id="signals-grid">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- REGISTRY CHECK -->
+    <div class="result-card">
+      <div class="result-card-header">
+        <span class="result-card-title">TRAXE Registry Check</span>
+      </div>
+      <div class="result-card-body">
+        <div id="registry-result"></div>
+        <div class="disclaimer">
+          ⚠ This scan is an analysis tool only. Results are probabilistic — not legal proof. A negative registry result does not mean content is fake; it may simply not have been registered. For certified proof of origin, <a href="register.html" style="color:var(--blue-br);">register your content</a>.
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="result-cta">
+      <div class="result-cta-text">
+        <div class="result-cta-title">Certify your own content.</div>
+        <div class="result-cta-sub">Register it with a cryptographic TRAXE ID — verifiable proof of origin.</div>
+      </div>
+      <a href="register.html" class="result-cta-btn">Register Content →</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- GATE MODAL -->
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">You've used your 3 free scans</div>
+    <div class="gate-sub">Create a free account to get 3 scans every month, or upgrade for unlimited access and white-label options.</div>
+    <a href="register.html" class="gate-btn">Create Free Account →</a>
+    <div class="gate-dismiss" onclick="closeGate()">Maybe later</div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2026 TRAXE.co. All rights reserved. · This tool is for analysis only and does not constitute legal evidence.</span>
+  <a href="index.html" class="footer-back">← Back to TRAXE.co</a>
+</footer>
+
+<script>
+  const BACKEND = 'https://api.traxe.co';
+  const MAX_FREE = 3;
+  let currentFile = null;
+  let currentTab = 'url';
+
+  // --- NAV ---
+  function toggleMobileMenu() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+    document.getElementById('nav-hamburger').classList.toggle('open');
+  }
+
+  // --- TABS ---
+  function switchTab(tab) {
+    currentTab = tab;
+    document.getElementById('panel-url').style.display = tab === 'url' ? 'block' : 'none';
+    document.getElementById('panel-file').style.display = tab === 'file' ? 'block' : 'none';
+    document.getElementById('tab-url').className = 'scanner-tab' + (tab === 'url' ? ' active' : '');
+    document.getElementById('tab-file').className = 'scanner-tab' + (tab === 'file' ? ' active' : '');
+  }
+
+  // --- FILE HANDLING ---
+  function dragOver(e) { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag'); }
+  function dragLeave() { document.getElementById('drop-zone').classList.remove('drag'); }
+  function dropFile(e) {
+    e.preventDefault();
+    dragLeave();
+    const f = e.dataTransfer.files[0];
+    if (f) setFile(f);
+  }
+  function fileSelected(e) { if (e.target.files[0]) setFile(e.target.files[0]); }
+  function setFile(f) {
+    currentFile = f;
+    document.getElementById('drop-zone').style.display = 'none';
+    const sel = document.getElementById('file-selected');
+    sel.classList.add('show');
+    document.getElementById('file-name').textContent = f.name;
+    document.getElementById('file-size').textContent = (f.size / 1024 / 1024).toFixed(2) + ' MB';
+  }
+  function clearFile() {
+    currentFile = null;
+    document.getElementById('drop-zone').style.display = 'block';
+    document.getElementById('file-selected').classList.remove('show');
+    document.getElementById('file-input').value = '';
+  }
+
+  // --- FREE COUNTER ---
+  function getChecksUsed() { return parseInt(localStorage.getItem('traxe_scans') || '0'); }
+  function incrementChecks() { localStorage.setItem('traxe_scans', getChecksUsed() + 1); }
+  function updateCounter() {
+    const remaining = Math.max(0, MAX_FREE - getChecksUsed());
+    const el = document.getElementById('free-counter');
+    const txt = document.getElementById('counter-text');
+    if (remaining === 0) { el.className = 'free-counter out'; txt.textContent = 'No free scans remaining — create account'; }
+    else if (remaining === 1) { el.className = 'free-counter warn'; txt.textContent = '1 free scan remaining'; }
+    else { el.className = 'free-counter'; txt.textContent = remaining + ' free scans remaining'; }
+  }
+  updateCounter();
+
+  function showGate() { document.getElementById('gate').classList.add('show'); }
+  function closeGate() { document.getElementById('gate').classList.remove('show'); }
+
+  // --- SCAN ---
+  async function runScan() {
+    if (getChecksUsed() >= MAX_FREE) { showGate(); return; }
+
+    const btn = document.getElementById('scan-btn');
+    const btnText = document.getElementById('scan-btn-text');
+    btn.disabled = true;
+    btn.classList.add('loading');
+    btnText.textContent = 'Scanning…';
+
+    document.getElementById('results').classList.remove('show');
+
+    try {
+      let data;
+
+      if (currentTab === 'url') {
+        const url = document.getElementById('url-input').value.trim();
+        if (!url) { alert('Please paste a URL first.'); return; }
+        const resp = await fetch(BACKEND + '/detect', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+        if (!resp.ok) { const e = await resp.json().catch(() => ({})); throw new Error(e.detail || 'Scan failed.'); }
+        data = await resp.json();
+      } else {
+        if (!currentFile) { alert('Please select a file first.'); return; }
+        const fd = new FormData();
+        fd.append('file', currentFile);
+        fd.append('declared_origin', 'unknown');
+        // Use upload endpoint but scan-only flag
+        const resp = await fetch(BACKEND + '/detect-file', {
+          method: 'POST',
+          body: fd
+        });
+        if (!resp.ok) { const e = await resp.json().catch(() => ({})); throw new Error(e.detail || 'Scan failed.'); }
+        data = await resp.json();
+      }
+
+      incrementChecks();
+      updateCounter();
+      renderResults(data);
+
+      if (getChecksUsed() >= MAX_FREE) setTimeout(showGate, 2500);
+
+    } catch(e) {
+      alert('Error: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.classList.remove('loading');
+      btnText.textContent = 'Scan Content';
+    }
+  }
+
+  // --- RENDER RESULTS ---
+  function renderResults(data) {
+    const aiScore = Math.round((data.ai_score || 0) * 100);
+    const verdict = data.verdict || (aiScore >= 70 ? 'AI GENERATED' : aiScore >= 40 ? 'UNCERTAIN' : 'REAL');
+    const cls = verdict === 'AI GENERATED' ? 'ai' : verdict === 'UNCERTAIN' ? 'uncertain' : 'real';
+
+    const descriptions = {
+      'REAL': 'No significant AI generation signatures detected. Content appears to be of human or photographic origin.',
+      'AI GENERATED': 'Strong AI generation signatures detected. This content was likely created or heavily modified by an AI tool.',
+      'UNCERTAIN': 'Mixed signals detected. Content may be partially AI-generated, heavily edited, or the model confidence is low.'
+    };
+
+    document.getElementById('verdict-score').textContent = aiScore + '%';
+    const badge = document.getElementById('verdict-badge');
+    badge.className = 'verdict-badge ' + cls;
+    badge.textContent = verdict;
+    document.getElementById('verdict-desc').textContent = descriptions[verdict] || '';
+
+    const bar = document.getElementById('conf-bar');
+    bar.className = 'conf-bar-fill ' + cls;
+    setTimeout(() => { bar.style.width = aiScore + '%'; }, 80);
+
+    document.getElementById('scan-timestamp').textContent = new Date().toLocaleTimeString();
+
+    // Metadata signals
+    const signals = data.signals || {};
+    const grid = document.getElementById('signals-grid');
+    const items = [
+      { label: 'EXIF Data', value: signals.has_exif === true ? 'Present' : signals.has_exif === false ? 'Missing' : 'N/A', cls: signals.has_exif === false ? 'warn' : 'ok' },
+      { label: 'Camera Model', value: signals.camera_model || 'Not found', cls: signals.camera_model ? 'ok' : 'warn' },
+      { label: 'Creation Software', value: signals.software || 'Unknown', cls: signals.software ? 'warn' : '' },
+      { label: 'File Format', value: signals.format || data.content_type || 'Unknown', cls: '' },
+      { label: 'Resolution', value: signals.resolution || 'Unknown', cls: '' },
+      { label: 'AI Tool Detected', value: signals.ai_tool || 'None detected', cls: signals.ai_tool ? 'flag' : 'ok' },
+    ];
+    grid.innerHTML = items.map(i => `
+      <div class="signal-item">
+        <div class="signal-label">${i.label}</div>
+        <div class="signal-value ${i.cls}">${i.value}</div>
+      </div>`).join('');
+
+    // Registry check
+    const reg = document.getElementById('registry-result');
+    if (data.registry_match) {
+      reg.innerHTML = `<div class="registry-row found">
+        <div class="registry-icon">✅</div>
+        <div>
+          <div class="registry-title">Registered in TRAXE Registry</div>
+          <div class="registry-sub">This content has a verified certificate of origin.</div>
+          <a href="${BACKEND}/verify/${data.registry_match}" target="_blank" class="registry-link">View Certificate → ${data.registry_match}</a>
+        </div>
+      </div>`;
+    } else {
+      reg.innerHTML = `<div class="registry-row not-found">
+        <div class="registry-icon">🔍</div>
+        <div>
+          <div class="registry-title">Not found in TRAXE Registry</div>
+          <div class="registry-sub">No certificate of origin found for this content. This does not confirm the content is fake.</div>
+        </div>
+      </div>`;
+    }
+
+    document.getElementById('results').classList.add('show');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Pre-fill URL from query string
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const preUrl = params.get('url');
+    if (preUrl) {
+      document.getElementById('url-input').value = preUrl;
+      setTimeout(runScan, 400);
+    }
+  });
+</script>
+</body>
+</html>
