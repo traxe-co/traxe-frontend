@@ -653,9 +653,10 @@
       font-family: var(--mono); font-size: 10px; color: var(--muted2); letter-spacing: 1px;
     }
 
-    .hero h1 { color: #fff; text-align: right; font-size: clamp(24px, 3vw, 40px); letter-spacing: -.5px; line-height: 1.2; margin-bottom: 16px; }
+    .hero h1 { color: #fff; text-align: right; font-size: clamp(24px, 3vw, 40px); letter-spacing: -.5px; line-height: 1.2; margin-bottom: 12px; }
     .hero h1 em { color: #93c5fd; font-style: normal; }
-    .hero .hero-sub { color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.7; margin-bottom: 28px; text-align: right; max-width: 380px; margin-left: auto; }
+    .hero .hero-supporting { color: #fff; font-size: 17px; font-weight: 600; text-align: right; margin-bottom: 10px; letter-spacing: -.2px; }
+    .hero .hero-sub { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.7; margin-bottom: 28px; text-align: right; max-width: 380px; margin-left: auto; }
     .hero .hero-btns { justify-content: flex-end; }
     .hero .btn-hero-p { background: transparent; color: #93c5fd; font-weight: 600; border: 1.5px solid #93c5fd; border-radius: 8px; padding: 11px 24px; box-shadow: 0 0 12px rgba(147,197,253,0.3), inset 0 0 12px rgba(147,197,253,0.05); }
     .hero .btn-hero-p:hover { background: rgba(147,197,253,0.08); box-shadow: 0 0 24px rgba(147,197,253,0.5), inset 0 0 16px rgba(147,197,253,0.1); border-color: #bfdbfe; color: #bfdbfe; }
@@ -665,6 +666,7 @@
     @media (max-width: 900px) {
       .hero-inner { grid-template-columns: 1fr; padding: 0 20px 56px; gap: 24px; }
       .hero h1 { text-align: left; }
+      .hero .hero-supporting { text-align: left; }
       .hero .hero-sub { text-align: left; margin-left: 0; }
       .hero .hero-btns { justify-content: flex-start; }
       .hero-right { text-align: left; }
@@ -702,6 +704,7 @@
       <a href="#pricing" class="nav-link">Pricing</a>
       <a href="founder.html" class="nav-link">About Us</a>
       <a href="#faq" class="nav-link">FAQ</a>
+      <a href="detect.html" class="nav-link" style="color:var(--blue-br);">AI Detector</a>
     </div>
   </div>
   <div class="nav-right">
@@ -729,6 +732,7 @@
   <a href="#badges" onclick="closeMobileMenu()">Badge Types</a>
   <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
   <a href="founder.html">About Us</a>
+  <a href="detect.html">AI Detector</a>
   <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
   <a href="register.html" class="mobile-menu-cta">Register Content →</a>
 </div>
@@ -757,8 +761,20 @@
         <span class="hero-dot"></span>
         EU AI ACT 2026 COMPLIANT
       </div>
-      <h1>AI content without<br/>proof is a liability.</h1>
-      <p class="hero-sub">Cryptographic certificates of origin for legal teams, creators, and brands.</p>
+      <h1>Human or AI?<br/>Know for sure.</h1>
+      <p class="hero-supporting">AI content without proof is a liability.</p>
+      <p class="hero-sub">Cryptographic proof of origin for creators, brands, and legal teams.</p>
+
+      <!-- AI CHECKER INPUT -->
+      <div class="hero-detect-wrap">
+        <div class="hero-detect-row">
+          <input id="hero-detect-url" type="url" class="hero-detect-input" placeholder="Paste any image URL to detect AI…" autocomplete="off" onkeydown="if(event.key==='Enter')heroDetect()"/>
+          <button class="hero-detect-btn" onclick="heroDetect()">Detect →</button>
+        </div>
+        <div class="hero-detect-hint">3 free checks · no account needed</div>
+      </div>
+
+      <div class="hero-divider-line"></div>
       <div class="hero-btns">
         <a href="register.html" class="btn-hero-p">Register Content →</a>
         <a href="#how" class="btn-hero-g">See How It Works</a>
@@ -919,6 +935,25 @@
   </div>
 </section>
 
+<!-- AI DETECTOR TEASER -->
+<section id="detect" style="background:var(--text);">
+  <div class="section-inner" style="max-width:720px;">
+    <div class="section-tag" style="color:rgba(255,255,255,0.4);">Free Tool</div>
+    <h2 class="section-title" style="color:#fff;">Is this image AI-generated?</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.6);">Paste any image URL and get an instant AI detection score. No account needed for your first 3 checks.</p>
+    <div style="display:flex;gap:10px;max-width:560px;">
+      <input id="detect-url" type="url" placeholder="Paste an image URL…"
+        style="flex:1;font-family:var(--font);font-size:14px;padding:13px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff;outline:none;"
+        onkeydown="if(event.key==='Enter')goDetect()"/>
+      <a id="detect-btn" href="detect.html" onclick="goDetect(event)"
+        style="font-family:var(--font);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:13px 24px;border-radius:8px;background:var(--blue-br);color:#fff;text-decoration:none;white-space:nowrap;display:flex;align-items:center;">
+        Detect →
+      </a>
+    </div>
+    <p style="font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.3);margin-top:12px;">3 free checks · No signup · Instant result · <a href="detect.html" style="color:rgba(255,255,255,0.5);text-decoration:underline;">Open full detector →</a></p>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section id="faq">
   <div class="section-inner">
@@ -1040,6 +1075,11 @@
   function closeMobileMenu() {
     document.getElementById('mobile-menu').classList.remove('open');
     document.getElementById('nav-hamburger').classList.remove('open');
+  }
+  function goDetect(e) {
+    if (e) e.preventDefault();
+    var url = document.getElementById('detect-url').value.trim();
+    window.location.href = url ? 'detect.html?url=' + encodeURIComponent(url) : 'detect.html';
   }
 
   function toggleNavVerify() {
